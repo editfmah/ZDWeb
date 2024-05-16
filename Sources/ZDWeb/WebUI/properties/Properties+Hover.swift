@@ -11,24 +11,28 @@ public extension GenericProperties {
     @discardableResult
     func hover(_ color: WebColor? = nil, background: WebColor? = nil, bold: Bool? = nil, underline: Bool? = nil) -> Self {
         
+        // link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover link-underline-opacity-100-hover link-underline-opacity-50-hover link-underline-opacity-25-hover link-underline-opacity-0-hover link-underline-opacity-25 link-underline-opacity-50 link-underline-opacity-75 link-underline-opacity-100 link-underline-hover link-underline-hover-opacity-0 link-underline-hover-opacity-25 link-underline-hover-opacity-50 link-underline-hover-opacity-75 link-underline-hover-opacity-100 link-underline-hover-opacity-75-hover link-underline-hover-opacity-50-hover link-underline-hover-opacity-25-hover link-underline-hover-opacity-0-hover link-underline-opacity-0-hover link-underline-opacity-25-hover link-underline-opacity-50-hover link-underline-opacity-75-hover link-underline-opacity-100-hover link-underline-opacity-75 link-underline-opacity-50 link-underline-opacity-25 link-underline-opacity-0 link-underline link-underline-hover link-underline-hover-opacity-0 link-underline-hover-opacity-25 link-underline-hover-opacity-50 link-underline-hover-opacity-75 link-underline-hover-opacity-100 link-underline-hover-opacity-75-hover link-underline-hover-opacity-50-hover link-underline-hover-opacity-25-hover link-underline-hover-opacity-0-hover link-underline-opacity-0-hover link-underline-opacity-25-hover link-underline-opacity-50-hover link-underline-opacity-75-hover link-underline-opacity-100-hover link-underline-opacity-75 link-underline-opacity-50 link-underline-opacity-25 link-underline-opacity-0 link-underline link-underline-hover link-underline-hover-opacity-0 link-underline-hover-opacity-25 link-underline-hover-opacity-50 link-underline-hover-opacity-75 link-underline-hover-opacity-100 link-underline-hover-opacity-75-hover link-underline-hover-opacity-50-hover link-underline-hover-opacity-25-hover link-underline-hover-opacity-0-hover link-underline-opacity-0-hover link-underline-opacity-25-hover link-underline-opacity-50-hover link-underline-opacity-75-hover link-underline-opacity-100-hover link-underline-opacity-75 link-underline-opacity-50 link-underline-opacity-25 link-underline-opacity-0 link-underline link-underline-hover link-underline-hover-opacity-0 link-underline-hover-opacity-25 link-underline-hover-opacity-50 link-underline-hover-opacity-75 link-underline-hover-opacity-100 link-underline-hover-opacity-75-hover link-
+        
         if let color = color {
             // set the style colour using the onmouseover event
-            executingWebThread?.builderScript("\(builderId).onmouseover = function() { \(builderId).style.color = '\(color.rgba)'; };")
+            
         }
         
         if let background = background {
             // set the style background using the onmouseover event
-            executingWebThread?.builderScript("\(builderId).onmouseover = function() { \(builderId).style.backgroundColor = '\(background.rgba)'; };")
+            
         }
         
         if let bold = bold {
             // set the style font weight using the onmouseover event
-            executingWebThread?.builderScript("\(builderId).onmouseover = function() { \(builderId).style.fontWeight = '\(bold ? "bold" : "normal")'; };")
+            executingWebThread?.builderScript("\(builderId).addClassName('link-bold-hover');")
         }
         
         if let underline = underline {
-            // set the style text decoration using the onmouseover event
-            executingWebThread?.builderScript("\(builderId).onmouseover = function() { \(builderId).style.textDecoration = '\(underline ? "underline" : "none")'; };")
+            if underline {
+                executingWebThread?.builderScript("\(builderId).addClassName('link-underline-hover');")
+                executingWebThread?.builderScript("\(builderId).addClassName('link-underline-opacity-100-hover');")
+            }
         }
         
         return self
