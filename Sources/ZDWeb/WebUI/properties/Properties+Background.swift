@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func background(_ color: WebColor) -> Self {
         executingWebThread?.builderScript("\(builderId).style.backgroundColor = '\(color.rgba)';")

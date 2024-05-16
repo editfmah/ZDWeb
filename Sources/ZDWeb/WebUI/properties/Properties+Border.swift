@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func border(_ color: WebColor, width: Int) -> Self {
         executingWebThread?.builderScript("\(builderId).style.border = '\(width)px solid \(color.rgba)';")

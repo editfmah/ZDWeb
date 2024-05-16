@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PickerType {
+public enum PickerType {
     case dropdown
     case radio
     case check
@@ -15,7 +15,7 @@ enum PickerType {
     case view
 }
 
-class Picker : WebElement {
+public class Picker : WebElement {
     @discardableResult
     init(type: PickerType? = .dropdown, binding: WString? = nil, body: WebComposerClosure) {
         super.init()

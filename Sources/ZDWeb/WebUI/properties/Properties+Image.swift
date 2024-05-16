@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension ImageProperties {
+public extension ImageProperties {
     func src(_ src: String) -> Self {
         executingWebThread?.builderScript("\(builderId).src = '\(src)';")
         return self

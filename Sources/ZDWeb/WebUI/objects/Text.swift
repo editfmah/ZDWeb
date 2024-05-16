@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Text : WebElement {
+public class Text : WebElement {
     @discardableResult
     init(_ text: String) {
         super.init()

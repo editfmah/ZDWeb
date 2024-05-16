@@ -85,7 +85,7 @@ public enum WebColor {
     
 }
 
-protocol GenericProperties {
+public protocol GenericProperties {
     var builderId: String { get }
     func background(_ color: WebColor) -> Self
     func font(_ font: WebFont) -> Self
@@ -112,7 +112,7 @@ protocol GenericProperties {
     func onClick(script: String) -> Self
 }
 
-protocol ImageProperties : GenericProperties {
+public protocol ImageProperties : GenericProperties {
     func src(_ src: String) -> Self
     func alt(_ alt: String) -> Self
     func scaleToFit() -> Self

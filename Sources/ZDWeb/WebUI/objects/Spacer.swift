@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Spacer : WebElement {
+public class Spacer : WebElement {
     @discardableResult
     override init() {
         super.init()

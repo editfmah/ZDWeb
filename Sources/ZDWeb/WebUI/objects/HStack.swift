@@ -7,7 +7,7 @@
 
 import Foundation
 
-class HStack : WebElement {
+public class HStack : WebElement {
     @discardableResult
     init(_ body: WebComposerClosure) {
         super.init()

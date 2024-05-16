@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Image : WebImageElement {
+public class Image : WebImageElement {
     @discardableResult
     init(url: String) {
         super.init()

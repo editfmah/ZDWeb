@@ -6,7 +6,7 @@
 //
 
 import Foundation
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func padding(_ padding: Int) -> Self {
         executingWebThread?.builderScript("\(builderId).style.padding = '\(padding)px';")

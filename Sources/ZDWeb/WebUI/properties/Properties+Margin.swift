@@ -6,7 +6,7 @@
 //
 
 import Foundation
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func margin(_ margin: Int) -> Self {
         executingWebThread?.builderScript("\(builderId).style.margin = '\(margin)px';")

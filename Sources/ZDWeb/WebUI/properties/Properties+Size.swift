@@ -6,7 +6,7 @@
 //
 
 import Foundation
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func width(_ width: Int) -> Self {
         executingWebThread?.builderScript("\(builderId).style.width = '\(width)px';")

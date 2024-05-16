@@ -7,6 +7,6 @@
 
 import Foundation
 
-class NavigationView : WebElement {
+public class NavigationView : WebElement {
     
 }

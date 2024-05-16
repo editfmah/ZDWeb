@@ -8,7 +8,7 @@
 import Foundation
 
 // other items
-class Button : WebElement {
+public class Button : WebElement {
     @discardableResult
     init(_ title: String) {
         super.init()

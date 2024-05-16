@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func font(_ font: WebFont) -> Self {
         switch font {

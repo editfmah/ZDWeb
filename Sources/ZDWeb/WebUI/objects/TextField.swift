@@ -7,7 +7,7 @@
 
 import Foundation
 
-class TextField : WebElement {
+public class TextField : WebElement {
     @discardableResult
     init(_ placeholder: String, binding: WString? = nil) {
         super.init()

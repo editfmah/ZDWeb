@@ -13,7 +13,7 @@ public enum ScrollDirections {
     case both
 }
 
-class Scrollview : WebElement {
+public class Scrollview : WebElement {
     @discardableResult
     init(direction: ScrollDirections? = .horizontal, body: WebComposerClosure) {
         

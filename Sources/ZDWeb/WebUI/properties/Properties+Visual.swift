@@ -6,7 +6,7 @@
 //
 
 import Foundation
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func opacity(_ opacity: Double) -> Self {
         executingWebThread?.builderScript("\(builderId).style.opacity = '\(opacity)';")

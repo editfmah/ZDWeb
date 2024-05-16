@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Toggle : WebElement {
+public class Toggle : WebElement {
     @discardableResult
     init(binding: WBool? = nil) {
         /*

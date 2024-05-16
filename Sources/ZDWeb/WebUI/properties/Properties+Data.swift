@@ -6,7 +6,7 @@
 //
 
 import Foundation
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func name(_ name: String) -> Self {
         executingWebThread?.builderScript("\(builderId).name = '\(name)';")

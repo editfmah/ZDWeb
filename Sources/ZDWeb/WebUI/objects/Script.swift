@@ -7,7 +7,7 @@
 
 import Foundation
 
-class Script : WebImageElement {
+public class Script : WebImageElement {
     @discardableResult
     init(url: String) {
         super.init()

@@ -11,7 +11,7 @@ protocol WebVariableProperties {
     var builderId: String { get }
 }
 
-class WBool : WebVariable {
+public class WBool : WebVariable {
     
     internal var internalValue: Bool = false {
         didSet {
@@ -79,7 +79,7 @@ let condition\(builderId) = setInterval(testCondition\(builderId), 500);
     }
 }
 
-class WString : WebVariable {
+public class WString : WebVariable {
     
     internal var internalValue: String = "" {
         didSet {
@@ -119,6 +119,6 @@ class WString : WebVariable {
     
 }
 
-class WebVariable : WebCommonInterop {
+public class WebVariable : WebCommonInterop {
     
 }

@@ -6,7 +6,7 @@
 //
 
 import Foundation
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func radius(_ radius: Int) -> Self {
         executingWebThread?.builderScript("\(builderId).style.borderRadius = '\(radius)px';")

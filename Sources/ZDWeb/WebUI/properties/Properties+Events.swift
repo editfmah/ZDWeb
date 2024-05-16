@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension GenericProperties {
+public extension GenericProperties {
     @discardableResult
     func onClick(toggle: WBool) -> Self {
         executingWebThread?.builderScript("\(builderId).onclick = function() { \(toggle.builderId) = !\(toggle.builderId) }")

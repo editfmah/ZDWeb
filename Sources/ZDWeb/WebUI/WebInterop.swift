@@ -7,25 +7,25 @@
 
 import Foundation
 
-class WebCommonInterop {
+public class WebCommonInterop {
     
-    internal var builderId = UUID()
+    public  var builderId = UUID()
         .uuidString
         .replacingOccurrences(of: "-", with: "")
         .trimmingCharacters(in: CharacterSet.decimalDigits).prefix(8).lowercased()
     
-    internal func addClass(_ cls: String) {
+    public  func addClass(_ cls: String) {
         executingWebThread?.builderScript("\(builderId).classList.add('\(cls)');")
     }
     
 }
 
-class WebElement : WebCommonInterop, GenericProperties {
+public class WebElement : WebCommonInterop, GenericProperties {
     
     
 }
 
-class WebImageElement : WebCommonInterop, ImageProperties {
+public class WebImageElement : WebCommonInterop, ImageProperties {
     
 }
 
