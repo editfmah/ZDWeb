@@ -14,7 +14,7 @@ public class WebCommonInterop {
         .replacingOccurrences(of: "-", with: "")
         .trimmingCharacters(in: CharacterSet.decimalDigits).prefix(8).lowercased()
     
-    public  func addClass(_ cls: String) {
+    func addClass(_ cls: String) {
         executingWebThread?.builderScript("\(builderId).classList.add('\(cls)');")
     }
     
