@@ -25,14 +25,14 @@ public extension GenericProperties {
         
         if let bold = bold {
             // set the style font weight using the onmouseover event
-            executingWebThread?.builderScript("\(builderId).addClassName('link-bold-hover');")
+            executingWebThread?.builderScript("\(builderId).classList.add('link-bold-hover');")
         }
         
-        if let underline = underline {
-            if underline {
-                executingWebThread?.builderScript("\(builderId).addClassName('link-underline-hover');")
-                executingWebThread?.builderScript("\(builderId).addClassName('link-underline-opacity-100-hover');")
-            }
+        if let underline = underline, underline {
+            executingWebThread?.builderScript("\(builderId).classList.add('link-underline');")
+            executingWebThread?.builderScript("\(builderId).classList.add('link-underline-opacity-0');")
+            executingWebThread?.builderScript("\(builderId).classList.add('link-underline-hover');")
+            executingWebThread?.builderScript("\(builderId).classList.add('link-underline-opacity-100-hover');")
         }
         
         return self
