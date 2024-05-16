@@ -1,0 +1,41 @@
+//
+//  File.swift
+//  
+//
+//  Created by Adrian Herridge on 18/02/2024.
+//
+
+import Foundation
+
+enum PickerType {
+    case dropdown
+    case radio
+    case check
+    case modal
+    case view
+}
+
+class Picker : WebElement {
+    @discardableResult
+    init(type: PickerType? = .dropdown, binding: WString? = nil, body: WebComposerClosure) {
+        super.init()
+        executingWebThread?.declarative("select", identifier: self.builderId , {
+            // now build the body of the picker
+            withinPickerBuilder = true
+            pickerBuilderType = type
+            body()
+            withinPickerBuilder = false
+            pickerBuilderType = nil
+        })
+        executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        addClass("form-select")
+        if let binding = binding {
+            executingWebThread?.builderScript("""
+\(builderId).addEventListener('input', function() {
+    \(binding.builderId) = \(builderId).value;
+});
+\(binding.builderId) = \(builderId).value;
+""")
+        }
+    }
+}

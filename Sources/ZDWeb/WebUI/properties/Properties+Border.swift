@@ -1,0 +1,16 @@
+//
+//  File.swift
+//  
+//
+//  Created by Adrian Herridge on 18/02/2024.
+//
+
+import Foundation
+
+extension GenericProperties {
+    @discardableResult
+    func border(_ color: WebColor, width: Int) -> Self {
+        executingWebThread?.builderScript("\(builderId).style.border = '\(width)px solid \(color.rgba)';")
+        return self
+    }
+}
