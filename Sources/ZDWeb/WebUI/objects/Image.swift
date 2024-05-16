@@ -9,7 +9,7 @@ import Foundation
 
 public class Image : WebImageElement {
     @discardableResult
-    init(url: String) {
+    public init(url: String) {
         super.init()
         executingWebThread?.declarative("img", identifier: self.builderId , {
             

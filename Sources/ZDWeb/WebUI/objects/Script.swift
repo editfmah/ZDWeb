@@ -9,11 +9,11 @@ import Foundation
 
 public class Script : WebImageElement {
     @discardableResult
-    init(url: String) {
+    public init(url: String) {
         super.init()
         executingWebThread?.script(url: url)
     }
-    init(_ script: String) {
+    public init(_ script: String) {
         super.init()
         executingWebThread?.builderScript(script)
     }

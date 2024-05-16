@@ -15,7 +15,7 @@ public enum ScrollDirections {
 
 public class Scrollview : WebElement {
     @discardableResult
-    init(direction: ScrollDirections? = .horizontal, body: WebComposerClosure) {
+    public init(direction: ScrollDirections? = .horizontal, body: WebComposerClosure) {
         
         super.init()
         

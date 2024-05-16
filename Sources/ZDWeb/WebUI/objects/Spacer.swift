@@ -9,7 +9,7 @@ import Foundation
 
 public class Spacer : WebElement {
     @discardableResult
-    override init() {
+    public override init() {
         super.init()
         executingWebThread?.declarative("div", identifier: self.builderId , {
             

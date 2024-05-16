@@ -9,7 +9,7 @@ import Foundation
 
 public class TextField : WebElement {
     @discardableResult
-    init(_ placeholder: String, binding: WString? = nil) {
+    public init(_ placeholder: String, binding: WString? = nil) {
         super.init()
         executingWebThread?.declarative("input", identifier: self.builderId , {
             

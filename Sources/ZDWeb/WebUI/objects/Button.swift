@@ -10,7 +10,7 @@ import Foundation
 // other items
 public class Button : WebElement {
     @discardableResult
-    init(_ title: String) {
+    public init(_ title: String) {
         super.init()
         executingWebThread?.declarative("button", identifier: self.builderId , {
             

@@ -9,7 +9,7 @@ import Foundation
 
 public class Text : WebElement {
     @discardableResult
-    init(_ text: String) {
+    public init(_ text: String) {
         super.init()
         if withinPickerBuilder == false {
             executingWebThread?.declarative("p", identifier: self.builderId , {
@@ -26,7 +26,7 @@ public class Text : WebElement {
         }
         addClass("col-md-auto")
     }
-    init(_ binding: WString) {
+    public init(_ binding: WString) {
         
         super.init()
         

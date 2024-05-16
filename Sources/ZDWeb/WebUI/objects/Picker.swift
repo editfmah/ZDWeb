@@ -17,7 +17,7 @@ public enum PickerType {
 
 public class Picker : WebElement {
     @discardableResult
-    init(type: PickerType? = .dropdown, binding: WString? = nil, body: WebComposerClosure) {
+    public init(type: PickerType? = .dropdown, binding: WString? = nil, body: WebComposerClosure) {
         super.init()
         executingWebThread?.declarative("select", identifier: self.builderId , {
             // now build the body of the picker

@@ -9,7 +9,7 @@ import Foundation
 
 public class Toggle : WebElement {
     @discardableResult
-    init(binding: WBool? = nil) {
+    public init(binding: WBool? = nil) {
         /*
          <div class="form-check">
           <input class="form-check-input" type="checkbox" id="check1" name="option1" value="something" checked>
