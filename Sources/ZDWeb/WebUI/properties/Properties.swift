@@ -110,6 +110,7 @@ public protocol GenericProperties {
     func hidden(_ variable: WebVariable,_ operator: Operator) -> Self
     func onClick(toggle: WBool) -> Self
     func onClick(script: String) -> Self
+    func hover(_ color: WebColor?, background: WebColor?, bold: Bool?, underline: Bool?) -> Self
 }
 
 public protocol ImageProperties : GenericProperties {

@@ -50,7 +50,10 @@ final class ZDWebTests: XCTestCase {
                             .margin([.top,.bottom], 30)
                         Spacer()
                     }
-                    
+                    Link("ZestDeck", url: "https://www.zestdeck.com")
+                        .font(.largeTitle)
+                        .foreground(.black)
+                        .margin(.bottom, 20)
                     Text(testVar).font(.largeTitle).foreground(.black)
                     hideEmptyString.condition(testVar, operator: .isNotEmpty)
                     
