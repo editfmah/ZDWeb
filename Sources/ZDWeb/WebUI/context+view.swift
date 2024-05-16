@@ -12,7 +12,7 @@ var executingWebThread: WebRequestContext? = nil
 var withinPickerBuilder = false
 var pickerBuilderType: PickerType? = nil
 
-extension WebRequestContext {
+public extension WebRequestContext {
     
     func view(_ body: WebComposerClosure) {
         contextBuilderLock.mutex {
