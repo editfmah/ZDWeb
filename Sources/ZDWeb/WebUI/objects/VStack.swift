@@ -9,7 +9,7 @@ import Foundation
 
 public class VStack : WebElement {
     @discardableResult
-    public public init(_ body: WebComposerClosure) {
+    public init(_ body: WebComposerClosure) {
         super.init()
         executingWebThread?.declarative("div", identifier: self.builderId , {
             body()
