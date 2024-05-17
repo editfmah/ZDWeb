@@ -16,13 +16,13 @@ public extension GenericProperties {
      
         if let color = color {
             mouseover += "var \(builderId)_pre_color = \(builderId).style.color;\n"
-            mouseover += "\(builderId).style.color = \(color.rgba);\n"
+            mouseover += "\(builderId).style.color = '\(color.rgba)';\n"
             mouseout += "\(builderId).style.color =  \(builderId)_pre_color;\n"
         }
         
         if let underlineColor = underlineColor {
             mouseover += "var \(builderId)_pre_underline_color = \(builderId).style.textDecorationColor;\n"
-            mouseover += "\(builderId).style.textDecorationColor = \(underlineColor.rgba);\n"
+            mouseover += "\(builderId).style.textDecorationColor = '\(underlineColor.rgba)';\n"
             mouseout += "\(builderId).style.textDecorationColor =  \(builderId)_pre_underline_color;\n"
         }
         
@@ -34,7 +34,7 @@ public extension GenericProperties {
         
         if let opacity = opacity {
             mouseover += "var \(builderId)_pre_opacity = \(builderId).style.opacity;\n"
-            mouseover += "\(builderId).style.opacity = \(opacity.bsValue);\n"
+            mouseover += "\(builderId).style.opacity = \(opacity.cssValue);\n"
             mouseout += "\(builderId).style.opacity =  \(builderId)_pre_opacity;\n"
         }
         

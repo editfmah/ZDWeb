@@ -53,6 +53,19 @@ public enum WebOpacity {
         }
     }
     
+    var cssValue: String {
+        switch self {
+        case .opaque:
+            return "1"
+        case .semiTransparent:
+            return "0.5"
+        case .nearTransparent:
+            return "0.25"
+        case .clear:
+            return "0"
+        }
+    }
+    
 }
 
 public enum WebColor {
