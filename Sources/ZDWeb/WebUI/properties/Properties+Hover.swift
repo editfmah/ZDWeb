@@ -11,6 +11,46 @@ public extension GenericProperties {
     @discardableResult
     func hover(_ color: WebColor? = nil, underline: Bool? = nil, underlineColor: WebColor? = nil, opacity: WebOpacity? = nil) -> Self {
         
+        var mouseover = ""
+        var mouseout = ""
+     
+        if let color = color {
+            mouseover += "var \(builderId)_pre_color = \(builderId).style.color;\n"
+            mouseover += "\(builderId).style.color = \(color.rgba);\n"
+            mouseout += "\(builderId).style.color =  \(builderId)_pre_color;\n"
+        }
+        
+        if let underlineColor = underlineColor {
+            mouseover += "var \(builderId)_pre_underline_color = \(builderId).style.textDecorationColor;\n"
+            mouseover += "\(builderId).style.textDecorationColor = \(underlineColor.rgba);\n"
+            mouseout += "\(builderId).style.textDecorationColor =  \(builderId)_pre_underline_color;\n"
+        }
+        
+        if let underline = underline, underline {
+            mouseover += "var \(builderId)_pre_underline = \(builderId).style.textDecoration;\n"
+            mouseover += "\(builderId).style.textDecoration = 'underline';\n"
+            mouseout += "\(builderId).style.textDecoration =  \(builderId)_pre_underline;\n"
+        }
+        
+        if let opacity = opacity {
+            mouseover += "var \(builderId)_pre_opacity = \(builderId).style.opacity;\n"
+            mouseover += "\(builderId).style.opacity = \(opacity.bsValue);\n"
+            mouseout += "\(builderId).style.opacity =  \(builderId)_pre_opacity;\n"
+        }
+        
+        // record the existing values for colour, underline, bold, underline color, opacity and restore them on mouse off
+        executingWebThread?.builderScript("""
+
+\(builderId).addEventListener('mouseover', function() {
+\(mouseover)
+});
+
+\(builderId).addEventListener('mouseout', function() {
+\(mouseout)
+});
+
+""")
+        
         if let color = color {
             // set the style colour using the onmouseover event
             if let type = executingElementType {
