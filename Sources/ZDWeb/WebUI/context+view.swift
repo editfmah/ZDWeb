@@ -11,6 +11,7 @@ let contextBuilderLock = ContextMutex()
 var executingWebThread: WebRequestContext? = nil
 var withinPickerBuilder = false
 var pickerBuilderType: PickerType? = nil
+var executingElementType: WebElementType? = nil
 
 public extension WebRequestContext {
     func view(_ body: WebComposerClosure) {
@@ -26,4 +27,11 @@ public func View(context: WebRequestContext, _ body: WebComposerClosure) {
     context.view {
         body()
     }
+}
+
+public enum WebElementType {
+    case text
+    case button
+    case link
+    case image
 }

@@ -11,11 +11,13 @@ public class Image : WebImageElement {
     @discardableResult
     public init(url: String) {
         super.init()
+        executingElementType = .image
         executingWebThread?.declarative("img", identifier: self.builderId , {
             
         })
         executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         executingWebThread?.builderScript("\(builderId).src = '\(url)';")
+        executingElementType = nil
     }
 }
 

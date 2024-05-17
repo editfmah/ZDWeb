@@ -12,11 +12,13 @@ public class Button : WebElement {
     @discardableResult
     public init(_ title: String) {
         super.init()
+        executingElementType = .button
         executingWebThread?.declarative("button", identifier: self.builderId , {
             
         })
         executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         executingWebThread?.builderScript("\(builderId).innerText = '\(title)';")
         addClass("btn")
+        executingElementType = nil
     }
 }

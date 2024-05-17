@@ -11,6 +11,7 @@ public class Link : WebElement {
     @discardableResult
     public init(_ text: String, url: String) {
         super.init()
+        executingElementType = .link
         if withinPickerBuilder == false {
             executingWebThread?.declarative("a", identifier: self.builderId , {
                 
@@ -27,5 +28,6 @@ public class Link : WebElement {
             executingWebThread?.builderScript("\(builderId).innerText = '\(text)';")
         }
         addClass("col-md-auto")
+        executingElementType = nil
     }
 }

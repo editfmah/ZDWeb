@@ -11,6 +11,7 @@ public class Text : WebElement {
     @discardableResult
     public init(_ text: String) {
         super.init()
+        executingElementType = .text
         if withinPickerBuilder == false {
             executingWebThread?.declarative("p", identifier: self.builderId , {
                 
@@ -25,11 +26,12 @@ public class Text : WebElement {
             executingWebThread?.builderScript("\(builderId).innerText = '\(text)';")
         }
         addClass("col-md-auto")
+        executingElementType = nil
     }
     public init(_ binding: WString) {
         
         super.init()
-        
+        executingElementType = .text
         executingWebThread?.declarative("p", identifier: self.builderId , {
             
         })
@@ -48,5 +50,6 @@ function l\(self.builderId)() {
 }
 """)
         addClass("col-md-auto")
+        executingElementType = nil
     }
 }
