@@ -15,25 +15,25 @@ public extension GenericProperties {
         var mouseout = ""
      
         if let color = color {
-            mouseover += "var \(builderId)_pre_color = \(builderId).style.color;\n"
+            mouseover += "\(builderId)_pre_color = \(builderId).style.color;\n"
             mouseover += "\(builderId).style.color = '\(color.rgba)';\n"
             mouseout += "\(builderId).style.color =  \(builderId)_pre_color;\n"
         }
         
         if let underlineColor = underlineColor {
-            mouseover += "var \(builderId)_pre_underline_color = \(builderId).style.textDecorationColor;\n"
+            mouseover += "\(builderId)_pre_underline_color = \(builderId).style.textDecorationColor;\n"
             mouseover += "\(builderId).style.textDecorationColor = '\(underlineColor.rgba)';\n"
             mouseout += "\(builderId).style.textDecorationColor =  \(builderId)_pre_underline_color;\n"
         }
         
         if let underline = underline, underline {
-            mouseover += "var \(builderId)_pre_underline = \(builderId).style.textDecoration;\n"
+            mouseover += "\(builderId)_pre_underline = \(builderId).style.textDecoration;\n"
             mouseover += "\(builderId).style.textDecoration = 'underline';\n"
             mouseout += "\(builderId).style.textDecoration =  \(builderId)_pre_underline;\n"
         }
         
         if let opacity = opacity {
-            mouseover += "var \(builderId)_pre_opacity = \(builderId).style.opacity;\n"
+            mouseover += "\(builderId)_pre_opacity = \(builderId).style.opacity;\n"
             mouseover += "\(builderId).style.opacity = \(opacity.cssValue);\n"
             mouseout += "\(builderId).style.opacity =  \(builderId)_pre_opacity;\n"
         }
