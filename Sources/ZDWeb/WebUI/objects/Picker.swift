@@ -19,18 +19,18 @@ public class Picker : WebElement {
     @discardableResult
     public init(type: PickerType? = .dropdown, binding: WString? = nil, body: WebComposerClosure) {
         super.init()
-        executingWebThread?.declarative("select", identifier: self.builderId , {
+        executionPipeline()?.context?.declarative("select", identifier: self.builderId , {
             // now build the body of the picker
-            withinPickerBuilder = true
-            pickerBuilderType = type
+            executionPipeline()?.withinPickerBuilder = true
+            executionPipeline()?.pickers[self.builderId] = type
             body()
-            withinPickerBuilder = false
-            pickerBuilderType = nil
+            executionPipeline()?.withinPickerBuilder = false
         })
-        executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("form-select")
+        addClass("form-control")
         if let binding = binding {
-            executingWebThread?.builderScript("""
+            executionPipeline()?.context?.builderScript("""
 \(builderId).addEventListener('input', function() {
     \(binding.builderId) = \(builderId).value;
 });

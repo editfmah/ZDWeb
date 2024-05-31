@@ -11,35 +11,34 @@ public class Text : WebElement {
     @discardableResult
     public init(_ text: String) {
         super.init()
-        executingElementType = .text
-        if withinPickerBuilder == false {
-            executingWebThread?.declarative("p", identifier: self.builderId , {
+        executionPipeline()?.types[self.builderId] = .text
+        if executionPipeline()?.withinPickerBuilder == false {
+            executionPipeline()?.context?.declarative("p", identifier: self.builderId , {
                 
             })
-            executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-            executingWebThread?.builderScript("\(builderId).innerText = '\(text)';")
+            executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+            executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(text)';")
         } else {
-            executingWebThread?.declarative("option", identifier: self.builderId , {
+            executionPipeline()?.context?.declarative("option", identifier: self.builderId , {
                 
             })
-            executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-            executingWebThread?.builderScript("\(builderId).innerText = '\(text)';")
+            executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+            executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(text)';")
         }
         addClass("col-md-auto")
-        executingElementType = nil
     }
     public init(_ binding: WString) {
         
         super.init()
-        executingElementType = .text
-        executingWebThread?.declarative("p", identifier: self.builderId , {
+        executionPipeline()?.types[self.builderId] = .text
+        executionPipeline()?.context?.declarative("p", identifier: self.builderId , {
             
         })
-        executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-        executingWebThread?.builderScript("\(builderId).innerText = '\(binding.internalValue)';")
+        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(binding.internalValue)';")
         
         // now lets listen for changes from the bound object
-        executingWebThread?.builderScript("""
+        executionPipeline()?.context?.builderScript("""
 l\(self.builderId)();
 function l\(self.builderId)() {
   const rl\(self.builderId) = () => {
@@ -50,6 +49,5 @@ function l\(self.builderId)() {
 }
 """)
         addClass("col-md-auto")
-        executingElementType = nil
     }
 }

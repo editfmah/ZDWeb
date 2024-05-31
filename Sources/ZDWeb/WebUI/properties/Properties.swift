@@ -8,11 +8,52 @@
 import Foundation
 
 public enum Operator {
+    
     case equals(Any)
     case isEmpty
+    case isZero
+    case isNonzero
     case isNotEmpty
     case isTrue
     case isFalse
+    case isPositive
+    case isNegative
+    
+    var javascriptCondition: String {
+        get {
+            switch self {
+            case .equals(let comparitor):
+                if let stringValue = comparitor as? String {
+                    return "== '\(stringValue)'"
+                } else if let intValue = comparitor as? Int {
+                    return "== \(intValue)"
+                } else if let doubleValue = comparitor as? Double {
+                    return "== \(doubleValue)"
+                } else if let boolValue = comparitor as? Bool {
+                    return "== \(boolValue ? "true" : "false")"
+                } else {
+                    return "== '\(comparitor)'"
+                }
+            case .isEmpty:
+                return "== ''"
+            case .isNotEmpty:
+                return "!= ''"
+            case .isTrue:
+                return "== true"
+            case .isFalse:
+                return "== false"
+            case .isZero:
+                return "== 0"
+            case .isNonzero:
+                return "!= 0"
+            case .isPositive:
+                return "> 0"
+            case .isNegative:
+                return "< 0"
+            }
+        }
+    }
+    
 }
 
 public enum WebAreaPosition {
@@ -235,7 +276,11 @@ public enum WebColor {
 }
 
 public protocol GenericProperties {
+    
     var builderId: String { get }
+    
+    
+    // property setters
     func background(_ color: WebColor) -> Self
     func font(_ font: WebFont) -> Self
     func padding(_ padding: Int) -> Self
@@ -254,12 +299,23 @@ public protocol GenericProperties {
     func opacity(_ opacity: Double) -> Self
     func name(_ name: String) -> Self
     func value(_ value: String) -> Self
-    func id(_ id: String) -> Self
+    func ref(_ id: String) -> Self
     func hidden(_ hidden: WBool) -> Self
     func hidden(_ variable: WebVariable,_ operator: Operator) -> Self
-    func onClick(toggle: WBool) -> Self
-    func onClick(script: String) -> Self
-    func hover(_ color: WebColor?, underline: Bool?, underlineColor: WebColor?, opacity: WebOpacity?) -> Self
+    func enabled(_ enabled: WBool) -> Self
+    func enabled(_ variable: WebVariable,_ operator: Operator) -> Self
+    
+    // common events
+    func onClick(_ action: WebAction) -> Self
+    func onClick(_ actions: [WebAction]) -> Self
+    func onMouseover(_ action: WebAction) -> Self
+    func onMouseover(_ actions: [WebAction]) -> Self
+    func onMouseLeave(_ action: WebAction) -> Self
+    func onMouseLeave(_ actions: [WebAction]) -> Self
+    func onEnable(_ action: WebAction) -> Self
+    func onEnable(_ actions: [WebAction]) -> Self
+    func onDisable(_ action: WebAction) -> Self
+    func onDisable(_ actions: [WebAction]) -> Self
 }
 
 public protocol ImageProperties : GenericProperties {
@@ -267,4 +323,113 @@ public protocol ImageProperties : GenericProperties {
     func alt(_ alt: String) -> Self
     func scaleToFit() -> Self
     func scaleToFill() -> Self
+}
+
+public protocol GenericFormProperties : GenericProperties {
+    func target(_ url: String) -> Self
+}
+
+public enum WebButtonType : String {
+    case button
+    case submit
+    case reset
+}
+
+public enum WebStyle : String {
+    
+    case primary
+    case secondary
+    case success
+    case danger
+    case warning
+    case info
+    case light
+    case dark
+    case link
+    case transparent
+    
+    static var all: [WebStyle] {
+        return [.primary, .secondary, .success, .danger, .warning, .info, .light, .dark, .link, .transparent]
+    }
+    
+    var textStyleClass: String {
+        switch self {
+        case .primary:
+            return "text-primary"
+        case .secondary:
+            return "text-secondary"
+        case .success:
+            return "text-success"
+        case .danger:
+            return "text-danger"
+        case .warning:
+            return "text-warning"
+        case .info:
+            return "text-info"
+        case .light:
+            return "text-light"
+        case .dark:
+            return "text-dark"
+        case .link:
+            return "text-link"
+        case .transparent:
+            return "text-transparent"
+        }
+    }
+    
+    var buttonStyleClass: String {
+        switch self {
+        case .primary:
+            return "btn-primary"
+        case .secondary:
+            return "btn-secondary"
+        case .success:
+            return "btn-success"
+        case .danger:
+            return "btn-danger"
+        case .warning:
+            return "btn-warning"
+        case .info:
+            return "btn-info"
+        case .light:
+            return "btn-light"
+        case .dark:
+            return "btn-dark"
+        case .link:
+            return "btn-link"
+        case .transparent:
+            return "btn-transparent"
+        }
+    }
+    
+    var linkStyleClass: String {
+        switch self {
+        case .primary:
+            return "link-primary"
+        case .secondary:
+            return "link-secondary"
+        case .success:
+            return "link-success"
+        case .danger:
+            return "link-danger"
+        case .warning:
+            return "link-warning"
+        case .info:
+            return "link-info"
+        case .light:
+            return "link-light"
+        case .dark:
+            return "link-dark"
+        case .link:
+            return "link-link"
+        case .transparent:
+            return "link-transparent"
+        }
+    }
+}
+
+public protocol GenericButtonProperties : GenericProperties {
+    func type(_ type: WebButtonType) -> Self
+    func style(_ style: WebStyle) -> Self
+    func conditions(_ conditions: [WebVariable]) -> Self
 }

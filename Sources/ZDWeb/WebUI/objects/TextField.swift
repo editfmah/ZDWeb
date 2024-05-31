@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Adrian Herridge on 18/02/2024.
 //
@@ -9,17 +9,17 @@ import Foundation
 
 public class TextField : WebElement {
     @discardableResult
-    public init(_ placeholder: String, binding: WString? = nil) {
+    public init(_ placeholder: String, name: String? = nil, binding: WString? = nil) {
         super.init()
-        executingWebThread?.declarative("input", identifier: self.builderId , {
+        executionPipeline()?.context?.declarative("input", identifier: self.builderId , {
             
         })
-        executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-        executingWebThread?.builderScript("\(builderId).placeholder = '\(placeholder)';")
+        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        executionPipeline()?.context?.builderScript("\(builderId).placeholder = '\(placeholder)';")
         addClass("form-control")
         
         if let binding = binding {
-            executingWebThread?.builderScript("""
+            executionPipeline()?.context?.builderScript("""
 \(builderId).addEventListener('input', function() {
     \(binding.builderId) = \(builderId).value;
 });

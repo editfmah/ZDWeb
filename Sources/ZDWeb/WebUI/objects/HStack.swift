@@ -11,10 +11,10 @@ public class HStack : WebElement {
     @discardableResult
     public init(_ body: WebComposerClosure) {
         super.init()
-        executingWebThread?.declarative("div", identifier: self.builderId , {
+        executionPipeline()?.context?.declarative("div", identifier: self.builderId , {
             body()
         })
-        executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("row")
         
     }

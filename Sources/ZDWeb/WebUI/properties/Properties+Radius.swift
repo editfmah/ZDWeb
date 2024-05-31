@@ -9,7 +9,7 @@ import Foundation
 public extension GenericProperties {
     @discardableResult
     func radius(_ radius: Int) -> Self {
-        executingWebThread?.builderScript("\(builderId).style.borderRadius = '\(radius)px';")
+        executionPipeline()?.context?.builderScript("\(builderId).style.borderRadius = '\(radius)px';")
         return self
     }
 }

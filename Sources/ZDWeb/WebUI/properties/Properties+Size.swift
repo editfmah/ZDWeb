@@ -9,12 +9,12 @@ import Foundation
 public extension GenericProperties {
     @discardableResult
     func width(_ width: Int) -> Self {
-        executingWebThread?.builderScript("\(builderId).style.width = '\(width)px';")
+        executionPipeline()?.context?.builderScript("\(builderId).style.width = '\(width)px';")
         return self
     }
     @discardableResult
     func height(_ height: Int) -> Self {
-        executingWebThread?.builderScript("\(builderId).style.height = '\(height)px';")
+        executionPipeline()?.context?.builderScript("\(builderId).style.height = '\(height)px';")
         return self
     }
 }

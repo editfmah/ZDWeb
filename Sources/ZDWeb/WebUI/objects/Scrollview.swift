@@ -19,25 +19,25 @@ public class Scrollview : WebElement {
         
         super.init()
         
-        executingWebThread?.declarative("div", identifier: self.builderId , {
+        executionPipeline()?.context?.declarative("div", identifier: self.builderId , {
             // now build the body of the picker
             body()
         })
         
-        executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         
         if let direction = direction {
             switch direction {
             case .vertical:
-                executingWebThread?.builderScript("\(builderId).style.overflowY = 'scroll';")
-                executingWebThread?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
+                executionPipeline()?.context?.builderScript("\(builderId).style.overflowY = 'scroll';")
+                executionPipeline()?.context?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
             case .horizontal:
-                executingWebThread?.builderScript("\(builderId).style.overflowX = 'scroll';")
-                executingWebThread?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
+                executionPipeline()?.context?.builderScript("\(builderId).style.overflowX = 'scroll';")
+                executionPipeline()?.context?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
             case .both:
-                executingWebThread?.builderScript("\(builderId).style.overflowY = 'scroll';")
-                executingWebThread?.builderScript("\(builderId).style.overflowX = 'scroll';")
-                executingWebThread?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
+                executionPipeline()?.context?.builderScript("\(builderId).style.overflowY = 'scroll';")
+                executionPipeline()?.context?.builderScript("\(builderId).style.overflowX = 'scroll';")
+                executionPipeline()?.context?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
             }
         }
     }

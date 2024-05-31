@@ -9,7 +9,7 @@ import Foundation
 public extension GenericProperties {
     @discardableResult
     func foreground(_ color: WebColor) -> Self {
-        executingWebThread?.builderScript("\(builderId).style.color = '\(color.rgba)';")
+        executionPipeline()?.context?.builderScript("\(builderId).style.color = '\(color.rgba)';")
         return self
     }
 }

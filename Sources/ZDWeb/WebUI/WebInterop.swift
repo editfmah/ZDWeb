@@ -12,20 +12,23 @@ public class WebCommonInterop {
     public  var builderId = UUID()
         .uuidString
         .replacingOccurrences(of: "-", with: "")
-        .trimmingCharacters(in: CharacterSet.decimalDigits).prefix(8).lowercased()
+        .trimmingCharacters(in: CharacterSet.decimalDigits)
+        .prefix(12)
+        .lowercased()
+    
+    public var ref: String? = nil
     
     func addClass(_ cls: String) {
-        executingWebThread?.builderScript("\(builderId).classList.add('\(cls)');")
+        executionPipeline()?.context?.builderScript("\(builderId).classList.add('\(cls)');")
     }
     
 }
 
-public class WebElement : WebCommonInterop, GenericProperties {
-    
-    
-}
+public class WebElement : WebCommonInterop, GenericProperties {}
 
-public class WebImageElement : WebCommonInterop, ImageProperties {
-    
-}
+public class WebButtonElement : WebCommonInterop, GenericButtonProperties {}
+
+public class WebFormElement : WebCommonInterop, GenericFormProperties {}
+
+public class WebImageElement : WebCommonInterop, ImageProperties {}
 

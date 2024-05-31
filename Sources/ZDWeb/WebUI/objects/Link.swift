@@ -11,23 +11,22 @@ public class Link : WebElement {
     @discardableResult
     public init(_ text: String, url: String) {
         super.init()
-        executingElementType = .link
-        if withinPickerBuilder == false {
-            executingWebThread?.declarative("a", identifier: self.builderId , {
+        executionPipeline()?.types[self.builderId] = .link
+        if executionPipeline()?.withinPickerBuilder == false {
+            executionPipeline()?.context?.declarative("a", identifier: self.builderId , {
                 
             })
-            executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-            executingWebThread?.builderScript("\(builderId).href = '\(url)';")
-            executingWebThread?.builderScript("\(builderId).innerText = '\(text)';")
+            executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+            executionPipeline()?.context?.builderScript("\(builderId).href = '\(url)';")
+            executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(text)';")
         } else {
-            executingWebThread?.declarative("option", identifier: self.builderId , {
+            executionPipeline()?.context?.declarative("option", identifier: self.builderId , {
                 
             })
-            executingWebThread?.builderScript("\(builderId).href = '\(url)';")
-            executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-            executingWebThread?.builderScript("\(builderId).innerText = '\(text)';")
+            executionPipeline()?.context?.builderScript("\(builderId).href = '\(url)';")
+            executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+            executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(text)';")
         }
         addClass("col-md-auto")
-        executingElementType = nil
     }
 }

@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Adrian Herridge on 18/02/2024.
 //
@@ -9,13 +9,13 @@ import Foundation
 public extension GenericProperties {
     @discardableResult
     func opacity(_ opacity: Double) -> Self {
-        executingWebThread?.builderScript("\(builderId).style.opacity = '\(opacity)';")
+        executionPipeline()?.context?.builderScript("\(builderId).style.opacity = '\(opacity)';")
         return self
     }
     @discardableResult
     func hidden(_ hidden: WBool) -> Self {
-        executingWebThread?.builderScript("\(builderId).hidden = \(hidden.internalValue ? "true" : "false");")
-        executingWebThread?.builderScript("""
+        executionPipeline()?.context?.builderScript("\(builderId).hidden = \(hidden.internalValue ? "true" : "false");")
+        executionPipeline()?.context?.builderScript("""
 function \(builderId)HiddenInterval() {
     if (\(hidden.builderId) == true) {
         \(builderId).style.display = 'none';
@@ -29,48 +29,43 @@ let \(builderId)HiddenIntervalTimer = setInterval(\(builderId)HiddenInterval, 50
     }
     @discardableResult
     func hidden(_ variable: WebVariable,_ operator: Operator) -> Self {
-        switch `operator` {
-        case .equals(let value):
-            executingWebThread?.builderScript("""
+        
+        executionPipeline()?.context?.builderScript("""
 // condition tester and publisher
 var hiddenTestCondition\(builderId) = function() {
-    if(\(variable.builderId) == \(value)) { \(builderId).style.display = 'none'; } else { \(builderId).style.display = 'initial'; }
+if(\(variable.builderId) \(`operator`.javascriptCondition)) { \(builderId).style.display = 'none'; } else { \(builderId).style.display = 'initial'; }
 };
 let hiddenCondition\(builderId) = setInterval(hiddenTestCondition\(builderId), 500);
 """)
-        case .isEmpty:
-            executingWebThread?.builderScript("""
-// condition tester and publisher
-var hiddenTestCondition\(builderId) = function() {
-    if(\(variable.builderId) == '') { \(builderId).style.display = 'none'; } else { \(builderId).style.display = 'initial'; }
-};
-let hiddenCondition\(builderId) = setInterval(hiddenTestCondition\(builderId), 500);
+
+        return self
+    }
+    @discardableResult
+    func enabled(_ enabled: WBool) -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).hidden = \(enabled.internalValue ? "true" : "false");")
+        executionPipeline()?.context?.builderScript("""
+function \(builderId)EnabledInterval() {
+    if (\(enabled.builderId) == true) {
+        \(builderId).disabled = false;
+    } else {
+        \(builderId).disabled = true;
+    }
+}
+let \(builderId)HiddenEnabledTimer = setInterval(\(builderId)EnabledInterval, 500);
 """)
-        case .isNotEmpty:
-            executingWebThread?.builderScript("""
+        return self
+    }
+    @discardableResult
+    func enabled(_ variable: WebVariable,_ operator: Operator) -> Self {
+        
+        executionPipeline()?.context?.builderScript("""
 // condition tester and publisher
-var hiddenTestCondition\(builderId) = function() {
-    if(\(variable.builderId) != '') { \(builderId).style.display = 'none'; } else { \(builderId).style.display = 'initial'; }
+var enabledTestCondition\(builderId) = function() {
+if(\(variable.builderId) \(`operator`.javascriptCondition)) { \(builderId).disabled = false; } else { \(builderId).disabled = true; }
 };
-let hiddenCondition\(builderId) = setInterval(hiddenTestCondition\(builderId), 500);
+let enabledCondition\(builderId) = setInterval(enabledTestCondition\(builderId), 500);
 """)
-        case .isTrue:
-            executingWebThread?.builderScript("""
-// condition tester and publisher
-var hiddenTestCondition\(builderId) = function() {
-    if(\(variable.builderId) == true) { \(builderId).style.display = 'none'; } else { \(builderId).style.display = 'initial'; }
-};
-let hiddenCondition\(builderId) = setInterval(hiddenTestCondition\(builderId), 500);
-""")
-        case .isFalse:
-            executingWebThread?.builderScript("""
-// condition tester and publisher
-var hiddenTestCondition\(builderId) = function() {
-    if(\(variable.builderId) == false) { \(builderId).style.display = 'none'; } else { \(builderId).style.display = 'initial'; }
-};
-let hiddenCondition\(builderId) = setInterval(hiddenTestCondition\(builderId), 500);
-""")
-        }
+
         return self
     }
 }

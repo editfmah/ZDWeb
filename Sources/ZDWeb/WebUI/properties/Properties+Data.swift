@@ -9,17 +9,21 @@ import Foundation
 public extension GenericProperties {
     @discardableResult
     func name(_ name: String) -> Self {
-        executingWebThread?.builderScript("\(builderId).name = '\(name)';")
+        executionPipeline()?.context?.builderScript("\(builderId).name = '\(name)';")
         return self
     }
     @discardableResult
     func value(_ value: String) -> Self {
-        executingWebThread?.builderScript("\(builderId).value = '\(value)';")
+        executionPipeline()?.context?.builderScript("\(builderId).value = '\(value)';")
         return self
     }
     @discardableResult
-    func id(_ id: String) -> Self {
-        executingWebThread?.builderScript("\(builderId).id = '\(id)';")
+    func ref(_ id: String) -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).id = '\(id)';")
+        // now we also have to create a link to the object type
+        if let type = executionPipeline()?.types[self.builderId] {
+            executionPipeline()?.types[id] = type
+        }
         return self
     }
 }

@@ -12,7 +12,13 @@
     "codeCoverage" : false
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "ZDWebTests",
+        "name" : "ZDWebTests"
+      }
+    }
   ],
   "version" : 1
 }

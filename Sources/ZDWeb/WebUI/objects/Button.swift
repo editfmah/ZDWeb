@@ -8,17 +8,16 @@
 import Foundation
 
 // other items
-public class Button : WebElement {
+public class Button : WebButtonElement {
     @discardableResult
     public init(_ title: String) {
         super.init()
-        executingElementType = .button
-        executingWebThread?.declarative("button", identifier: self.builderId , {
+        executionPipeline()?.types[self.builderId] = .button
+        executionPipeline()?.context?.declarative("button", identifier: self.builderId , {
             
         })
-        executingWebThread?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-        executingWebThread?.builderScript("\(builderId).innerText = '\(title)';")
+        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(title)';")
         addClass("btn")
-        executingElementType = nil
     }
 }
