@@ -12,4 +12,16 @@ public extension GenericProperties {
         executionPipeline()?.context?.builderScript("\(builderId).style.borderRadius = '\(radius)px';")
         return self
     }
+    @discardableResult
+    func radius(_ position: WebCornerPosition, _ radius: Int) -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).style.border\(position.rawValue)Radius = '\(radius)px';")
+        return self
+    }
+    @discardableResult
+    func radius(_ positions: [WebCornerPosition], _ radius: Int) -> Self {
+        for position in positions {
+            executionPipeline()?.context?.builderScript("\(builderId).style.border\(position.rawValue)Radius = '\(radius)px';")
+        }
+        return self
+    }
 }

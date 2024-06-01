@@ -64,7 +64,15 @@ public enum WebAreaPosition {
     case all
 }
 
+public enum WebCornerPosition : String {
+    case topLeft = "TopLeft"
+    case topRight = "TopRight"
+    case bottomLeft = "BottomLeft"
+    case bottomRight = "BottomRight"
+}
+
 public enum WebFont {
+    case veryLargeTitle
     case largeTitle
     case title
     case title2
@@ -295,6 +303,8 @@ public protocol GenericProperties {
     func margin(_ position: WebAreaPosition, _ margin: Int) -> Self
     func margin(_ positions: [WebAreaPosition], _ margin: Int) -> Self
     func radius(_ radius: Int) -> Self
+    func radius(_ position: WebCornerPosition, _ radius: Int) -> Self
+    func radius(_ positions: [WebCornerPosition], _ radius: Int) -> Self
     func shadow(_ shadow: Int) -> Self
     func border(_ color: WebColor, width: Int) -> Self
     func width(_ width: Int) -> Self

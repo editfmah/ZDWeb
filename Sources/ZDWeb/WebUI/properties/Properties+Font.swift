@@ -11,6 +11,8 @@ public extension GenericProperties {
     @discardableResult
     func font(_ font: WebFont) -> Self {
         switch font {
+        case .veryLargeTitle:
+            executionPipeline()?.context?.builderScript("\(builderId).style.fontSize = '64px';")
         case .largeTitle:
             executionPipeline()?.context?.builderScript("\(builderId).style.fontSize = '32px';")
         case .title:
