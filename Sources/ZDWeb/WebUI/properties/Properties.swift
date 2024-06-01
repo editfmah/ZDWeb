@@ -287,6 +287,7 @@ public protocol GenericProperties {
     func lightweight() -> Self
     func italic() -> Self
     func strikethrough() -> Self
+    func underline(_ value: Bool) -> Self
     func padding(_ padding: Int) -> Self
     func padding(_ position: WebAreaPosition, _ padding: Int) -> Self
     func padding(_ positions: [WebAreaPosition], _ padding: Int) -> Self

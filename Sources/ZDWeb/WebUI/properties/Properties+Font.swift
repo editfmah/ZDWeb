@@ -57,4 +57,10 @@ public extension GenericProperties {
         return self
     }
     
+    @discardableResult
+    func underline(_ value: Bool) -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).style.textDecoration = '\(value ? "underline" : "none")';")
+        return self
+    }
+    
 }
