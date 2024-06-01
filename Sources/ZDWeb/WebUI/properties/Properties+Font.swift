@@ -33,4 +33,28 @@ public extension GenericProperties {
         executionPipeline()?.context?.builderScript("\(builderId).style.fontFamily = '\(family)';")
         return self
     }
+    @discardableResult
+    func bold() -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).style.fontWeight = 'bold';")
+        return self
+    }
+    
+    @discardableResult
+    func lightweight() -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).style.fontWeight = 'lighter';")
+        return self
+    }
+    
+    @discardableResult
+    func italic() -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).style.fontStyle = 'italic';")
+        return self
+    }
+    
+    @discardableResult
+    func strikethrough() -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).style.textDecoration = 'line-through';")
+        return self
+    }
+    
 }

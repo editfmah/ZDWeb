@@ -283,6 +283,10 @@ public protocol GenericProperties {
     // property setters
     func background(_ color: WebColor) -> Self
     func font(_ font: WebFont) -> Self
+    func bold() -> Self
+    func lightweight() -> Self
+    func italic() -> Self
+    func strikethrough() -> Self
     func padding(_ padding: Int) -> Self
     func padding(_ position: WebAreaPosition, _ padding: Int) -> Self
     func padding(_ positions: [WebAreaPosition], _ padding: Int) -> Self
