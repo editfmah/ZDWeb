@@ -135,6 +135,9 @@ public class WebRequestContext {
                 
                 results = self.service.menus.filter({ $0.visibility.contains(.unauthenticated) })
                 for result in results {
+                    if (result.cont ?? "") == (self.navigation.controller ?? "") {
+                        result.selected = true
+                    }
                     result.subordinates = result.subordinates.filter({ $0.visibility.contains(.unauthenticated) })
                     for subordinate in result.subordinates {
                         if subordinate.meth == self.navigation.method {
