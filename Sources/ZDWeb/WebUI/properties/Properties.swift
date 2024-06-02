@@ -124,44 +124,44 @@ public enum WebOpacity {
 
 public enum WebColor {
     
-    case red(_ opacity: WebOpacity? = nil)
-    case darkred(_ opacity: WebOpacity? = nil)
-    case lightred(_ opacity: WebOpacity? = nil)
-    case green(_ opacity: WebOpacity? = nil)
-    case lightgreen(_ opacity: WebOpacity? = nil)
-    case darkgreen(_ opacity: WebOpacity? = nil)
-    case blue(_ opacity: WebOpacity? = nil)
-    case lightblue(_ opacity: WebOpacity? = nil)
-    case darkblue(_ opacity: WebOpacity? = nil)
-    case yellow(_ opacity: WebOpacity? = nil)
-    case lightyellow(_ opacity: WebOpacity? = nil)
-    case darkyellow(_ opacity: WebOpacity? = nil)
-    case orange(_ opacity: WebOpacity? = nil)
-    case lightorange(_ opacity: WebOpacity? = nil)
-    case darkorange(_ opacity: WebOpacity? = nil)
-    case purple(_ opacity: WebOpacity? = nil)
-    case lightpurple(_ opacity: WebOpacity? = nil)
-    case darkpurple(_ opacity: WebOpacity? = nil)
-    case pink(_ opacity: WebOpacity? = nil)
-    case lightpink(_ opacity: WebOpacity? = nil)
-    case darkpink(_ opacity: WebOpacity? = nil)
-    case brown(_ opacity: WebOpacity? = nil)
-    case lightbrown(_ opacity: WebOpacity? = nil)
-    case darkbrown(_ opacity: WebOpacity? = nil)
-    case grey(_ opacity: WebOpacity? = nil)
-    case darkGrey(_ opacity: WebOpacity? = nil)
-    case lightGrey(_ opacity: WebOpacity? = nil)
-    case indigo(_ opacity: WebOpacity? = nil)
-    case lightindigo(_ opacity: WebOpacity? = nil)
-    case darkindigo(_ opacity: WebOpacity? = nil)
-    case teal(_ opacity: WebOpacity? = nil)
-    case lightteal(_ opacity: WebOpacity? = nil)
-    case darkteal(_ opacity: WebOpacity? = nil)
-    case cyan(_ opacity: WebOpacity? = nil)
-    case lightcyan(_ opacity: WebOpacity? = nil)
-    case darkcyan(_ opacity: WebOpacity? = nil)
-    case black(_ opacity: WebOpacity? = nil)
-    case white(_ opacity: WebOpacity? = nil)
+    case red
+    case darkred
+    case lightred
+    case green
+    case lightgreen
+    case darkgreen
+    case blue
+    case lightblue
+    case darkblue
+    case yellow
+    case lightyellow
+    case darkyellow
+    case orange
+    case lightorange
+    case darkorange
+    case purple
+    case lightpurple
+    case darkpurple
+    case pink
+    case lightpink
+    case darkpink
+    case brown
+    case lightbrown
+    case darkbrown
+    case grey
+    case darkGrey
+    case lightGrey
+    case indigo
+    case lightindigo
+    case darkindigo
+    case teal
+    case lightteal
+    case darkteal
+    case cyan
+    case lightcyan
+    case darkcyan
+    case black
+    case white
     case transparent
     case custom(_ hexColor: String)
     
@@ -208,82 +208,82 @@ public enum WebColor {
     
     var rgba: String {
         switch self {
-        case .red(let opacity):
-            return "rgba(255,0,0,\(opacity?.cssValue ?? "1"))"
-        case .darkred(let opacity):
-            return "rgba(139,0,0,\(opacity?.cssValue ?? "1"))"
-        case .lightred(let opacity):
-            return "rgba(255,102,102,\(opacity?.cssValue ?? "1"))"
-        case .green(let opacity):
-            return "rgba(0,128,0,\(opacity?.cssValue ?? "1"))"
-        case .lightgreen(let opacity):
-            return "rgba(102,255,102,\(opacity?.cssValue ?? "1"))"
-        case .darkgreen(let opacity):
-            return "rgba(0,100,0,\(opacity?.cssValue ?? "1"))"
-        case .blue(let opacity):
-            return "rgba(0,0,255,\(opacity?.cssValue ?? "1"))"
-        case .lightblue(let opacity):
-            return "rgba(102,102,255,\(opacity?.cssValue ?? "1"))"
-        case .darkblue(let opacity):
-            return "rgba(0,0,139,\(opacity?.cssValue ?? "1"))"
-        case .yellow(let opacity):
-            return "rgba(255,255,0,\(opacity?.cssValue ?? "1"))"
-        case .lightyellow(let opacity):
-            return "rgba(255,255,102,\(opacity?.cssValue ?? "1"))"
-        case .darkyellow(let opacity):
-            return "rgba(255,255,0,\(opacity?.cssValue ?? "1"))"
-        case .orange(let opacity):
-            return "rgba(255,165,0,\(opacity?.cssValue ?? "1"))"
-        case .lightorange(let opacity):
-            return "rgba(255,204,153,\(opacity?.cssValue ?? "1"))"
-        case .darkorange(let opacity):
-            return "rgba(255,140,0,\(opacity?.cssValue ?? "1"))"
-        case .purple(let opacity):
-            return "rgba(128,0,128,\(opacity?.cssValue ?? "1"))"
-        case .lightpurple(let opacity):
-            return "rgba(204,153,255,\(opacity?.cssValue ?? "1"))"
-        case .darkpurple(let opacity):
-            return "rgba(75,0,130,\(opacity?.cssValue ?? "1"))"
-        case .pink(let opacity):
-            return "rgba(255,192,203,\(opacity?.cssValue ?? "1"))"
-        case .lightpink(let opacity):
-            return "rgba(255,204,204,\(opacity?.cssValue ?? "1"))"
-        case .darkpink(let opacity):
-            return "rgba(255,105,180,\(opacity?.cssValue ?? "1"))"
-        case .brown(let opacity):
-            return "rgba(165,42,42,\(opacity?.cssValue ?? "1"))"
-        case .lightbrown(let opacity):
-            return "rgba(210,180,140,\(opacity?.cssValue ?? "1"))"
-        case .darkbrown(let opacity):
-            return "rgba(139,69,19,\(opacity?.cssValue ?? "1"))"
-        case .grey(let opacity):
-            return "rgba(128,128,128,\(opacity?.cssValue ?? "1"))"
-        case .darkGrey(let opacity):
-            return "rgba(64,64,64,\(opacity?.cssValue ?? "1"))"
-        case .lightGrey(let opacity):
-            return "rgba(192,192,192,\(opacity?.cssValue ?? "1"))"
-        case .indigo(let opacity):
-            return "rgba(75,0,130,\(opacity?.cssValue ?? "1"))"
-        case .lightindigo(let opacity):
-            return "rgba(153,102,255,\(opacity?.cssValue ?? "1"))"
-        case .darkindigo(let opacity):
-            return "rgba(75,0,130,\(opacity?.cssValue ?? "1"))"
-        case .teal(let opacity):
-            return "rgba(0,128,128,\(opacity?.cssValue ?? "1"))"
-        case .lightteal(let opacity):
-            return "rgba(102,255,255,\(opacity?.cssValue ?? "1"))"
-        case .darkteal(let opacity):
-            return "rgba(0,139,139,\(opacity?.cssValue ?? "1"))"
-        case .cyan(let opacity):
-            return "rgba(0,255,255,\(opacity?.cssValue ?? "1"))"
-        case .lightcyan(let opacity):
-            return "rgba(102,255,255,\(opacity?.cssValue ?? "1"))"
-        case .darkcyan(let opacity):
-            return "rgba(0,139,139,\(opacity?.cssValue ?? "1"))"
-        case .black(let opacity):
-            return "rgba(0,0,0,\(opacity?.cssValue ?? "1"))"
-        case .white(let opacity):
-            return "rgba(255,255,255,\(opacity?.cssValue ?? "1"))"
+        case .red:
+            return "rgba(255,0,0,1)"
+        case .darkred:
+            return "rgba(139,0,0,1)"
+        case .lightred:
+            return "rgba(255,102,102,1)"
+        case .green:
+            return "rgba(0,128,0,1)"
+        case .lightgreen:
+            return "rgba(102,255,102,1)"
+        case .darkgreen:
+            return "rgba(0,100,0,1)"
+        case .blue:
+            return "rgba(0,0,255,1)"
+        case .lightblue:
+            return "rgba(102,102,255,1)"
+        case .darkblue:
+            return "rgba(0,0,139,1)"
+        case .yellow:
+            return "rgba(255,255,0,1)"
+        case .lightyellow:
+            return "rgba(255,255,102,1)"
+        case .darkyellow:
+            return "rgba(255,255,0,1)"
+        case .orange:
+            return "rgba(255,165,0,1)"
+        case .lightorange:
+            return "rgba(255,204,153,1)"
+        case .darkorange:
+            return "rgba(255,140,0,1)"
+        case .purple:
+            return "rgba(128,0,128,1)"
+        case .lightpurple:
+            return "rgba(204,153,255,1)"
+        case .darkpurple:
+            return "rgba(75,0,130,1)"
+        case .pink:
+            return "rgba(255,192,203,1)"
+        case .lightpink:
+            return "rgba(255,204,204,1)"
+        case .darkpink:
+            return "rgba(255,105,180,1)"
+        case .brown:
+            return "rgba(165,42,42,1)"
+        case .lightbrown:
+            return "rgba(210,180,140,1)"
+        case .darkbrown:
+            return "rgba(139,69,19,1)"
+        case .grey:
+            return "rgba(128,128,128,1)"
+        case .darkGrey:
+            return "rgba(64,64,64,1)"
+        case .lightGrey:
+            return "rgba(192,192,192,1)"
+        case .indigo:
+            return "rgba(75,0,130,1)"
+        case .lightindigo:
+            return "rgba(153,102,255,1)"
+        case .darkindigo:
+            return "rgba(75,0,130,1)"
+        case .teal:
+            return "rgba(0,128,128,1)"
+        case .lightteal:
+            return "rgba(102,255,255,1)"
+        case .darkteal:
+            return "rgba(0,139,139,1)"
+        case .cyan:
+            return "rgba(0,255,255,1)"
+        case .lightcyan:
+            return "rgba(102,255,255,1)"
+        case .darkcyan:
+            return "rgba(0,139,139,1)"
+        case .black:
+            return "rgba(0,0,0,1)"
+        case .white:
+            return "rgba(255,255,255,1)"
         case .transparent:
             return "rgba(0,0,0,0)"
         case .custom(let colorString):
