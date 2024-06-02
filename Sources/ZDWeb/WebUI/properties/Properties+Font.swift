@@ -9,7 +9,7 @@ import Foundation
 
 public extension GenericProperties {
     @discardableResult
-    func font(_ font: WebFont) -> Self {
+    func font(_ font: WebFontSize) -> Self {
         switch font {
         case .veryLargeTitle:
             executionPipeline()?.context?.builderScript("\(builderId).style.fontSize = '64px';")
@@ -27,6 +27,8 @@ public extension GenericProperties {
             executionPipeline()?.context?.builderScript("\(builderId).style.fontSize = '12px';")
         case .footnote:
             executionPipeline()?.context?.builderScript("\(builderId).style.fontSize = '10px';")
+        case .custom(let size):
+            executionPipeline()?.context?.builderScript("\(builderId).style.fontSize = '\(size)px';")
         }
         return self
     }

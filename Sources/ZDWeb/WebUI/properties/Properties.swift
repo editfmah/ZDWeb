@@ -71,7 +71,7 @@ public enum WebCornerPosition : String {
     case bottomRight = "BottomRight"
 }
 
-public enum WebFont {
+public enum WebFontSize {
     case veryLargeTitle
     case largeTitle
     case title
@@ -80,6 +80,7 @@ public enum WebFont {
     case subtitle
     case caption
     case footnote
+    case custom(_ size: Int)
 }
 
 public enum WebOpacity {
@@ -288,7 +289,6 @@ public enum WebColor {
             return "rgba(0,0,0,0)"
         case .custom(let colorString):
             return colorString
-            
         }
         
     }
@@ -306,7 +306,7 @@ public protocol GenericProperties {
     
     // property setters
     func background(_ color: WebColor) -> Self
-    func font(_ font: WebFont) -> Self
+    func font(_ font: WebFontSize) -> Self
     func bold() -> Self
     func lightweight() -> Self
     func italic() -> Self
