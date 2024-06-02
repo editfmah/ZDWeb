@@ -35,4 +35,14 @@ public extension GenericProperties {
         }
         return self
     }
+    @discardableResult
+    func margin(_ type: WebMarginType) -> Self {
+        switch type {
+        case .auto:
+            executionPipeline()?.context?.builderScript("\(builderId).style.margin = 'auto';")
+        case .none:
+            executionPipeline()?.context?.builderScript("\(builderId).style.margin = 'unset';")
+        }
+        return self
+    }
 }

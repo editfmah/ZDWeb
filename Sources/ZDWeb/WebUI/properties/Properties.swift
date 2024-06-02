@@ -283,6 +283,11 @@ public enum WebColor {
     }
 }
 
+public enum WebMarginType {
+    case auto
+    case none
+}
+
 public protocol GenericProperties {
     
     var builderId: String { get }
@@ -319,6 +324,7 @@ public protocol GenericProperties {
     func hidden(_ variable: WebVariable,_ operator: Operator) -> Self
     func enabled(_ enabled: WBool) -> Self
     func enabled(_ variable: WebVariable,_ operator: Operator) -> Self
+    func margin(_ marginType: WebMarginType) -> Self
     
     // common events
     func onClick(_ action: WebAction) -> Self
