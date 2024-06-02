@@ -27,6 +27,6 @@ public class Link : WebElement {
             executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
             executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(text)';")
         }
-        addClass("col-md-auto")
+        addClass("col")
     }
 }

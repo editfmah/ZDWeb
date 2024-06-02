@@ -15,7 +15,7 @@ public class VStack : WebElement {
             body()
         })
         executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-        addClass("col-md-auto")
+        addClass("col")
     }
 }
 
