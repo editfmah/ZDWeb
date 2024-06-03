@@ -306,6 +306,15 @@ public enum WebTextAlignment: String {
     case justify
 }
 
+public enum WebContentAlignment : String {
+    case start
+    case end
+    case center
+    case between
+    case around
+    case evenly
+}
+
 public protocol GenericProperties {
     
     var builderId: String { get }
@@ -347,6 +356,7 @@ public protocol GenericProperties {
     func enabled(_ enabled: WBool) -> Self
     func enabled(_ variable: WebVariable,_ operator: Operator) -> Self
     func margin(_ marginType: WebMarginType) -> Self
+    func justifyContent(_ justify: WebContentAlignment) -> Self
     
     // common events
     func onClick(_ action: WebAction) -> Self
