@@ -56,4 +56,23 @@ public extension GenericProperties {
         }
         return self
     }
+    @discardableResult
+    func verticalAlignContent(_ align: WebContentAlignment) -> Self {
+        // use bootstrap classes to align the content
+        switch align {
+        case .start:
+            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-start');")
+        case .end:
+            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-end');")
+        case .center:
+            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-center');")
+        case .around:
+            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-around');")
+        case .evenly:
+            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-evenly');")
+        case .between:
+            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-between');")
+        }
+        return self
+    }
 }

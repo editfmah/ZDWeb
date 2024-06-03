@@ -357,6 +357,7 @@ public protocol GenericProperties {
     func enabled(_ variable: WebVariable,_ operator: Operator) -> Self
     func margin(_ marginType: WebMarginType) -> Self
     func justifyContent(_ justify: WebContentAlignment) -> Self
+    func verticalAlignContent(_ align: WebContentAlignment) -> Self
     
     // common events
     func onClick(_ action: WebAction) -> Self
