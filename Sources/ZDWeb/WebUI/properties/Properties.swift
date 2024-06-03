@@ -299,10 +299,16 @@ public enum WebMarginType {
     case none
 }
 
+public enum WebTextAlignment: String {
+    case left
+    case right
+    case center
+    case justify
+}
+
 public protocol GenericProperties {
     
     var builderId: String { get }
-    
     
     // property setters
     func background(_ color: WebColor) -> Self
@@ -325,6 +331,11 @@ public protocol GenericProperties {
     func border(_ color: WebColor, width: Int) -> Self
     func width(_ width: Int) -> Self
     func height(_ height: Int) -> Self
+    func maxWidth(_ width: Int) -> Self
+    func minWidth(_ width: Int) -> Self
+    func maxHeight(_ height: Int) -> Self
+    func minHeight(_ height: Int) -> Self
+    func textalign(_ align: WebTextAlignment) -> Self
     func foreground(_ color: WebColor) -> Self
     func fontfamily(_ family: String) -> Self
     func opacity(_ opacity: Double) -> Self
