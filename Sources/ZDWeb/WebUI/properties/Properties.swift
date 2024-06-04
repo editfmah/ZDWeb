@@ -165,6 +165,7 @@ public enum WebColor {
     case white
     case transparent
     case custom(_ hexColor: String)
+    case gradient(_ colors: [WebColor], _ direction: WebGradientDirection)
     
     var bsColor: String {
         switch self {
@@ -203,6 +204,8 @@ public enum WebColor {
         case .transparent:
             return "transparent"
         case .custom(_):
+            return "custom"
+        case .gradient(_, _):
             return "custom"
         }
     }
@@ -289,9 +292,22 @@ public enum WebColor {
             return "rgba(0,0,0,0)"
         case .custom(let colorString):
             return colorString
+        case .gradient(let colours, let direction):
+            return "linear-gradient(\(direction.rawValue), \(colours.map({ $0.rgba }).joined(separator: ","))"
         }
         
     }
+}
+
+public enum WebGradientDirection: String {
+    case toTop = "to top"
+    case toBottom = "to bottom"
+    case toLeft = "to left"
+    case toRight = "to right"
+    case toTopLeft = "to top left"
+    case toTopRight = "to top right"
+    case toBottomLeft = "to bottom left"
+    case toBottomRight = "to bottom right"
 }
 
 public enum WebMarginType {
