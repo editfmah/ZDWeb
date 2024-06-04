@@ -100,7 +100,8 @@ class TestPage: WebHTMLEndpoint {
                                  )
                         )
                         .hidden(testVar, .isEmpty)
-                }
+                        .background(.toBottom, [.darkGrey,.lightGrey,.darkGrey])
+                }.background(.toBottom, [.white, .blue, .blue, .blue, .white])
             }
             c.compileBuilderScripts()
         }

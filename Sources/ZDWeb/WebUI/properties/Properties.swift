@@ -165,7 +165,6 @@ public enum WebColor {
     case white
     case transparent
     case custom(_ hexColor: String)
-    case gradient(_ colors: [WebColor], _ direction: WebGradientDirection)
     
     var bsColor: String {
         switch self {
@@ -204,8 +203,6 @@ public enum WebColor {
         case .transparent:
             return "transparent"
         case .custom(_):
-            return "custom"
-        case .gradient(_, _):
             return "custom"
         }
     }
@@ -292,8 +289,6 @@ public enum WebColor {
             return "rgba(0,0,0,0)"
         case .custom(let colorString):
             return colorString
-        case .gradient(let colours, let direction):
-            return "linear-gradient(\(direction.rawValue), \(colours.map({ $0.rgba }).joined(separator: ","))"
         }
         
     }
@@ -337,6 +332,7 @@ public protocol GenericProperties {
     
     // property setters
     func background(_ color: WebColor) -> Self
+    func background(_ direction: WebGradientDirection, _ colors: [WebColor]) -> Self
     func font(_ font: WebFontSize) -> Self
     func bold() -> Self
     func lightweight() -> Self
