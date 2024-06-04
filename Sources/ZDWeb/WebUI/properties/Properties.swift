@@ -307,12 +307,12 @@ public enum WebTextAlignment: String {
 }
 
 public enum WebContentAlignment : String {
-    case start
-    case end
+    case left
+    case right
+    case middle
+    case top
+    case bottom
     case center
-    case between
-    case around
-    case evenly
 }
 
 public protocol GenericProperties {
@@ -356,8 +356,8 @@ public protocol GenericProperties {
     func enabled(_ enabled: WBool) -> Self
     func enabled(_ variable: WebVariable,_ operator: Operator) -> Self
     func margin(_ marginType: WebMarginType) -> Self
-    func justifyContent(_ justify: WebContentAlignment) -> Self
-    func verticalAlignContent(_ align: WebContentAlignment) -> Self
+    func align(_ align: WebContentAlignment) -> Self
+    func align(_ align: [WebContentAlignment]) -> Self
     
     // common events
     func onClick(_ action: WebAction) -> Self

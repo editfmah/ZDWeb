@@ -13,7 +13,7 @@ public class Text : WebElement {
         super.init()
         executionPipeline()?.types[self.builderId] = .text
         if executionPipeline()?.withinPickerBuilder == false {
-            executionPipeline()?.context?.declarative("p", identifier: self.builderId , {
+            executionPipeline()?.context?.declarative("span", identifier: self.builderId , {
                 
             })
             executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
@@ -31,7 +31,7 @@ public class Text : WebElement {
         
         super.init()
         executionPipeline()?.types[self.builderId] = .text
-        executionPipeline()?.context?.declarative("p", identifier: self.builderId , {
+        executionPipeline()?.context?.declarative("span", identifier: self.builderId , {
             
         })
         executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

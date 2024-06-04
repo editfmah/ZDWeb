@@ -38,40 +38,27 @@ public extension GenericProperties {
         return self
     }
     @discardableResult
-    func justifyContent(_ justify: WebContentAlignment) -> Self {
-        // use bootstrap classes to align the content
-        switch justify {
-        case .start:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-start');")
-        case .end:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-end');")
-        case .center:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-center');")
-        case .between:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-between');")
-        case .around:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-around');")
-        case .evenly:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-evenly');")
-        }
-        return self
+    func align(_ align: WebContentAlignment) -> Self {
+        return self.align([align])
     }
+    
     @discardableResult
-    func verticalAlignContent(_ align: WebContentAlignment) -> Self {
-        // use bootstrap classes to align the content
-        switch align {
-        case .start:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-start');")
-        case .end:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-end');")
-        case .center:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-center');")
-        case .around:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-around');")
-        case .evenly:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-evenly');")
-        case .between:
-            executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-items-between');")
+    func align(_ align: [WebContentAlignment]) -> Self {
+        for alignment in align {
+            switch alignment {
+            case .left:
+                executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-start');")
+            case .right:
+                executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-end');")
+            case .middle:
+                executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-content-center');")
+            case .top:
+                executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-content-start');")
+            case .bottom:
+                executionPipeline()?.context?.builderScript("\(builderId).classList.add('align-content-end');")
+            case .center:
+                executionPipeline()?.context?.builderScript("\(builderId).classList.add('justify-content-center');")
+            }
         }
         return self
     }
