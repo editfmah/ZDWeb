@@ -15,7 +15,7 @@ public class WInt : WebVariable {
         }
     }
     
-    init(_ value: Int) {
+    public init(_ value: Int) {
         super.init()
         internalValue = value
         executionPipeline()?.context?.builderScript("var \(builderId) = \(value);")

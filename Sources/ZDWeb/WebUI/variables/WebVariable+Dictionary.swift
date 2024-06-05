@@ -16,7 +16,7 @@ public class WDictionary : WebVariable {
         }
     }
     
-    init(_ value: [String:String]) {
+    public init(_ value: [String:String]) {
         super.init()
         internalValue = value
         executionPipeline()?.context?.builderScript("var \(builderId) = \(value);")

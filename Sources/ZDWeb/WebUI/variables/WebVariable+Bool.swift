@@ -15,7 +15,7 @@ public class WBool : WebVariable {
         }
     }
     
-    init(_ value: Bool) {
+    public init(_ value: Bool) {
         super.init()
         internalValue = value
         executionPipeline()?.context?.builderScript("var \(builderId) = \(internalValue == true ? "true" : "false");")

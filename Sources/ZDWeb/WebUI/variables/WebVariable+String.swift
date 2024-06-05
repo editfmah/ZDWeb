@@ -15,7 +15,7 @@ public class WString : WebVariable {
         }
     }
     
-    init(_ value: String) {
+    public init(_ value: String) {
         super.init()
         internalValue = value
         executionPipeline()?.context?.builderScript("var \(builderId) = '\(value)';")
