@@ -21,7 +21,7 @@ public class WBool : WebVariable {
         executionPipeline()?.context?.builderScript("var \(builderId) = \(internalValue == true ? "true" : "false");")
     }
     
-    func conditions(_ conditions: [(variable: WebVariable, operator: Operator)]) {
+    public func conditions(_ conditions: [(variable: WebVariable, operator: Operator)]) {
         for condition in conditions {
             let instanceId = UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "")
             executionPipeline()?.context?.builderScript("""
@@ -36,7 +36,7 @@ var testCondition\(builderId) = function() {
         }
     }
     
-    func condition(_ variable: WebVariable, operator: Operator) {
+    public func condition(_ variable: WebVariable, operator: Operator) {
         
         executionPipeline()?.context?.builderScript("""
 var testCondition\(builderId) = function() {
@@ -46,11 +46,11 @@ let condition\(builderId) = setInterval(testCondition\(builderId), 500);
 """)
         
     }
-    func set(_ value: Bool) {
+    public func set(_ value: Bool) {
         internalValue = value
         executionPipeline()?.context?.script("\(builderId) = \(internalValue == true ? "true" : "false");")
     }
-    func toggle() {
+    public func toggle() {
         internalValue = !internalValue
         executionPipeline()?.context?.script("\(builderId) = \(internalValue == true ? "true" : "false");")
     }

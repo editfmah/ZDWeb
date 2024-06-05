@@ -21,59 +21,59 @@ public class WInt : WebVariable {
         executionPipeline()?.context?.builderScript("var \(builderId) = \(value);")
     }
     
-    static func +(lhs: WInt, rhs: WInt) -> WInt {
+    public static func +(lhs: WInt, rhs: WInt) -> WInt {
         return WInt(lhs.internalValue + rhs.internalValue)
     }
     
-    static func -(lhs: WInt, rhs: WInt) -> WInt {
+    public static func -(lhs: WInt, rhs: WInt) -> WInt {
         return WInt(lhs.internalValue - rhs.internalValue)
     }
     
-    static func *(lhs: WInt, rhs: WInt) -> WInt {
+    public static func *(lhs: WInt, rhs: WInt) -> WInt {
         return WInt(lhs.internalValue * rhs.internalValue)
     }
     
-    static func /(lhs: WInt, rhs: WInt) -> WInt {
+    public static func /(lhs: WInt, rhs: WInt) -> WInt {
         return WInt(lhs.internalValue / rhs.internalValue)
     }
     
-    static func %(lhs: WInt, rhs: WInt) -> WInt {
+    public static func %(lhs: WInt, rhs: WInt) -> WInt {
         return WInt(lhs.internalValue % rhs.internalValue)
     }
     
-    static func +=(lhs: inout WInt, rhs: WInt) {
+    public static func +=(lhs: inout WInt, rhs: WInt) {
         lhs.internalValue += rhs.internalValue
     }
     
-    static func -=(lhs: inout WInt, rhs: WInt) {
+    public static func -=(lhs: inout WInt, rhs: WInt) {
         lhs.internalValue -= rhs.internalValue
     }
     
-    static func *=(lhs: inout WInt, rhs: WInt) {
+    public static func *=(lhs: inout WInt, rhs: WInt) {
         lhs.internalValue *= rhs.internalValue
     }
     
-    static func /=(lhs: inout WInt, rhs: WInt) {
+    public static func /=(lhs: inout WInt, rhs: WInt) {
         lhs.internalValue /= rhs.internalValue
     }
     
-    static func %=(lhs: inout WInt, rhs: WInt) {
+    public static func %=(lhs: inout WInt, rhs: WInt) {
         lhs.internalValue %= rhs.internalValue
     }
     
-    static func ==(lhs: WInt, rhs: WInt) -> Bool {
+    public static func ==(lhs: WInt, rhs: WInt) -> Bool {
         return lhs.internalValue == rhs.internalValue
     }
     
-    static func !=(lhs: WInt, rhs: WInt) -> Bool {
+    public static func !=(lhs: WInt, rhs: WInt) -> Bool {
         return lhs.internalValue != rhs.internalValue
     }
     
-    static func >(lhs: WInt, rhs: WInt) -> Bool {
+    public static func >(lhs: WInt, rhs: WInt) -> Bool {
         return lhs.internalValue > rhs.internalValue
     }
     
-    static func <(lhs: WInt, rhs: WInt) -> Bool {
+    public static func <(lhs: WInt, rhs: WInt) -> Bool {
         return lhs.internalValue < rhs.internalValue
     }
     

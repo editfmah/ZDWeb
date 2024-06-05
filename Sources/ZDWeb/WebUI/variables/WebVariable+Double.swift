@@ -21,103 +21,103 @@ public class WDouble : WebVariable {
         executionPipeline()?.context?.builderScript("var \(builderId) = \(value);")
     }
     
-    static func +(lhs: WDouble, rhs: WDouble) -> WDouble {
+    public static func +(lhs: WDouble, rhs: WDouble) -> WDouble {
         return WDouble(lhs.internalValue + rhs.internalValue)
     }
     
-    static func -(lhs: WDouble, rhs: WDouble) -> WDouble {
+    public static func -(lhs: WDouble, rhs: WDouble) -> WDouble {
         return WDouble(lhs.internalValue - rhs.internalValue)
     }
     
-    static func *(lhs: WDouble, rhs: WDouble) -> WDouble {
+    public static func *(lhs: WDouble, rhs: WDouble) -> WDouble {
         return WDouble(lhs.internalValue * rhs.internalValue)
     }
     
-    static func /(lhs: WDouble, rhs: WDouble) -> WDouble {
+    public static func /(lhs: WDouble, rhs: WDouble) -> WDouble {
         return WDouble(lhs.internalValue / rhs.internalValue)
     }
     
-    static func ==(lhs: WDouble, rhs: WDouble) -> Bool {
+    public static func ==(lhs: WDouble, rhs: WDouble) -> Bool {
         return lhs.internalValue == rhs.internalValue
     }
     
-    static func !=(lhs: WDouble, rhs: WDouble) -> Bool {
+    public static func !=(lhs: WDouble, rhs: WDouble) -> Bool {
         return lhs.internalValue != rhs.internalValue
     }
     
-    static func +=(lhs: inout WDouble, rhs: WDouble) {
+    public static func +=(lhs: inout WDouble, rhs: WDouble) {
         lhs.internalValue += rhs.internalValue
     }
     
-    static func -=(lhs: inout WDouble, rhs: WDouble) {
+    public static func -=(lhs: inout WDouble, rhs: WDouble) {
         lhs.internalValue -= rhs.internalValue
     }
     
-    static func *=(lhs: inout WDouble, rhs: WDouble) {
+    public static func *=(lhs: inout WDouble, rhs: WDouble) {
         lhs.internalValue *= rhs.internalValue
     }
     
-    static func /=(lhs: inout WDouble, rhs: WDouble) {
+    public static func /=(lhs: inout WDouble, rhs: WDouble) {
         lhs.internalValue /= rhs.internalValue
     }
     
-    static func ==(lhs: WDouble, rhs: Double) -> Bool {
+    public static func ==(lhs: WDouble, rhs: Double) -> Bool {
         return lhs.internalValue == rhs
     }
     
-    static func ==(lhs: Double, rhs: WDouble) -> Bool {
+    public static func ==(lhs: Double, rhs: WDouble) -> Bool {
         return lhs == rhs.internalValue
     }
     
-    static func !=(lhs: WDouble, rhs: Double) -> Bool {
+    public static func !=(lhs: WDouble, rhs: Double) -> Bool {
         return lhs.internalValue != rhs
     }
     
-    static func >(lhs: WDouble, rhs: WDouble) -> Bool {
+    public static func >(lhs: WDouble, rhs: WDouble) -> Bool {
         return lhs.internalValue > rhs.internalValue
     }
     
-    static func <(lhs: WDouble, rhs: WDouble) -> Bool {
+    public static func <(lhs: WDouble, rhs: WDouble) -> Bool {
         return lhs.internalValue < rhs.internalValue
     }
     
-    static func >=(lhs: WDouble, rhs: WDouble) -> Bool {
+    public static func >=(lhs: WDouble, rhs: WDouble) -> Bool {
         return lhs.internalValue >= rhs.internalValue
     }
     
-    static func <=(lhs: WDouble, rhs: WDouble) -> Bool {
+    public static func <=(lhs: WDouble, rhs: WDouble) -> Bool {
         return lhs.internalValue <= rhs.internalValue
     }
     
-    static func >(lhs: WDouble, rhs: Double) -> Bool {
+    public static func >(lhs: WDouble, rhs: Double) -> Bool {
         return lhs.internalValue > rhs
     }
     
-    static func <(lhs: WDouble, rhs: Double) -> Bool {
+    public static func <(lhs: WDouble, rhs: Double) -> Bool {
         return lhs.internalValue < rhs
     }
     
-    static func >=(lhs: WDouble, rhs: Double) -> Bool {
+    public static func >=(lhs: WDouble, rhs: Double) -> Bool {
         return lhs.internalValue >= rhs
     }
     
-    static func <=(lhs: WDouble, rhs: Double) -> Bool {
+    public static func <=(lhs: WDouble, rhs: Double) -> Bool {
         return lhs.internalValue <= rhs
     }
     
-    static func >(lhs: Double, rhs: WDouble) -> Bool {
+    public static func >(lhs: Double, rhs: WDouble) -> Bool {
         return lhs > rhs.internalValue
     }
     
-    static func <(lhs: Double, rhs: WDouble) -> Bool {
+    public static func <(lhs: Double, rhs: WDouble) -> Bool {
         return lhs < rhs.internalValue
     }
     
-    static func >=(lhs: Double, rhs: WDouble) -> Bool {
+    public static func >=(lhs: Double, rhs: WDouble) -> Bool {
         return lhs >= rhs.internalValue
     }
     
-    static func <=(lhs: Double, rhs: WDouble) -> Bool {
+    public static func <=(lhs: Double, rhs: WDouble) -> Bool {
         return lhs <= rhs.internalValue
     }
     

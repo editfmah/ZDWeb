@@ -15,15 +15,15 @@ protocol WebVariableProperties {
 
 public class WebVariable : WebCommonInterop {
     
-    var formName: String? = nil
+    public var formName: String? = nil
     
-    func name(_ name: String) -> Self {
+    public func name(_ name: String) -> Self {
         formName = name
         executionPipeline()?.context?.builderScript("\(builderId).name = '\(name)';")
         return self
     }
     
-    func onValueChange(_ actions: [WebAction]) -> Self {
+    public func onValueChange(_ actions: [WebAction]) -> Self {
         // when the value of the variable changes, execute the actions
         executionPipeline()?.context?.builderScript("""
 var lastValue\(builderId) = \(builderId);

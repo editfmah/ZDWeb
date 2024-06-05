@@ -21,27 +21,27 @@ public class WString : WebVariable {
         executionPipeline()?.context?.builderScript("var \(builderId) = '\(value)';")
     }
     
-    static func +(lhs: WString, rhs: WString) -> WString {
+    public static func +(lhs: WString, rhs: WString) -> WString {
         return WString(lhs.internalValue + rhs.internalValue)
     }
     
-    static func ==(lhs: WString, rhs: WString) -> Bool {
+    public static func ==(lhs: WString, rhs: WString) -> Bool {
         return lhs.internalValue == rhs.internalValue
     }
     
-    static func !=(lhs: WString, rhs: WString) -> Bool {
+    public static func !=(lhs: WString, rhs: WString) -> Bool {
         return lhs.internalValue != rhs.internalValue
     }
     
-    static func +=(lhs: inout WString, rhs: WString) {
+    public static func +=(lhs: inout WString, rhs: WString) {
         lhs.internalValue.append(rhs.internalValue)
     }
     
-    static func ==(lhs: WString, rhs: String) -> Bool {
+    public static func ==(lhs: WString, rhs: String) -> Bool {
         return lhs.internalValue == rhs
     }
     
-    static func ==(lhs: String, rhs: WString) -> Bool {
+    public static func ==(lhs: String, rhs: WString) -> Bool {
         return lhs == rhs.internalValue
     }
     
