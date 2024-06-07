@@ -193,9 +193,24 @@ public class WebRequestData {
         return nil
     }
     
+    public func bool(_ param: String) -> Bool {
+        if let value = data[param.lowercased()] {
+            if let v = Bool(value) {
+                return v
+            }
+            if let v = Double(value) {
+                return v > 0
+            }
+            if let v = Int(value) {
+                return v > 0
+            }
+        }
+        return false
+    }
+    
     public func bool(_ param: String,_ closure: ((_ value: Bool) -> Void)) {
         if let value = data[param.lowercased()] {
-            if ["true","on"].contains(value) {
+            if ["true","on","1","1.0"].contains(value) {
                 closure(true)
             } else {
                 closure(false)
