@@ -68,7 +68,7 @@ class TestPage: WebHTMLEndpoint {
                             .foregroundColor(ref: "textobject",.green)
                         ])
                     ])
-                let testChoice = WString("").name("testing_choice")
+                let testChoice = WString("3").name("testing_choice")
                 
                 HStack {
                     Spacer()

@@ -31,6 +31,18 @@ public class Picker : WebElement {
         addClass("form-control")
         if let binding = binding {
             executionPipeline()?.context?.builderScript("""
+
+// get the selected value form the bound variable
+var \(builderId)Current = \(binding.builderId);
+
+// now go through the picker and mark the correct value as selected.  This could be a dropdown, radio, check or modal
+var \(builderId)Options = \(builderId).getElementsByTagName('option');
+for (var i = 0; i < \(builderId)Options.length; i++) {
+    if (\(builderId)Options[i].value == \(builderId)Current) {
+        \(builderId)Options[i].selected = true;
+    }
+}
+
 \(builderId).addEventListener('input', function() {
     \(binding.builderId) = \(builderId).value;
 });
