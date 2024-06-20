@@ -11,11 +11,14 @@ let package = Package(
             name: "ZDWeb",
             targets: ["ZDWeb"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/krzyzanowskim/CryptoSwift.git", from: "1.8.0"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "ZDWeb"),
+            name: "ZDWeb", dependencies: ["CryptoSwift"]),
         .testTarget(
             name: "ZDWebTests",
             dependencies: ["ZDWeb"]),
