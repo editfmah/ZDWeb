@@ -31,6 +31,7 @@ public enum WebAction {
     case opacity(ref: String? = nil,_ value: Double)
     case setStyle(ref: String? = nil,_ style: WebStyle)
     case random([WebAction])
+    case showModal(ref: String)
 }
 
 public func CompileActions(_ actions: [WebAction], builderId: String) -> String {
@@ -39,7 +40,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
         
         for action in actions {
             switch action {
-                case .navigate(let url):
+            case .navigate(let url):
                     script += "window.location.href = '\(url)';\n"
             case .load(ref: let ref, url: let url):
                 if let ref = ref {
@@ -282,6 +283,14 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 // now execute the random function
                 script += "functions\(id)[randomIndex\(id)]();\n"
                 
+            case .showModal(ref: let ref):
+                // this shows a bootstrap modal dialog, the ref is the id of the modal dialog to show.
+                script += """
+const myModal = new bootstrap.Modal('#\(ref)', {
+  keyboard: false
+})
+myModal.show();
+"""
             }
         }
         

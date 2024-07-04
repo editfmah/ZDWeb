@@ -53,11 +53,21 @@ class TestPage: WebHTMLEndpoint {
             c.head {
                 c.title("Test")
                 c.meta(name: "viewport", content: "width=device-width, initial-scale=1")
+                c.script(url: "https://code.jquery.com/jquery-3.7.1.slim.min.js")
                 c.stylesheet(url: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css")
                 c.script(url: "https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js")
             }
             c.view {
                 // include minimum/mandatory bootstrap 5
+                
+                Modal(ref: "myModal") {
+                    Text("This is a modal")
+                }
+                
+                Button("Open Modal")
+                    .onClick([
+                        .showModal(ref: "myModal")
+                    ])
                 
                 let testVar = WString("Should be this text")
                     .name("testing_var")
