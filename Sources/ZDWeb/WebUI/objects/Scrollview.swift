@@ -26,6 +26,8 @@ public class Scrollview : WebElement {
         
         executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         
+        addClass("d-flex")
+        
         if let direction = direction {
             switch direction {
             case .vertical:

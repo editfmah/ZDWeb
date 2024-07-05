@@ -16,7 +16,6 @@ public class Modal : WebElement {
         // this is going to be a bootstrap modal with no header or footer and with the body closure as the body of the modal dialog
         
         // any headers and footers will be built into the body instead. This is to allow for more flexible modals
-        
         executionPipeline()?.context?.declarative("div", identifier: self.builderId, {
             executionPipeline()?.context?.declarative("div", identifier: "modal-dialog modal-dialog-centered modal-fullscreen", {
                 executionPipeline()?.context?.declarative("div", identifier: "modal-content", {
