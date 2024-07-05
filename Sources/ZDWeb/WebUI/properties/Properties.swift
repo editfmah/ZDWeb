@@ -326,6 +326,15 @@ public enum WebContentAlignment : String {
     case center
 }
 
+// html properties for html style `text-wrap`
+public enum WebTextWrapType : String {
+    case auto
+    case balance
+    case nowrap
+    case wrap
+    case stable
+}
+
 public protocol GenericProperties {
     
     var builderId: String { get }
@@ -370,6 +379,7 @@ public protocol GenericProperties {
     func margin(_ marginType: WebMarginType) -> Self
     func align(_ align: WebContentAlignment) -> Self
     func align(_ align: [WebContentAlignment]) -> Self
+    func wrap(_ type: WebTextWrapType) -> Self
     
     // common events
     func onClick(_ action: WebAction) -> Self

@@ -15,4 +15,11 @@ extension GenericProperties {
         return self
     }
     
+    @discardableResult
+    public func wrap(_ type: WebTextWrapType) -> Self {
+        // set properties for the style `text-wrap`
+        executionPipeline()?.context?.builderScript("\(builderId).style.textWrap = '\(type.rawValue)';")
+        return self
+    }
+    
 }
