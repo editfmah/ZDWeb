@@ -68,4 +68,14 @@ let enabledCondition\(builderId) = setInterval(enabledTestCondition\(builderId),
 
         return self
     }
+    @discardableResult
+    func clip() -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).style.clipPath = 'border-box';")
+        return self
+    }
+    @discardableResult
+    func position(_ position: WebPosition) -> Self {
+        executionPipeline()?.context?.builderScript("\(builderId).style.position = '\(position.rawValue)';")
+        return self
+    }
 }

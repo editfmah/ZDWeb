@@ -335,6 +335,13 @@ public enum WebTextWrapType : String {
     case stable
 }
 
+public enum WebPosition : String {
+    case relative
+    case absolute
+    case fixed
+    case sticky
+}
+
 public protocol GenericProperties {
     
     var builderId: String { get }
@@ -380,6 +387,8 @@ public protocol GenericProperties {
     func align(_ align: WebContentAlignment) -> Self
     func align(_ align: [WebContentAlignment]) -> Self
     func wrap(_ type: WebTextWrapType) -> Self
+    func clip() -> Self
+    func position(_ position: WebPosition) -> Self
     
     // common events
     func onClick(_ action: WebAction) -> Self
