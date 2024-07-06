@@ -227,7 +227,8 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                             
                         case .image:
                             break;
-                            
+                        case .unknown:
+                            break;
                         }
                     }
                 } else {
@@ -258,6 +259,8 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                             
                             script += "\(builderId).classList.add('\(style.linkStyleClass)');\n"
                         case .image:
+                            break;
+                        case .unknown:
                             break;
                         }
                     }

@@ -22,7 +22,52 @@ public class WebCommonInterop {
         executionPipeline()?.context?.builderScript("\(builderId).classList.add('\(cls)');")
     }
     
+    public var pipeline: WebRequestExecutionPipeline {
+        return executionPipeline()!
+    }
+    
+    public var context: WebRequestContext {
+        return pipeline.context!
+    }
+    
+    public func script(_ script: String) {
+        context.builderScript(script)
+    }
+    
+    public func declare(_ tag: String, identifier: String, id: String? = nil, type: String? = nil, for: String? = nil, name: String? = nil, attributes: [String:String]? = nil, _ body: WebComposerClosure) {
+        context.declarative(tag, identifier: identifier, id: id, type: type, for: `for`, name: name, body)
+    }
+    
+    public var type: WebElementType {
+        get {
+            return pipeline.types[builderId] ?? .unknown
+        }
+        set {
+            pipeline.types[builderId] = newValue
+        }
+    }
+    
+    public var isPicker: Bool {
+        get {
+            return pipeline.withinPickerBuilder
+        }
+        set {
+            pipeline.withinPickerBuilder = newValue
+        }
+    }
+    
+    public var pickerType: PickerType {
+        get {
+            return pipeline.pickerType
+        }
+        set {
+            pipeline.pickerType = newValue
+        }
+    }
+    
 }
+
+public class WebTextInputElement : WebCommonInterop, GenericTextInputProperties {}
 
 public class WebElement : WebCommonInterop, GenericProperties {}
 

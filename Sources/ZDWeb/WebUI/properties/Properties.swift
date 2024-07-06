@@ -414,6 +414,18 @@ public protocol GenericFormProperties : GenericProperties {
     func target(_ url: String) -> Self
 }
 
+public protocol GenericTextInputProperties : GenericProperties {
+    func placeholder(_ placeholder: String) -> Self
+    func rows(_ rows: Int) -> Self
+    func cols(_ cols: Int) -> Self
+    func readonly(_ readonly: WBool) -> Self
+    func readonly(_ variable: WebVariable,_ operator: Operator) -> Self
+    func required(_ required: WBool) -> Self
+    func required(_ variable: WebVariable,_ operator: Operator) -> Self
+    func maxlength(_ length: Int) -> Self
+    func minlength(_ length: Int) -> Self
+}
+
 public enum WebButtonType : String {
     case button
     case submit

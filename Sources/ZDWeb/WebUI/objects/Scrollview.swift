@@ -19,27 +19,27 @@ public class Scrollview : WebElement {
         
         super.init()
         
-        executionPipeline()?.context?.declarative("div", identifier: self.builderId , {
+        declare("div", identifier: self.builderId , {
             // now build the body of the picker
             body()
         })
         
-        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         
         addClass("d-flex")
         
         if let direction = direction {
             switch direction {
             case .vertical:
-                executionPipeline()?.context?.builderScript("\(builderId).style.overflowY = 'scroll';")
-                executionPipeline()?.context?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
+                script("\(builderId).style.overflowY = 'scroll';")
+                script("\(builderId).style.whiteSpace = 'nowrap';")
             case .horizontal:
-                executionPipeline()?.context?.builderScript("\(builderId).style.overflowX = 'scroll';")
-                executionPipeline()?.context?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
+                script("\(builderId).style.overflowX = 'scroll';")
+                script("\(builderId).style.whiteSpace = 'nowrap';")
             case .both:
-                executionPipeline()?.context?.builderScript("\(builderId).style.overflowY = 'scroll';")
-                executionPipeline()?.context?.builderScript("\(builderId).style.overflowX = 'scroll';")
-                executionPipeline()?.context?.builderScript("\(builderId).style.whiteSpace = 'nowrap';")
+                script("\(builderId).style.overflowY = 'scroll';")
+                script("\(builderId).style.overflowX = 'scroll';")
+                script("\(builderId).style.whiteSpace = 'nowrap';")
             }
         }
     }

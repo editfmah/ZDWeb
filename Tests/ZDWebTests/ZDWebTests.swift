@@ -92,6 +92,13 @@ class TestPage: WebHTMLEndpoint {
                                 Text("Option 2").value("2")
                                 Text("Option 3").value("3")
                             }.name("picker-field")
+                            
+                            Picker(type: .segmented, binding: testVar) {
+                                Option("First value", value: "first")
+                                Option("Second value", value: "second")
+                                Option("Third value", value: "third")
+                            }
+                            
                             Button("Save")
                                 .type(.submit)
                                 .style(.warning)

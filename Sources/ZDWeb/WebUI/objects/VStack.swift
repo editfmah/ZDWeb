@@ -15,10 +15,10 @@ public class VStack : WebElement {
     @discardableResult
     public init(_ mode: VStackMode? = nil, _ body: WebComposerClosure) {
         super.init()
-        executionPipeline()?.context?.declarative("div", identifier: self.builderId , {
+        declare("div", identifier: self.builderId , {
             body()
         })
-        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         if let mode = mode {
             switch mode {
             case .auto:

@@ -11,10 +11,10 @@ public class Script : WebImageElement {
     @discardableResult
     public init(url: String) {
         super.init()
-        executionPipeline()?.context?.script(url: url)
+        context.script(url: url)
     }
-    public init(_ script: String) {
+    public init(_ scripts: String) {
         super.init()
-        executionPipeline()?.context?.builderScript(script)
+        script(scripts)
     }
 }

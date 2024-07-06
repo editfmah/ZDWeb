@@ -17,24 +17,24 @@ public class Toggle : WebElement {
         </div>
          */
         super.init()
-        executionPipeline()?.context?.declarative("input", identifier: self.builderId , {
+        declare("input", identifier: self.builderId , {
             
         })
-        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("form-check-input")
         addClass("form-control")
-        executionPipeline()?.context?.builderScript("\(builderId).type = 'checkbox';")
+        script("\(builderId).type = 'checkbox';")
         if let binding = binding {
             
             // initial value
             if binding.internalValue {
-                executionPipeline()?.context?.builderScript("\(builderId).checked = true;")
+                script("\(builderId).checked = true;")
             } else {
-                executionPipeline()?.context?.builderScript("\(builderId).checked = false;")
+                script("\(builderId).checked = false;")
             }
             
             // monitor for checkbox changes
-            executionPipeline()?.context?.builderScript("""
+            script("""
 \(builderId).addEventListener('input', function() {
     \(binding.builderId) = \(builderId).checked;
 });

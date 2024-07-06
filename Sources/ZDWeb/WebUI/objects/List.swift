@@ -12,12 +12,12 @@ public class List : WebButtonElement {
     @discardableResult
     public init(_ body: WebComposerClosure) {
         super.init()
-        executionPipeline()?.context?.declarative("div", identifier: self.builderId , {
+        declare("div", identifier: self.builderId , {
             Scrollview(direction: .vertical) {
                 body()
             }
         })
-        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("col")
     }
 }

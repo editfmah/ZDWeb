@@ -12,12 +12,12 @@ public class Button : WebButtonElement {
     @discardableResult
     public init(_ title: String) {
         super.init()
-        executionPipeline()?.types[self.builderId] = .button
-        executionPipeline()?.context?.declarative("button", identifier: self.builderId , {
+        type = .button
+        declare("button", identifier: self.builderId , {
             
         })
-        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-        executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(title)';")
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("\(builderId).innerText = '\(title)';")
         addClass("btn")
     }
 }

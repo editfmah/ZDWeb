@@ -1,17 +1,17 @@
 //
-//  File.swift
+//  TextEditor.swift
+//  
 //
-//
-//  Created by Adrian Herridge on 18/02/2024.
+//  Created by Adrian Herridge on 06/07/2024.
 //
 
 import Foundation
 
-public class TextField : WebElement {
+public class TextEditor : WebTextInputElement {
     @discardableResult
     public init(_ placeholder: String, name: String? = nil, binding: WString? = nil) {
         super.init()
-        declare("input", identifier: self.builderId , {
+        declare("textarea", identifier: self.builderId , {
             
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

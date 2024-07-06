@@ -188,9 +188,9 @@ public class WebRequestContext {
         blocks.removeLast()
     }
     
-    public func declarative(_ element: String, identifier: String, _ closure: WebComposerClosure) {
+    public func declarative(_ element: String, identifier: String, id: String? = nil, type: String? = nil, for: String? = nil, name: String? = nil, attributes: [String:String]? = nil, _ closure: WebComposerClosure) {
         blocks.append(UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: ""))
-        let marker = output("<\(element) class=\"\(identifier)\">")
+        let marker = output("<\(element) class=\"\(identifier)\"\(id != nil ? " id=\"\(id!)\"" : "")\(type != nil ? " type=\"\(type!)\"" : "")\(`for` != nil ? " for=\"\(`for`!)\"" : "")\(name != nil ? " name=\"\(name!)\"" : "")\(attributes != nil ? " \(attributes!.map({ "\($0.key)=\"\($0.value)\"" }).joined(separator: " "))" : "")>")
         elementProperties[blocks.last!] = [:]
         elementTags[blocks.last!] = []
         closure()

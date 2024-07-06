@@ -11,34 +11,53 @@ public class Text : WebElement {
     @discardableResult
     public init(_ text: String) {
         super.init()
-        executionPipeline()?.types[self.builderId] = .text
-        if executionPipeline()?.withinPickerBuilder == false {
-            executionPipeline()?.context?.declarative("span", identifier: self.builderId , {
+        type = .text
+        if isPicker == false {
+            declare("span", identifier: self.builderId , {
                 
             })
-            executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-            executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(text)';")
         } else {
-            executionPipeline()?.context?.declarative("option", identifier: self.builderId , {
-                
-            })
-            executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-            executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(text)';")
+            switch pickerType {
+            case .dropdown:
+                declare("option", identifier: self.builderId , {
+                    
+                })
+            case .radio:
+                break;
+            case .check:
+                break;
+            case .modal:
+                break;
+            case .view:
+                break;
+            case .segmented:
+                // these are actually buttons, within a button group
+                // <button type="button" class="btn btn-secondary">Left</button>
+                declare("button", identifier: self.builderId + " btn btn-secondary" , {
+                    
+                })
+            }
+        }
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("\(builderId).innerText = '\(text)';")
+        if isPicker && pickerType == .segmented {
+            // set the type to button
+            script("\(builderId).type = 'button';")
         }
         addClass("col")
     }
     public init(_ binding: WString) {
         
         super.init()
-        executionPipeline()?.types[self.builderId] = .text
-        executionPipeline()?.context?.declarative("span", identifier: self.builderId , {
+        type = .text
+        declare("span", identifier: self.builderId , {
             
         })
-        executionPipeline()?.context?.builderScript("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-        executionPipeline()?.context?.builderScript("\(builderId).innerText = '\(binding.internalValue)';")
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("\(builderId).innerText = '\(binding.internalValue)';")
         
         // now lets listen for changes from the bound object
-        executionPipeline()?.context?.builderScript("""
+        script("""
 l\(self.builderId)();
 function l\(self.builderId)() {
   const rl\(self.builderId) = () => {

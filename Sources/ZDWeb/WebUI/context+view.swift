@@ -17,8 +17,9 @@ public class WebRequestExecutionPipeline {
     var lastAccessed: Date = Date()
     var withinPickerBuilder = false
     var withinFormBuilder = false
-    var pickers: [String:PickerType] = [:]
+    var pickerType: PickerType = .dropdown
     var types: [String:WebElementType] = [:]
+    var metadata: [String:Any] = [:]
 }
 
 func executionPipeline() -> WebRequestExecutionPipeline? {
@@ -94,4 +95,5 @@ public enum WebElementType {
     case button
     case link
     case image
+    case unknown
 }
