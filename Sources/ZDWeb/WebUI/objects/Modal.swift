@@ -29,7 +29,7 @@ public class Modal : WebElement {
     @discardableResult
     public init(type: WebModalType? = .fullScreen, ref: String? = nil, _ body: WebComposerClosure) {
         super.init()
-        type = .unknown
+        self.type = .unknown
         
         // this is going to be a bootstrap modal with no header or footer and with the body closure as the body of the modal dialog
         
