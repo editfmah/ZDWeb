@@ -7,9 +7,27 @@
 
 import Foundation
 
+/*
+ 
+ Size     Class     Modal max-width
+ Small     .modal-sm     300px
+ Default     None     500px
+ Large     .modal-lg     800px
+ Extra large     .modal-xl     1140px
+ 
+ */
+
+public enum WebModalType: String {
+    case fullScreen = "modal-fullscreen"
+    case small = "modal-sm"
+    case large = "modal-lg"
+    case extraLarge = "modal-xl"
+    case unknown = ""
+}
+
 public class Modal : WebElement {
     @discardableResult
-    public init(ref: String? = nil, _ body: WebComposerClosure) {
+    public init(type: WebModalType? = .fullScreen, ref: String? = nil, _ body: WebComposerClosure) {
         super.init()
         type = .unknown
         
@@ -17,7 +35,7 @@ public class Modal : WebElement {
         
         // any headers and footers will be built into the body instead. This is to allow for more flexible modals
         declare("div", identifier: self.builderId, {
-            declare("div", identifier: "modal-dialog modal-dialog-centered modal-fullscreen", {
+            declare("div", identifier: "modal-dialog modal-dialog-centered \(type?.rawValue ?? "")", {
                 declare("div", identifier: "modal-content", {
                     // now the header
                     declare("div", identifier: "modal-header", {
