@@ -53,27 +53,29 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
             case .post(url: let url,values: let values, onSuccessful: let onSuccessful, onFailed: let onFailed, onTimeout: let onTimeout, resultInto: let resultInto):
                 
                 // post data back to url or this url if nil, the array of values contains a property `name` which is the key for the json structure for data posting.
+                let id = "\(UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "").prefix(4))"
                 
-                script += "var postData = {};\n"
+                script += "var postData\(id) = {};\n"
                 for value in values ?? [] {
                    if let name = value.formName {
-                       script += "postData['\(name)'] = \(value.builderId);\n";
+                       script += "postData\(id)['\(name)'] = \(value.builderId);\n";
                    }
                 }
                 
-                // now use XMLHttpRequest() to send a JSON string encoding of the postData object to the server
+                // now use XMLHttpRequest() to send a JSON string encoding of the postData\(id) object to the server
                 
-                script += "var xhr = new XMLHttpRequest();\n"
-                script += "xhr.open('POST', '\(url ?? "")', true);\n"
-                script += "xhr.setRequestHeader('Content-Type', 'application/json');\n"
-                script += "xhr.onreadystatechange = function() {\n"
+                script += "var xhr\(id) = new XMLHttpRequest();\n"
+                script += "xhr\(id).open('POST', '\(url ?? "")', true);\n"
+                script += "xhr\(id).setRequestHeader('Content-Type', 'application/json');\n"
+                script += "xhr\(id).overrideMimeType('text/html');\n"
+                script += "xhr\(id).onreadystatechange = function() {\n"
                 
                 // check for a status code of 200, 201 or 202
-                script += "     if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201 || xhr.status == 202)) {\n"
+                script += "     if (xhr\(id).readyState == 4 && (xhr\(id).status == 200 || xhr\(id).status == 201 || xhr\(id).status == 202)) {\n"
                 
                 // copy the result if there is a target variable
                 if let resultInto = resultInto {
-                    script += "          \(resultInto.builderId) = xhr.responseText;\n"
+                    script += "          \(resultInto.builderId) = xhr\(id).responseText;\n"
                 }
                 
                 if let onSuccessful = onSuccessful {
@@ -90,8 +92,8 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 script += "     }\n"
                 script += "}\n"
                 
-                // set the request body to the JSON string encoding of the postData object
-                script += "xhr.send(JSON.stringify(postData))\n"
+                // set the request body to the JSON string encoding of the postData\(id) object
+                script += "xhr\(id).send(JSON.stringify(postData\(id)))\n"
                 
             case .set(value: let value, to: let to):
                 // cast to value into different common types and then update the value in the script from the builderId in value
