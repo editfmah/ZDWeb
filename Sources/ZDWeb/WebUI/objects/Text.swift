@@ -46,6 +46,7 @@ public class Text : WebElement {
         }
         addClass("col")
     }
+    @discardableResult
     public init(_ binding: WString) {
         
         super.init()

@@ -11,7 +11,7 @@ public enum WebAction {
     case script(String)
     case load(ref: String? = nil, url: String)
     case navigate(String)
-    case post(url: String? = nil, values: [WebVariable]? = nil, onSuccessful: [WebAction]? = nil, onFailed: [WebAction]? = nil)
+    case post(url: String? = nil, values: [WebVariable]? = nil, onSuccessful: [WebAction]? = nil, onFailed: [WebAction]? = nil, onTimeout: [WebAction]? = nil, resultInto: WebVariable? = nil)
     case set(value: WebVariable, to: Any?)
     case addClass(String)
     case removeClass(String)
@@ -50,7 +50,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 }
             case .script(let scrpt):
                 script += scrpt + "\n"
-            case .post(url: let url,values: let values, onSuccessful: let onSuccessful, onFailed: let onFailed):
+            case .post(url: let url,values: let values, onSuccessful: let onSuccessful, onFailed: let onFailed, onTimeout: let onTimeout, resultInto: let resultInto):
                 
                 // post data back to url or this url if nil, the array of values contains a property `name` which is the key for the json structure for data posting.
                 
@@ -70,6 +70,12 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 
                 // check for a status code of 200, 201 or 202
                 script += "     if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 201 || xhr.status == 202)) {\n"
+                
+                // copy the result if there is a target variable
+                if let resultInto = resultInto {
+                    script += "          \(resultInto.builderId) = xhr.responseText;\n"
+                }
+                
                 if let onSuccessful = onSuccessful {
                     for action in onSuccessful {
                         script += CompileActions([action], builderId: builderId)
@@ -294,6 +300,7 @@ const myModal = new bootstrap.Modal('#\(ref)', {
 })
 myModal.show();
 """
+            
             }
         }
         
