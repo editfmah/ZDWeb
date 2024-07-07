@@ -27,7 +27,7 @@ public class TextEditor : WebTextInputElement {
 l\(self.builderId)();
 function l\(self.builderId)() {
   const rl\(self.builderId) = () => {
-    \(builderId).innerText = \(binding.builderId);
+    \(builderId).value = \(binding.builderId);
     return setTimeout(rl\(self.builderId), 500);
   };
   rl\(self.builderId)();
