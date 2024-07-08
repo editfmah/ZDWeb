@@ -290,7 +290,92 @@ public enum WebColor {
         case .custom(let colorString):
             return colorString
         }
-        
+    
+    }
+    
+    var hex: String {
+        switch self {
+        case .red:
+            return "#FF0000"
+        case .darkred:
+            return "#8B0000"
+        case .lightred:
+            return "#FF6666"
+        case .green:
+            return "#008000"
+        case .lightgreen:
+            return "#66FF66"
+        case .darkgreen:
+            return "#006400"
+        case .blue:
+            return "#0000FF"
+        case .lightblue:
+            return "#6666FF"
+        case .darkblue:
+            return "#00008B"
+        case .yellow:
+            return "#FFFF00"
+        case .lightyellow:
+            return "#FFFF66"
+        case .darkyellow:
+            return "#FFFF00"
+        case .orange:
+            return "#FFA500"
+        case .lightorange:
+            return "#FFCC99"
+        case .darkorange:
+            return "#FF8C00"
+        case .purple:
+            return "#800080"
+        case .lightpurple:
+            return "#CC99FF"
+        case .darkpurple:
+            return "#4B0082"
+        case .pink:
+            return "#FFC0CB"
+        case .lightpink:
+            return "#FFCCCC"
+        case .darkpink:
+            return "#FF69B4"
+        case .brown:
+            return "#A52A2A"
+        case .lightbrown:
+            return "#D2B48C"
+        case .darkbrown:
+            return "#8B4513"
+        case .grey:
+            return "#808080"
+        case .darkGrey:
+            return "#404040"
+        case .lightGrey:
+            return "#C0C0C0"
+        case .indigo:
+            return "#4B0082"
+        case .lightindigo:
+            return "#9966FF"
+        case .darkindigo:
+            return "#4B0082"
+        case .teal:
+            return "#008080"
+        case .lightteal:
+            return "#66FFFF"
+        case .darkteal:
+            return "#008B8B"
+        case .cyan:
+            return "#00FFFF"
+        case .lightcyan:
+            return "#66FFFF"
+        case .darkcyan:
+            return "#008B8B"
+        case .black:
+            return "#000000"
+        case .white:
+            return "#FFFFFF"
+        case .transparent:
+            return "#000000"
+        case .custom(let colorString):
+            return colorString
+        }
     }
 }
 
@@ -366,6 +451,8 @@ public protocol GenericProperties {
     func radius(_ positions: [WebCornerPosition], _ radius: Int) -> Self
     func shadow(_ shadow: Int) -> Self
     func border(_ color: WebColor, width: Int) -> Self
+    func border(_ position: WebAreaPosition, _ color: WebColor, width: Int) -> Self
+    func border(_ positions: [WebAreaPosition], _ color: WebColor, width: Int) -> Self
     func width(_ width: Int) -> Self
     func height(_ height: Int) -> Self
     func maxWidth(_ width: Int) -> Self

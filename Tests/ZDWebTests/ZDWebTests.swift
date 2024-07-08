@@ -79,7 +79,9 @@ class TestPage: WebHTMLEndpoint {
                         ])
                     ])
                 let testChoice = WString("3").name("testing_choice")
-                
+                HStack {
+                    Text("sample")
+                }.minHeight(100).margin(20).border(.leading, .purple, width: 5).background(.lightpurple)
                 HStack {
                     Spacer()
                     VStack {
