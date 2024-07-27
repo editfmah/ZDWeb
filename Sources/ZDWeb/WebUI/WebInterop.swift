@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Adrian Herridge on 18/02/2024.
 //
@@ -18,7 +18,7 @@ public class WebCommonInterop {
     
     public var ref: String? = nil
     
-    func addClass(_ cls: String) {
+    public func addClass(_ cls: String) {
         executionPipeline()?.context?.builderScript("\(builderId).classList.add('\(cls)');")
     }
     
@@ -35,7 +35,7 @@ public class WebCommonInterop {
     }
     
     public func declare(_ tag: String, identifier: String, id: String? = nil, type: String? = nil, for: String? = nil, name: String? = nil, attributes: [String:String]? = nil, _ body: WebComposerClosure) {
-        context.declarative(tag, identifier: identifier, id: id, type: type, for: `for`, name: name, body)
+        context.declarative(tag, identifier: identifier, id: id, type: type, for: `for`, name: name, attributes: attributes, body)
     }
     
     public var type: WebElementType {
@@ -70,6 +70,8 @@ public class WebCommonInterop {
 public class WebTextInputElement : WebCommonInterop, GenericTextInputProperties {}
 
 public class WebElement : WebCommonInterop, GenericProperties {}
+
+public class WebTableElement : WebCommonInterop, GenericTableProperties {}
 
 public class WebButtonElement : WebCommonInterop, GenericButtonProperties {}
 

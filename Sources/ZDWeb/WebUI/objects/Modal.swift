@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Adrian Herridge on 04/07/2024.
 //
@@ -27,7 +27,7 @@ public enum WebModalType: String {
 
 public class Modal : WebElement {
     @discardableResult
-    public init(type: WebModalType? = .fullScreen, ref: String? = nil, _ body: WebComposerClosure) {
+    public init(type: WebModalType? = .fullScreen, title: String? = nil,  ref: String? = nil, _ body: WebComposerClosure) {
         super.init()
         self.type = .unknown
         
@@ -39,6 +39,7 @@ public class Modal : WebElement {
                 declare("div", identifier: "modal-content", {
                     // now the header
                     declare("div", identifier: "modal-header", {
+                        context.text("<h5 class=\"modal-title\">\(title ?? "")</h5>")
                         context.text("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>")
                     })
                     // now the body

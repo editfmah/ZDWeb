@@ -56,6 +56,18 @@ public enum Operator {
     
 }
 
+// Define BadgeStyle enum
+public enum BadgeStyle: String {
+    case primary = "bg-primary"
+    case secondary = "bg-secondary"
+    case success = "bg-success"
+    case danger = "bg-danger"
+    case warning = "bg-warning"
+    case info = "bg-info"
+    case light = "bg-light"
+    case dark = "bg-dark"
+}
+
 public enum WebAreaPosition {
     case leading
     case trailing
@@ -476,6 +488,9 @@ public protocol GenericProperties {
     func wrap(_ type: WebTextWrapType) -> Self
     func clip() -> Self
     func position(_ position: WebPosition) -> Self
+    func collapsible() -> Self
+    func tooltip(_ text: String) -> Self
+    func badge(style: BadgeStyle, text: String) -> Self
     
     // common events
     func onClick(_ action: WebAction) -> Self
@@ -488,6 +503,30 @@ public protocol GenericProperties {
     func onEnable(_ actions: [WebAction]) -> Self
     func onDisable(_ action: WebAction) -> Self
     func onDisable(_ actions: [WebAction]) -> Self
+    
+    // common methods
+    func addClass(_ cls: String)
+    var pipeline: WebRequestExecutionPipeline { get }
+    var context: WebRequestContext { get }
+    func script(_ script: String)
+}
+
+extension GenericProperties {
+    public func addClass(_ cls: String) {
+        executionPipeline()?.context?.builderScript("\(builderId).classList.add('\(cls)');")
+    }
+    
+    public var pipeline: WebRequestExecutionPipeline {
+        return executionPipeline()!
+    }
+    
+    public var context: WebRequestContext {
+        return pipeline.context!
+    }
+    
+    public func script(_ script: String) {
+        context.builderScript(script)
+    }
 }
 
 public protocol ImageProperties : GenericProperties {
@@ -616,4 +655,15 @@ public protocol GenericButtonProperties : GenericProperties {
     func type(_ type: WebButtonType) -> Self
     func style(_ style: WebStyle) -> Self
     func conditions(_ conditions: [WebVariable]) -> Self
+}
+
+public protocol GenericTableProperties : GenericProperties {
+    // allows for bootstrap 5 table styles
+    func bordered() -> Self
+    func borderless() -> Self
+    func striped() -> Self
+    func hover() -> Self
+    func dark() -> Self
+    func small() -> Self
+    func responsive() -> Self
 }

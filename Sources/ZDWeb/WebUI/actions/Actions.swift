@@ -31,7 +31,10 @@ public enum WebAction {
     case opacity(ref: String? = nil,_ value: Double)
     case setStyle(ref: String? = nil,_ style: WebStyle)
     case random([WebAction])
-    case showModal(ref: String)
+    case showModal(ref: String, contentURL: String? = nil)
+    case hideModal(ref: String)
+    case collapse(ref: String)
+    case popover(title: String, content: String)
 }
 
 public func CompileActions(_ actions: [WebAction], builderId: String) -> String {
@@ -294,15 +297,53 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 // now execute the random function
                 script += "functions\(id)[randomIndex\(id)]();\n"
                 
-            case .showModal(ref: let ref):
+            case .showModal(ref: let ref, contentURL: let contentURL):
                 // this shows a bootstrap modal dialog, the ref is the id of the modal dialog to show.
+                if let contentURL = contentURL {
+                    // shows the modal, but also sets the div with a `modal-body` class innerHTML to the contents from contentURL
+                    script += """
+const myModal = new bootstrap.Modal(document.getElementById('\(ref)'), {
+    keyboard: false
+    })
+fetch('\(contentURL)')
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById('\(ref)').querySelector('.modal-body').innerHTML = data;
+        myModal.show();
+    });
+"""
+                } else {
+                    script += """
+    const myModal = new bootstrap.Modal('#\(ref)', {
+      keyboard: false
+    })
+    myModal.show();
+    """
+                }
+            case .collapse(ref: let ref):
+                // this collapses a bootstrap accordion, the ref is the id of the accordion to collapse.
+                script += """
+var myCollapse = new bootstrap.Collapse('#\(ref)', {
+    hide: true
+    });
+"""
+            case .hideModal(ref: let ref):
+                // this hides a bootstrap modal dialog, the ref is the id of the modal dialog to hide.
                 script += """
 const myModal = new bootstrap.Modal('#\(ref)', {
   keyboard: false
 })
-myModal.show();
+myModal.hide();
 """
-            
+            case .popover(title: let title, content: let content):
+                // this shows a bootstrap popover, the title is the title of the popover and the content is the content of the popover.
+                script += """
+var popover = new bootstrap.Popover(\(builderId), {
+    title: '\(title)',
+    content: '\(content)'
+    });
+popper.show();
+"""
             }
         }
         
