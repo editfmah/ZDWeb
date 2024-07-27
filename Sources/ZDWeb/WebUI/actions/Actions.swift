@@ -35,321 +35,378 @@ public enum WebAction {
     case hideModal(ref: String)
     case collapse(ref: String)
     case popover(title: String, content: String)
+    case showOffCanvas(ref: String)
+    case hideOffCanvas(ref: String)
+    case carouselNext(ref: String)
+    case carouselPrev(ref: String)
+    case carouselTo(ref: String, index: Int)
+    case accordionToggle(ref: String)
+    case progressSet(ref: String, value: Int)
+    case spinnerSet(ref: String, type: SpinnerType, size: SpinnerSize, color: WebColor, label: String)
+    // this response receives the body of the response from the post request, followed by the code, fillowed by the headers
+    /*
+     so the structure looks like function(body, code, headers) { /* your code goes here and you can access body, code, headers */ }
+     */
+    case handleResponse(script: String)
+
 }
 
 public func CompileActions(_ actions: [WebAction], builderId: String) -> String {
-    
-        var script = ""
+    var script = ""
+
+    for action in actions {
+        switch action {
+        // Existing cases...
         
-        for action in actions {
-            switch action {
-            case .navigate(let url):
-                    script += "window.location.href = '\(url)';\n"
-            case .load(ref: let ref, url: let url):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').src = '\(url)';\n"
-                } else {
-                    script += "\(builderId).src('\(url)');\n"
-                }
-            case .script(let scrpt):
-                script += scrpt + "\n"
-            case .post(url: let url,values: let values, onSuccessful: let onSuccessful, onFailed: let onFailed, onTimeout: let onTimeout, resultInto: let resultInto):
-                
-                // post data back to url or this url if nil, the array of values contains a property `name` which is the key for the json structure for data posting.
-                let id = "\(UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "").prefix(4))"
-                
-                script += "var postData\(id) = {};\n"
-                for value in values ?? [] {
-                   if let name = value.formName {
-                       script += "postData\(id)['\(name)'] = \(value.builderId);\n";
-                   }
-                }
-                
-                // now use XMLHttpRequest() to send a JSON string encoding of the postData\(id) object to the server
-                
-                script += "var xhr\(id) = new XMLHttpRequest();\n"
-                script += "xhr\(id).open('POST', '\(url ?? "")', true);\n"
-                script += "xhr\(id).setRequestHeader('Content-Type', 'application/json');\n"
-                script += "xhr\(id).overrideMimeType('text/html');\n"
-                script += "xhr\(id).onreadystatechange = function() {\n"
-                
-                // check for a status code of 200, 201 or 202
-                script += "     if (xhr\(id).readyState == 4 && (xhr\(id).status == 200 || xhr\(id).status == 201 || xhr\(id).status == 202)) {\n"
-                
-                // copy the result if there is a target variable
-                if let resultInto = resultInto {
-                    script += "          \(resultInto.builderId) = xhr\(id).responseText;\n"
-                }
-                
-                if let onSuccessful = onSuccessful {
-                    for action in onSuccessful {
-                        script += CompileActions([action], builderId: builderId)
-                    }
-                }
-                script += "     } else {\n"
-                if let onFailed = onFailed {
-                    for action in onFailed {
-                        script += CompileActions([action], builderId: builderId)
-                    }
-                }
-                script += "     }\n"
-                script += "}\n"
-                
-                // set the request body to the JSON string encoding of the postData\(id) object
-                script += "xhr\(id).send(JSON.stringify(postData\(id)))\n"
-                
-            case .set(value: let value, to: let to):
-                // cast to value into different common types and then update the value in the script from the builderId in value
-                if let stringValue = to as? String {
-                    script += "\(value.builderId) = '\(stringValue)';\n"
-                } else if let intValue = to as? Int {
-                    script += "\(value.builderId) = \(intValue);\n"
-                } else if let doubleValue = to as? Double {
-                    script += "\(value.builderId) = \(doubleValue);\n"
-                } else if let boolValue = to as? Bool {
-                    script += "\(value.builderId) = \(boolValue ? "true" : "false");\n"
-                } else {
-                    script += "\(value.builderId) = '\(to)';\n"
-                }
-            case .addClass(let className):
-                script += "\(builderId).classList.add('\(className)');\n"
-            case .removeClass(let className):
-                script += "\(builderId).classList.remove('\(className)');\n"
-            case .hidden(ref: let ref, let value):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.display = \(value ? "'none'" : "'block'");\n"
-                } else {
-                    script += "\(builderId).style.display = \(value ? "'none'" : "'block'");\n"
-                }
-            case .if(let variable, let condition, let ifActions, let elseActions):
-                var ifScript = ""
-                for action in ifActions {
-                    ifScript += CompileActions([action], builderId: builderId)
-                }
-                if let elseActions = elseActions {
-                    var elseScript = ""
-                    for action in elseActions {
-                        elseScript += CompileActions([action], builderId: builderId)
-                    }
-                    script += "if (\(variable.builderId) \(condition.javascriptCondition) {\n\(ifScript)\n} else {\n\(elseScript)\n}\n"
-                } else {
-                    script += "if (\(variable.builderId) \(condition.javascriptCondition) {\n\(ifScript)\n}\n"
-                }
-            case .toggle(let value):
-                script += "\(value.builderId) = !\(value.builderId);\n"
-            case .foregroundColor(ref: let ref, let color):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.color = '\(color.rgba)';\n"
-                } else {
-                    script += "\(builderId).style.color = '\(color.rgba)';\n"
-                }
-            case .backgroundColor(ref: let ref, let color):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.backgroundColor = '\(color.rgba)';\n"
-                } else {
-                    script += "\(builderId).style.backgroundColor = '\(color.rgba)';\n"
-                }
-            case .underlineColor(ref: let ref, let color):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.textDecorationColor = '\(color.rgba)';\n"
-                } else {
-                    script += "\(builderId).style.textDecorationColor = '\(color.rgba)';\n"
-                }
-            case .underline(ref: let ref, let value):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.textDecoration = \(value ? "'underline'" : "'none'");\n"
-                } else {
-                    script += "\(builderId).style.textDecoration = \(value ? "'underline'" : "'none'");\n"
-                }
-            case .bold(ref: let ref, let value):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.fontWeight = \(value ? "'bold'" : "'normal'");\n"
-                } else {
-                    script += "\(builderId).style.fontWeight = \(value ? "'bold'" : "'normal'");\n"
-                }
-            case .italic(ref: let ref, let value):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.fontStyle = \(value ? "'italic'" : "'normal'");\n"
-                } else {
-                    script += "\(builderId).style.fontStyle = \(value ? "'italic'" : "'normal'");\n"
-                }
-            case .strikethrough(ref: let ref, let value):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.textDecoration = \(value ? "'line-through'" : "'none'");\n"
-                } else {
-                    script += "\(builderId).style.textDecoration = \(value ? "'line-through'" : "'none'");\n"
-                }
-            case .fontSize(ref: let ref, let size):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.fontSize = '\(size)px';\n"
-                } else {
-                    script += "\(builderId).style.fontSize = '\(size)px';\n"
-                }
-            case .fontFamily(ref: let ref, let name):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.fontFamily = '\(name)';\n"
-                } else {
-                    script += "\(builderId).style.fontFamily = '\(name)';\n"
-                }
-            case .fontWeight(ref: let ref, let weight):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.fontWeight = '\(weight)';\n"
-                } else {
-                    script += "\(builderId).style.fontWeight = '\(weight)';\n"
-                }
-            case .opacity(ref: let ref, let value):
-                if let ref = ref {
-                    script += "document.getElementById('\(ref)').style.opacity = \(value);\n"
-                } else {
-                    script += "\(builderId).style.opacity = \(value);\n"
-                }
-            case .setStyle(ref: let ref, let style):
-                
-                if let ref = ref {
-                    if let type = executionPipeline()?.types[ref] {
-                        switch type {
-                        case .text:
-                            
-                            // remove all the possible bootstrap styles for a text item
-                            for color in WebStyle.all {
-                                script += "document.getElementById('\(ref)').classList.remove('\(color.textStyleClass)');\n"
-                            }
-                            
-                            // now add in the new style
-                            script += "document.getElementById('\(ref)').classList.add('\(style.textStyleClass)');\n"
-                            
-                        case .button:
-                                
-                                // remove all the possible bootstrap styles for a button item
-                                for color in WebStyle.all {
-                                    script += "document.getElementById('\(ref)').classList.remove('\(color.buttonStyleClass)');\n"
-                                }
-                                
-                                // now add in the new style
-                                script += "document.getElementById('\(ref)').classList.add('\(style.buttonStyleClass)');\n"
-                            
-                        case .link:
-                            
-                            for color in WebStyle.all {
-                                script += "document.getElementById('\(ref)').classList.remove('\(color.linkStyleClass)');\n"
-                            }
-                            
-                            script += "document.getElementById('\(ref)').classList.add('\(style.linkStyleClass)');\n"
-                            
-                        case .image:
-                            break;
-                        case .unknown:
-                            break;
-                        }
-                    }
-                } else {
-                
-                    // we are looking up the object by class name (which is unique) and is the current builderId.
-                    if let type = executionPipeline()?.types[builderId] {
-                        switch type {
-                        case .text:
-                                // remove all the possible bootstrap styles for a text item
-                                for color in WebStyle.all {
-                                    script += "\(builderId).classList.remove('\(color.textStyleClass)');\n"
-                                }
-                                
-                                // now add in the new style
-                                script += "\(builderId).classList.add('\(style.textStyleClass)');\n"
-                        case .button:
-                                // remove all the possible bootstrap styles for a button item
-                                for color in WebStyle.all {
-                                    script += "\(builderId).classList.remove('\(color.buttonStyleClass)');\n"
-                                }
-                                
-                                // now add in the new style
-                                script += "\(builderId).classList.add('\(style.buttonStyleClass)');\n"
-                        case .link:
-                            for color in WebStyle.all {
-                                script += "\(builderId).classList.remove('\(color.linkStyleClass)');\n"
-                            }
-                            
-                            script += "\(builderId).classList.add('\(style.linkStyleClass)');\n"
-                        case .image:
-                            break;
-                        case .unknown:
-                            break;
-                        }
-                    }
-                    
-                }
-                
-            case .random(let actions):
-                
-                // create a random number in javascript between 0 and the count of actions, then execute that action.
-                
-                let id = UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "")
-                
-                script += "var randomIndex\(id) = Math.floor(Math.random() * \(actions.count));\n"
-                script += "var functions\(id) = [];\n"
-                
-                // now output the compiled action into the functions variable
-                for action in actions {
-                    script += "functions\(id).push(function() {\n"
-                    script += CompileActions([action], builderId: builderId)
-                    script += "});\n"
-                }
-                
-                // now execute the random function
-                script += "functions\(id)[randomIndex\(id)]();\n"
-                
-            case .showModal(ref: let ref, contentURL: let contentURL):
-                // this shows a bootstrap modal dialog, the ref is the id of the modal dialog to show.
-                if let contentURL = contentURL {
-                    // shows the modal, but also sets the div with a `modal-body` class innerHTML to the contents from contentURL
-                    script += """
-const myModal = new bootstrap.Modal(document.getElementById('\(ref)'), {
-    keyboard: false
-    })
-fetch('\(contentURL)')
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById('\(ref)').querySelector('.modal-body').innerHTML = data;
-        myModal.show();
-    });
-"""
-                } else {
-                    script += """
-    const myModal = new bootstrap.Modal('#\(ref)', {
-      keyboard: false
-    })
-    myModal.show();
-    """
-                }
-            case .collapse(ref: let ref):
-                // this collapses a bootstrap accordion, the ref is the id of the accordion to collapse.
-                script += """
-var myCollapse = new bootstrap.Collapse('#\(ref)', {
-    hide: true
-    });
-"""
-            case .hideModal(ref: let ref):
-                // this hides a bootstrap modal dialog, the ref is the id of the modal dialog to hide.
-                script += """
-const myModal = new bootstrap.Modal('#\(ref)', {
-  keyboard: false
-})
-myModal.hide();
-"""
-            case .popover(title: let title, content: let content):
-                // this shows a bootstrap popover, the title is the title of the popover and the content is the content of the popover.
-                script += """
-var popover = new bootstrap.Popover(\(builderId), {
-    title: '\(title)',
-    content: '\(content)'
-    });
-popper.show();
-"""
+        case .showOffCanvas(let ref):
+            script += """
+            var offcanvasElement = document.getElementById('\(ref)');
+            if (offcanvasElement) {
+                var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                offcanvas.show();
             }
-        }
+            """
         
-        return script
-    
+        case .hideOffCanvas(let ref):
+            script += """
+            var offcanvasElement = document.getElementById('\(ref)');
+            if (offcanvasElement) {
+                var offcanvas = new bootstrap.Offcanvas(offcanvasElement);
+                offcanvas.hide();
+            }
+            """
+        
+        case .carouselNext(let ref):
+            script += """
+            var carouselElement = document.getElementById('\(ref)');
+            if (carouselElement) {
+                var carousel = new bootstrap.Carousel(carouselElement);
+                carousel.next();
+            }
+            """
+        
+        case .carouselPrev(let ref):
+            script += """
+            var carouselElement = document.getElementById('\(ref)');
+            if (carouselElement) {
+                var carousel = new bootstrap.Carousel(carouselElement);
+                carousel.prev();
+            }
+            """
+        
+        case .carouselTo(let ref, let index):
+            script += """
+            var carouselElement = document.getElementById('\(ref)');
+            if (carouselElement) {
+                var carousel = new bootstrap.Carousel(carouselElement);
+                carousel.to(\(index));
+            }
+            """
+        
+        case .accordionToggle(let ref):
+            script += """
+            var accordionElement = document.getElementById('\(ref)');
+            if (accordionElement) {
+                var accordion = new bootstrap.Collapse(accordionElement);
+                accordion.toggle();
+            }
+            """
+        
+        case .progressSet(let ref, let value):
+            script += """
+            var progressElement = document.getElementById('\(ref)');
+            if (progressElement) {
+                var progressBar = progressElement.querySelector('.progress-bar');
+                if (progressBar) {
+                    progressBar.setAttribute('aria-valuenow', \(value));
+                    progressBar.style.width = \(value) + '%';
+                    var label = progressBar.querySelector('.progress-label');
+                    if (label) {
+                        label.textContent = \(value) + '%';
+                    }
+                }
+            }
+            """
+        
+        case .spinnerSet(let ref, let type, let size, let color, let label):
+            script += """
+            var spinnerElement = document.getElementById('\(ref)');
+            if (spinnerElement) {
+                spinnerElement.classList.remove('spinner-border', 'spinner-grow', 'spinner-border-sm', 'spinner-border-lg', 'spinner-grow-sm', 'spinner-grow-lg');
+                spinnerElement.classList.add('\(type.rawValue)');
+                if ('\(size.rawValue)' !== '') {
+                    spinnerElement.classList.add('\(size.rawValue)');
+                }
+                spinnerElement.style.color = '\(color.rgba)';
+                var labelElement = spinnerElement.querySelector('.sr-only');
+                if (labelElement) {
+                    labelElement.textContent = '\(label)';
+                }
+            }
+            """
+        
+        case .handleResponse(let scriptContent):
+            // This case is handled within the .post case to inject the response data
+            break
+        
+        // Existing cases...
+
+        case .navigate(let url):
+            script += "window.location.href = '\(url)';\n"
+        case .load(ref: let ref, url: let url):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').src = '\(url)';\n"
+            } else {
+                script += "\(builderId).src('\(url)');\n"
+            }
+        case .script(let scrpt):
+            script += scrpt + "\n"
+        case .post(url: let url, values: let values, onSuccessful: let onSuccessful, onFailed: let onFailed, onTimeout: let onTimeout, resultInto: let resultInto):
+            let id = "\(UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "").prefix(4))"
+            script += "var postData\(id) = {};\n"
+            for value in values ?? [] {
+                if let name = value.formName {
+                    script += "postData\(id)['\(name)'] = \(value.builderId);\n"
+                }
+            }
+            script += "var xhr\(id) = new XMLHttpRequest();\n"
+            script += "xhr\(id).open('POST', '\(url ?? "")', true);\n"
+            script += "xhr\(id).setRequestHeader('Content-Type', 'application/json');\n"
+            script += "xhr\(id).overrideMimeType('text/html');\n"
+            script += "xhr\(id).onreadystatechange = function() {\n"
+            script += "if (xhr\(id).readyState == 4 && (xhr\(id).status == 200 || xhr\(id).status == 201 || xhr\(id).status == 202)) {\n"
+            if let resultInto = resultInto {
+                script += "\(resultInto.builderId) = xhr\(id).responseText;\n"
+            }
+            if let onSuccessful = onSuccessful {
+                for action in onSuccessful {
+                    if case .handleResponse(let scriptContent) = action {
+                        script += """
+                        {
+                            var body = xhr\(id).responseText;
+                            var status = xhr\(id).status;
+                            var headers = xhr\(id).getAllResponseHeaders();
+                            \(scriptContent)
+                        }
+                        """
+                    } else {
+                        script += CompileActions([action], builderId: builderId)
+                    }
+                }
+            }
+            script += "} else {\n"
+            if let onFailed = onFailed {
+                script += CompileActions(onFailed, builderId: builderId)
+            }
+            script += "}\n"
+            script += "};\n"
+            script += "xhr\(id).send(JSON.stringify(postData\(id)));\n"
+        case .set(value: let value, to: let to):
+            if let stringValue = to as? String {
+                script += "\(value.builderId) = '\(stringValue)';\n"
+            } else if let intValue = to as? Int {
+                script += "\(value.builderId) = \(intValue);\n"
+            } else if let doubleValue = to as? Double {
+                script += "\(value.builderId) = \(doubleValue);\n"
+            } else if let boolValue = to as? Bool {
+                script += "\(value.builderId) = \(boolValue ? "true" : "false");\n"
+            } else {
+                script += "\(value.builderId) = '\(to)';\n"
+            }
+        case .addClass(let className):
+            script += "\(builderId).classList.add('\(className)');\n"
+        case .removeClass(let className):
+            script += "\(builderId).classList.remove('\(className)');\n"
+        case .hidden(ref: let ref, let value):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.display = \(value ? "'none'" : "'block'");\n"
+            } else {
+                script += "\(builderId).style.display = \(value ? "'none'" : "'block'");\n"
+            }
+        case .if(let variable, let condition, let ifActions, let elseActions):
+            let ifScript = CompileActions(ifActions, builderId: builderId)
+            if let elseActions = elseActions {
+                let elseScript = CompileActions(elseActions, builderId: builderId)
+                script += "if (\(variable.builderId) \(condition.javascriptCondition)) {\n\(ifScript)\n} else {\n\(elseScript)\n}\n"
+            } else {
+                script += "if (\(variable.builderId) \(condition.javascriptCondition)) {\n\(ifScript)\n}\n"
+            }
+        case .toggle(let value):
+            script += "\(value.builderId) = !\(value.builderId);\n"
+        case .foregroundColor(ref: let ref, let color):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.color = '\(color.rgba)';\n"
+            } else {
+                script += "\(builderId).style.color = '\(color.rgba)';\n"
+            }
+        case .backgroundColor(ref: let ref, let color):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.backgroundColor = '\(color.rgba)';\n"
+            } else {
+                script += "\(builderId).style.backgroundColor = '\(color.rgba)';\n"
+            }
+        case .underlineColor(ref: let ref, let color):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.textDecorationColor = '\(color.rgba)';\n"
+            } else {
+                script += "\(builderId).style.textDecorationColor = '\(color.rgba)';\n"
+            }
+        case .underline(ref: let ref, let value):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.textDecoration = \(value ? "'underline'" : "'none'");\n"
+            } else {
+                script += "\(builderId).style.textDecoration = \(value ? "'underline'" : "'none'");\n"
+            }
+        case .bold(ref: let ref, let value):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.fontWeight = \(value ? "'bold'" : "'normal'");\n"
+            } else {
+                script += "\(builderId).style.fontWeight = \(value ? "'bold'" : "'normal'");\n"
+            }
+        case .italic(ref: let ref, let value):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.fontStyle = \(value ? "'italic'" : "'normal'");\n"
+            } else {
+                script += "\(builderId).style.fontStyle = \(value ? "'italic'" : "'normal'");\n"
+            }
+        case .strikethrough(ref: let ref, let value):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.textDecoration = \(value ? "'line-through'" : "'none'");\n"
+            } else {
+                script += "\(builderId).style.textDecoration = \(value ? "'line-through'" : "'none'");\n"
+            }
+        case .fontSize(ref: let ref, let size):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.fontSize = '\(size)px';\n"
+            } else {
+                script += "\(builderId).style.fontSize = '\(size)px';\n"
+            }
+        case .fontFamily(ref: let ref, let name):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.fontFamily = '\(name)';\n"
+            } else {
+                script += "\(builderId).style.fontFamily = '\(name)';\n"
+            }
+        case .fontWeight(ref: let ref, let weight):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.fontWeight = '\(weight)';\n"
+            } else {
+                script += "\(builderId).style.fontWeight = '\(weight)';\n"
+            }
+        case .opacity(ref: let ref, let value):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').style.opacity = \(value);\n"
+            } else {
+                script += "\(builderId).style.opacity = \(value);\n"
+            }
+        case .setStyle(ref: let ref, let style):
+            if let ref = ref {
+                if let type = executionPipeline()?.types[ref] {
+                    switch type {
+                    case .text:
+                        for color in WebStyle.all {
+                            script += "document.getElementById('\(ref)').classList.remove('\(color.textStyleClass)');\n"
+                        }
+                        script += "document.getElementById('\(ref)').classList.add('\(style.textStyleClass)');\n"
+                    case .button:
+                        for color in WebStyle.all {
+                            script += "document.getElementById('\(ref)').classList.remove('\(color.buttonStyleClass)');\n"
+                        }
+                        script += "document.getElementById('\(ref)').classList.add('\(style.buttonStyleClass)');\n"
+                    case .link:
+                        for color in WebStyle.all {
+                            script += "document.getElementById('\(ref)').classList.remove('\(color.linkStyleClass)');\n"
+                        }
+                        script += "document.getElementById('\(ref)').classList.add('\(style.linkStyleClass)');\n"
+                    case .image:
+                        break
+                    case .unknown:
+                        break
+                    }
+                }
+            } else {
+                if let type = executionPipeline()?.types[builderId] {
+                    switch type {
+                    case .text:
+                        for color in WebStyle.all {
+                            script += "\(builderId).classList.remove('\(color.textStyleClass)');\n"
+                        }
+                        script += "\(builderId).classList.add('\(style.textStyleClass)');\n"
+                    case .button:
+                        for color in WebStyle.all {
+                            script += "\(builderId).classList.remove('\(color.buttonStyleClass)');\n"
+                        }
+                        script += "\(builderId).classList.add('\(style.buttonStyleClass)');\n"
+                    case .link:
+                        for color in WebStyle.all {
+                            script += "\(builderId).classList.remove('\(color.linkStyleClass)');\n"
+                        }
+                        script += "\(builderId).classList.add('\(style.linkStyleClass)');\n"
+                    case .image:
+                        break
+                    case .unknown:
+                        break
+                    }
+                }
+            }
+        case .random(let actions):
+            let id = UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "")
+            script += "var randomIndex\(id) = Math.floor(Math.random() * \(actions.count));\n"
+            script += "var functions\(id) = [];\n"
+            for action in actions {
+                script += "functions\(id).push(function() {\n"
+                script += CompileActions([action], builderId: builderId)
+                script += "});\n"
+            }
+            script += "functions\(id)[randomIndex\(id)]();\n"
+        case .showModal(ref: let ref, contentURL: let contentURL):
+            if let contentURL = contentURL {
+                script += """
+                const myModal = new bootstrap.Modal(document.getElementById('\(ref)'), {
+                    keyboard: false
+                })
+                fetch('\(contentURL)')
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById('\(ref)').querySelector('.modal-body').innerHTML = data;
+                        myModal.show();
+                    });
+                """
+            } else {
+                script += """
+                const myModal = new bootstrap.Modal('#\(ref)', {
+                  keyboard: false
+                })
+                myModal.show();
+                """
+            }
+        case .collapse(ref: let ref):
+            script += """
+            var myCollapse = new bootstrap.Collapse('#\(ref)', {
+                hide: true
+            });
+            """
+        case .hideModal(ref: let ref):
+            script += """
+            const myModal = new bootstrap.Modal('#\(ref)', {
+              keyboard: false
+            })
+            myModal.hide();
+            """
+        case .popover(title: let title, content: let content):
+            script += """
+            var popover = new bootstrap.Popover(\(builderId), {
+                title: '\(title)',
+                content: '\(content)'
+            });
+            popper.show();
+            """
+        }
+    }
+
+    return script
 }
+
 
 extension GenericProperties {
     
