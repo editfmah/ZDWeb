@@ -1,11 +1,9 @@
 //
-//  File.swift
-//  
+//  Navbar.swift
+//
 //
 //  Created by Adrian Herridge on 18/02/2024.
 //
-
-import Foundation
 
 import Foundation
 
@@ -98,12 +96,12 @@ public class Navbar: WebElement, WebNavbarProperties {
                 declare("div", identifier: "navbar-brand-container d-flex align-items-center " + builderId) {
                     if let brandImage = brandImage, let brandText = brandText {
                         declare("a", identifier: "navbar-brand " + builderId, attributes: ["href": "#"]) {
-                            declare("img", identifier: builderId, attributes: ["src": brandImage, "alt": brandText, "style": "height:30px; margin-right:10px;"]) {}
+                            declare("img", identifier: builderId, attributes: ["src": brandImage, "alt": brandText, "style": "height:45px; margin-right:10px;"]) {}
                             context.text(brandText)
                         }
                     } else if let brandImage = brandImage {
                         declare("a", identifier: "navbar-brand " + builderId, attributes: ["href": "#"]) {
-                            declare("img", identifier: builderId, attributes: ["src": brandImage, "alt": brandText ?? "", "style": "height:30px;"]) {}
+                            declare("img", identifier: builderId, attributes: ["src": brandImage, "alt": brandText ?? "", "style": "height: 45px;"]) {}
                         }
                     } else if let brandText = brandText {
                         declare("a", identifier: "navbar-brand " + builderId, attributes: ["href": "#"]) {

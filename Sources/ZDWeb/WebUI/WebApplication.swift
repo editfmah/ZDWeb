@@ -36,31 +36,34 @@ func executionPipeline() -> WebRequestExecutionPipeline? {
 
 public extension WebRequestContext {
     
-    func generateInlineStyles(from theme: Theme) -> String {
-        return """
+    func generateInlineStyles(from theme: Theme?) -> String {
+        
+        if let theme = theme {
+            
+            return """
         <style>
             body {
                 background-color: \(theme.background.rgba);
                 color: \(theme.onBackground.rgba);
                 font-family: \(theme.fontFamily);
             }
-
+        
             h1, h2, h3, h4, h5, h6 {
                 font-family: \(theme.headingFontFamily);
             }
-
+        
             a {
                 color: \(theme.primary.rgba);
                 transition: 0.5s;
             }
-
+        
             a:hover,
             a:focus {
                 color: \(theme.accent.rgba);
                 text-decoration: none;
                 transition: 0.5s;
             }
-
+        
             .navbar {
                 background-color: \(theme.primary.rgba);
                 color: \(theme.onPrimary.rgba);
@@ -123,6 +126,16 @@ public extension WebRequestContext {
             }
         </style>
         """
+        } else {
+            
+            var stylesheet = "<style>\n"
+            for (selector, rules) in WebApplication.styles.sorted(by: { $0.key < $1.key }) {
+                stylesheet += "\(selector) {\n\(rules)\n}\n"
+            }
+            stylesheet += "</style>\n"
+            return stylesheet
+            
+        }
     }
 
     
@@ -295,5 +308,92 @@ public class WebApplication {
     
     // default theme
     public static var theme: Theme? = nil
+    
+    // styles to form the style sheet
+    public static var styles: [String: String] = [:]
+    
+    static func generateStyles(from theme: Theme) {
+        WebApplication.styles["body"] = """
+            background-color: \(theme.background.rgba);
+            color: \(theme.onBackground.rgba);
+            font-family: \(theme.fontFamily);
+        """
+        
+        WebApplication.styles["h1, h2, h3, h4, h5, h6"] = "font-family: \(theme.headingFontFamily);"
+        
+        WebApplication.styles["p"] = """
+            color: \(theme.onSurface.rgba);
+            font-size: 18px;
+            line-height: 28px;
+        """
+        
+        WebApplication.styles["a"] = """
+            color: \(theme.primary.rgba);
+            transition: 0.5s;
+        """
+        
+        WebApplication.styles["a:hover, a:focus"] = """
+            color: \(theme.accent.rgba);
+            text-decoration: none;
+            transition: 0.5s;
+        """
+        
+        WebApplication.styles[".navbar"] = """
+            background-color: \(theme.primary.rgba);
+            color: \(theme.onPrimary.rgba);
+            font-family: \(theme.headingFontFamily);
+        """
+        
+        WebApplication.styles[".navbar .nav-link"] = """
+            color: \(theme.onPrimary.rgba);
+            font-family: \(theme.fontFamily);
+        """
+        
+        WebApplication.styles[".navbar .nav-link:hover"] = "color: \(theme.accent.rgba); text-decoration: underline;"
+        
+        WebApplication.styles[".navbar .dropdown-menu"] = """
+            background-color: \(theme.primaryContainer.rgba);
+            color: \(theme.onPrimaryContainer.rgba);
+        """
+        
+        WebApplication.styles[".navbar .dropdown-item:hover"] = """
+            background-color: \(theme.accent.rgba);
+            color: \(theme.onPrimary.rgba);
+        """
+        
+        WebApplication.styles[".content-panel"] = """
+            background-color: \(theme.secondaryContainer.rgba);
+            color: \(theme.onSecondaryContainer.rgba);
+            font-family: \(theme.fontFamily);
+        """
+        
+        WebApplication.styles[".table"] = """
+            background-color: \(theme.tertiaryContainer.rgba);
+            color: \(theme.onTertiaryContainer.rgba);
+            font-family: \(theme.fontFamily);
+        """
+        
+        WebApplication.styles[".link:hover"] = "color: \(theme.accent.rgba);"
+        
+        WebApplication.styles[".button-primary"] = """
+            background-color: \(theme.primary.rgba);
+            color: \(theme.onPrimary.rgba);
+        """
+        
+        WebApplication.styles[".button-primary:hover"] = """
+            background-color: \(theme.accent.rgba);
+            color: \(theme.onPrimary.rgba);
+        """
+        
+        WebApplication.styles[".button-secondary"] = """
+            background-color: \(theme.secondary.rgba);
+            color: \(theme.onSecondary.rgba);
+        """
+        
+        WebApplication.styles[".button-secondary:hover"] = """
+            background-color: \(theme.accent.rgba);
+            color: \(theme.onSecondary.rgba);
+        """
+    }
     
 }
