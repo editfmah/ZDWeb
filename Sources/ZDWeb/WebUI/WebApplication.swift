@@ -272,4 +272,7 @@ public class WebApplication {
     // Static property for favicon
     public static var favicon: String = ""
     
+    // default theme
+    public static var theme: Theme? = nil
+    
 }

@@ -66,6 +66,7 @@ public class WebRequestContext {
         self.endpoint = endpoint
         //TODO: implement this.
         self.origin = ""
+        self.theme = WebApplication.theme
     }
     
     public var body: String {
