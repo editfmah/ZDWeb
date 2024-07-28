@@ -312,7 +312,7 @@ public class WebApplication {
     // styles to form the style sheet
     public static var styles: [String: String] = [:]
     
-    static func generateStyles(from theme: Theme) {
+    public static func generateStyles(from theme: Theme) {
         WebApplication.styles["body"] = """
             background-color: \(theme.background.rgba);
             color: \(theme.onBackground.rgba);
