@@ -185,9 +185,7 @@ public extension WebRequestContext {
             headHTML += "<script src=\"\(script)\"></script>\n"
         }
         
-        if let theme = theme {
-            headHTML += generateInlineStyles(from: theme)
-        }
+        headHTML += generateInlineStyles(from: theme)
         
         headHTML += "</head>\n"
         return headHTML
