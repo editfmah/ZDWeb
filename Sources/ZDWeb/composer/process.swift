@@ -47,6 +47,9 @@ public class WebRequestContext {
     
     // the endpoint for the request, can be tested for compliance for additional components for meta tags and javascript libs.
     public var endpoint: WebHTMLEndpoint? = nil
+    
+    // theme object to be applied to this context
+    public var theme: Theme? = nil
  
     // page/response structure
     internal var blocks: [String] = []
