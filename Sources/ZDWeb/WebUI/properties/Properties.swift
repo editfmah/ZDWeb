@@ -509,6 +509,14 @@ public protocol GenericProperties {
     var pipeline: WebRequestExecutionPipeline { get }
     var context: WebRequestContext { get }
     func script(_ script: String)
+    
+    // theme application
+    func applyTheme(_ theme: Theme) -> Self
+    func applyPrimaryTheme(_ theme: Theme) -> Self
+    func applySecondaryTheme(_ theme: Theme) -> Self
+    func applyTertiaryTheme(_ theme: Theme) -> Self
+    func applyAccentTheme(_ theme: Theme) -> Self
+    
 }
 
 extension GenericProperties {

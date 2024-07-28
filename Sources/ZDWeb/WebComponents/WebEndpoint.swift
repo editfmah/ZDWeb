@@ -83,6 +83,10 @@ public protocol WebHTMLEndpoint : WebEndpoint {
     // fragment object getter
     func fragment(_ c: WebRequestContext, activity: WebNavigationActivity,  fragment: String) -> WebResponseObject?
     
+    var scripts: [String] { get }
+    var styles: [String] { get }
+    var meta: [String:String] { get }
+    
 }
 
 public extension WebHTMLEndpoint {

@@ -8,7 +8,11 @@
 import Foundation
 
 class SamplePage: WebHTMLEndpoint {
-
+    
+    var scripts: [String] = []
+    var styles: [String] = []
+    var meta: [String : String] = [:]
+    
     static func register() {
         WebServer.registrations.append(SamplePage())
     }

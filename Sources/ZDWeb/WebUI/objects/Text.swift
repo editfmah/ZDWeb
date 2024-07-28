@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Adrian Herridge on 18/02/2024.
 //
@@ -14,13 +14,13 @@ public class Text : WebElement {
         type = .text
         if isPicker == false {
             declare("span", identifier: self.builderId , {
-                
+                context.text(text)
             })
         } else {
             switch pickerType {
             case .dropdown:
                 declare("option", identifier: self.builderId , {
-                    
+                    context.text(text)
                 })
             case .radio:
                 break;
@@ -34,12 +34,11 @@ public class Text : WebElement {
                 // these are actually buttons, within a button group
                 // <button type="button" class="btn btn-secondary">Left</button>
                 declare("button", identifier: self.builderId + " btn btn-secondary" , {
-                    
+                    context.text(text)
                 })
             }
         }
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
-        script("\(builderId).innerText = '\(text)';")
         if isPicker && pickerType == .segmented {
             // set the type to button
             script("\(builderId).type = 'button';")

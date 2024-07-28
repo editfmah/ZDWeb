@@ -42,7 +42,7 @@ public class WebServer {
                 
                 let requestHandler: ((HttpRequest) -> HttpResponse) = { request in
                     
-                    let c = WebRequestContext(navigation: WebNavigationPosition(request), data: WebRequestData(request), service: self, request: request)
+                    let c = WebRequestContext(navigation: WebNavigationPosition(request), data: WebRequestData(request), service: self, request: request, endpoint: r)
                     onAccept(c)
                     
                     // check authentication status
@@ -184,7 +184,7 @@ public class WebServer {
                 }
                 
                 let requestHandler: ((HttpRequest) -> HttpResponse) = { request in
-                    let c = WebRequestContext(navigation: WebNavigationPosition(request), data: WebRequestData(request), service: self, request: request)
+                    let c = WebRequestContext(navigation: WebNavigationPosition(request), data: WebRequestData(request), service: self, request: request, endpoint: nil)
                     onAccept(c)
                  
                     // check authentication status

@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Adrian Herridge on 29/08/2021.
 //
@@ -44,6 +44,9 @@ public class WebRequestContext {
     public var origin: String
     
     public var security = WebProcessSecurity()
+    
+    // the endpoint for the request, can be tested for compliance for additional components for meta tags and javascript libs.
+    public var endpoint: WebHTMLEndpoint? = nil
  
     // page/response structure
     internal var blocks: [String] = []
@@ -52,11 +55,12 @@ public class WebRequestContext {
     internal var elementProperties: [String:[String:Any?]] = [:]
     internal var elementTags: [String:[String]] = [:]
     
-    public init(navigation: WebNavigationPosition, data: WebRequestData, service: WebServer, request: HttpRequest) {
+    public init(navigation: WebNavigationPosition, data: WebRequestData, service: WebServer, request: HttpRequest, endpoint: WebHTMLEndpoint?) {
         self.request = request
         self.navigation = navigation
         self.service = service
         self.data = data
+        self.endpoint = endpoint
         //TODO: implement this.
         self.origin = ""
     }

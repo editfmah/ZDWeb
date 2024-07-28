@@ -21,6 +21,7 @@ public extension WebRequestContext {
         if self.builderScripts.isEmpty == false {
             self.script(builderScripts.joined(separator: "\n"))
         }
+        self.builderScripts.removeAll()
     }
     func script(url: String) {
         self.output("<script src=\"\(url)\"></script>")
