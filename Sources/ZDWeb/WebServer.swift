@@ -133,7 +133,7 @@ public class WebServer {
                             item.visibility = r.accessible
                             item.cont = r.controller
                             item.meth = r.method
-                            item.glyph = menuObject.glyph
+                            item.icon = menuObject.icon
                             
                             for g in item.grants {
                                 if !header.grants.contains(g) {
@@ -146,7 +146,7 @@ public class WebServer {
                             
                             let header = MenuEntry()
                             header.title = entry.primary
-                            header.glyph = menuObject.glyph
+                            header.icon = menuObject.icon
                             header.primary = entry.primary
                             header.visibility = r.accessible
                             header.grants = r.grants[.Content] ?? []
@@ -156,7 +156,7 @@ public class WebServer {
                             if let secondary = entry.secondary {
                                 let item = MenuEntry()
                                 item.secondary = secondary
-                                item.glyph = menuObject.glyph
+                                item.icon = menuObject.icon
                                 item.primary = entry.primary
                                 item.title = secondary
                                 item.grants = r.grants[.Content] ?? []
@@ -235,7 +235,7 @@ public class MenuEntry {
     public var cont: String?
     public var meth: String?
     public var header: Bool = false
-    public var glyph: Glyph?
+    public var icon: FontAwesomeIcon?
     
     public func copyFrom(_ menu: MenuEntry) -> MenuEntry {
         self.title = menu.title
@@ -249,7 +249,7 @@ public class MenuEntry {
         self.selected = menu.selected
         self.cont = menu.cont
         self.meth = menu.meth
-        self.glyph = menu.glyph
+        self.icon = menu.icon
         return self
     }
 }

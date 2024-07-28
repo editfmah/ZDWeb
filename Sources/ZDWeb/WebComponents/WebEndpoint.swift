@@ -49,7 +49,7 @@ public protocol WebFunction : WebAPIEndpoint {
 }
 
 public protocol MenuIndexable {
-    var glyph: Glyph? { get }
+    var icon: FontAwesomeIcon? { get }
     var menuEntry: (primary: String, secondary: String?)? { get }
 }
 
