@@ -439,6 +439,32 @@ public enum WebPosition : String {
     case sticky
 }
 
+public enum WebBackgroundSize: String {
+    case auto
+    case cover
+    case contain
+}
+
+public enum WebBackgroundRepeat: String {
+    case noRepeat = "no-repeat"
+    case `repeat` = "repeat"
+    case repeatX = "repeat-x"
+    case repeatY = "repeat-y"
+}
+
+public enum WebBackgroundPosition: String {
+    case topLeft = "top left"
+    case topCenter = "top center"
+    case topRight = "top right"
+    case centerLeft = "center left"
+    case centerCenter = "center center"
+    case centerRight = "center right"
+    case bottomLeft = "bottom left"
+    case bottomCenter = "bottom center"
+    case bottomRight = "bottom right"
+}
+
+
 public protocol GenericProperties {
     
     var builderId: String { get }
@@ -446,6 +472,11 @@ public protocol GenericProperties {
     // property setters
     func background(_ color: WebColor) -> Self
     func background(_ direction: WebGradientDirection, _ colors: [WebColor]) -> Self
+    func backgroundImage(_ url: String) -> Self
+    func backgroundSize(_ size: WebBackgroundSize) -> Self
+    func backgroundRepeat(_ `repeat`: WebBackgroundRepeat) -> Self
+    func backgroundPosition(_ position: WebBackgroundPosition) -> Self
+    func backgroundAttachment(_ attachment: String) -> Self
     func font(_ font: WebFontSize) -> Self
     func bold() -> Self
     func lightweight() -> Self
