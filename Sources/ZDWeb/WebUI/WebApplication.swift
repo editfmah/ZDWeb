@@ -44,14 +44,32 @@ public extension WebRequestContext {
                 color: \(theme.onBackground.rgba);
                 font-family: \(theme.fontFamily);
             }
-        
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: \(theme.headingFontFamily);
+            }
+
+            a {
+                color: \(theme.primary.rgba);
+                transition: 0.5s;
+            }
+
+            a:hover,
+            a:focus {
+                color: \(theme.accent.rgba);
+                text-decoration: none;
+                transition: 0.5s;
+            }
+
             .navbar {
                 background-color: \(theme.primary.rgba);
                 color: \(theme.onPrimary.rgba);
+                font-family: \(theme.headingFontFamily);
             }
             
             .navbar .nav-link {
                 color: \(theme.onPrimary.rgba);
+                font-family: \(theme.fontFamily);
             }
             
             .navbar .nav-link:hover {
@@ -71,11 +89,13 @@ public extension WebRequestContext {
             .content-panel {
                 background-color: \(theme.secondaryContainer.rgba);
                 color: \(theme.onSecondaryContainer.rgba);
+                font-family: \(theme.fontFamily);
             }
             
             .table {
                 background-color: \(theme.tertiaryContainer.rgba);
                 color: \(theme.onTertiaryContainer.rgba);
+                font-family: \(theme.fontFamily);
             }
             
             .link:hover {
@@ -104,6 +124,7 @@ public extension WebRequestContext {
         </style>
         """
     }
+
     
     func generateHead(theme: Theme?) -> String {
         
