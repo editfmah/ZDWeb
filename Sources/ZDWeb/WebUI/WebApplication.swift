@@ -36,18 +36,97 @@ func executionPipeline() -> WebRequestExecutionPipeline? {
 
 public extension WebRequestContext {
     
-    func generateHead() -> String {
+    func generateInlineStyles(from theme: Theme) -> String {
+        return """
+        <style>
+            body {
+                background-color: \(theme.background.rgba);
+                color: \(theme.onBackground.rgba);
+                font-family: \(theme.fontFamily);
+            }
+        
+            .navbar {
+                background-color: \(theme.primary.rgba);
+                color: \(theme.onPrimary.rgba);
+            }
+            
+            .navbar .nav-link {
+                color: \(theme.onPrimary.rgba);
+            }
+            
+            .navbar .nav-link:hover {
+                color: \(theme.accent.rgba);
+            }
+            
+            .navbar .dropdown-menu {
+                background-color: \(theme.primaryContainer.rgba);
+                color: \(theme.onPrimaryContainer.rgba);
+            }
+            
+            .navbar .dropdown-item:hover {
+                background-color: \(theme.accent.rgba);
+                color: \(theme.onPrimary.rgba);
+            }
+            
+            .content-panel {
+                background-color: \(theme.secondaryContainer.rgba);
+                color: \(theme.onSecondaryContainer.rgba);
+            }
+            
+            .table {
+                background-color: \(theme.tertiaryContainer.rgba);
+                color: \(theme.onTertiaryContainer.rgba);
+            }
+            
+            .link:hover {
+                color: \(theme.accent.rgba);
+            }
+            
+            .button-primary {
+                background-color: \(theme.primary.rgba);
+                color: \(theme.onPrimary.rgba);
+            }
+            
+            .button-primary:hover {
+                background-color: \(theme.accent.rgba);
+                color: \(theme.onPrimary.rgba);
+            }
+            
+            .button-secondary {
+                background-color: \(theme.secondary.rgba);
+                color: \(theme.onSecondary.rgba);
+            }
+            
+            .button-secondary:hover {
+                background-color: \(theme.accent.rgba);
+                color: \(theme.onSecondary.rgba);
+            }
+        </style>
+        """
+    }
+    
+    func generateHead(theme: Theme?) -> String {
         
         var headHTML = "<head>\n"
         headHTML += "<meta charset=\"\(WebApplication.charset)\">\n"
         headHTML += "<meta name=\"viewport\" content=\"\(WebApplication.viewport)\">\n"
         
-        // Meta tags
-        for (name, content) in WebApplication.metaTags {
-            headHTML += "<meta name=\"\(name)\" content=\"\(content)\">\n"
+        // Combine meta tags from WebApplication and endpoint
+        var combinedMetaTags = WebApplication.metaTags
+        if let endpointMeta = endpoint?.meta {
+            for (name, content) in endpointMeta {
+                combinedMetaTags[name] = content
+            }
         }
-        for (name, content) in endpoint?.meta ?? [:] {
-            headHTML += "<meta name=\"\(name)\" content=\"\(content)\">\n"
+        
+        // Sort combined meta tags by keys and generate HTML
+        let sortedMetaTags = combinedMetaTags.sorted(by: { $0.key < $1.key })
+        for (name, content) in sortedMetaTags {
+            if name.starts(with: "og:") || name.starts(with: "twitter:") || name.starts(with: "linkedin:") {
+                headHTML += "<meta property=\"\(name)\" content=\"\(content)\">\n"
+            } else {
+                headHTML += "<meta name=\"\(name)\" content=\"\(content)\">\n"
+            }
         }
         
         // Title
@@ -72,10 +151,14 @@ public extension WebRequestContext {
             headHTML += "<script src=\"\(script)\"></script>\n"
         }
         
+        if let theme = theme {
+            headHTML += generateInlineStyles(from: theme)
+        }
+        
         headHTML += "</head>\n"
         return headHTML
     }
-
+    
     
     func getExecutionPipeline() -> WebRequestExecutionPipeline {
         let id = "Thread-\(Thread.current.description)"
@@ -93,7 +176,7 @@ public extension WebRequestContext {
         }
         return pipeline
     }
-
+    
     func finishExecutionPipeline() {
         let id = "Thread-\(Thread.current.description)"
         executionPipelineLock.mutex {
@@ -123,7 +206,7 @@ public extension WebRequestContext {
         // construct the html / head / body
         self.text("<!DOCTYPE html>\n")
         self.html(language: "EN") {
-            self.output(generateHead())
+            self.output(generateHead(theme: self.theme))
             self.body {
                 let _ = getExecutionPipeline()
                 body()
