@@ -135,6 +135,16 @@ public extension WebRequestContext {
         return self
         
     }
+    @discardableResult
+    func WebApplicationPartialView(_ body: WebComposerClosure) -> Self {
+        // sets up the execution pipeline for the request
+        let _ = getExecutionPipeline()
+        body()
+        finishExecutionPipeline()
+        compileBuilderScripts()
+        return self
+        
+    }
 }
 
 public func WebApplicationView(context: WebRequestContext, _ body: WebComposerClosure) {
