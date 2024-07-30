@@ -13,13 +13,13 @@ public class Text : WebElement {
         super.init()
         type = .text
         if isPicker == false {
-            declare("span", identifier: self.builderId , {
+            declare("span", classList: self.builderId , {
                 context.text(text)
             })
         } else {
             switch pickerType {
             case .dropdown:
-                declare("option", identifier: self.builderId , {
+                declare("option", classList: self.builderId , {
                     context.text(text)
                 })
             case .radio:
@@ -33,7 +33,7 @@ public class Text : WebElement {
             case .segmented:
                 // these are actually buttons, within a button group
                 // <button type="button" class="btn btn-secondary">Left</button>
-                declare("button", identifier: self.builderId + " btn btn-secondary" , {
+                declare("button", classList: self.builderId + " btn btn-secondary" , {
                     context.text(text)
                 })
             }
@@ -50,7 +50,7 @@ public class Text : WebElement {
         
         super.init()
         type = .text
-        declare("span", identifier: self.builderId , {
+        declare("span", classList: self.builderId , {
             
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
@@ -62,6 +62,34 @@ l\(self.builderId)();
 function l\(self.builderId)() {
   const rl\(self.builderId) = () => {
     \(builderId).innerText = \(binding.builderId);
+    return setTimeout(rl\(self.builderId), 500);
+  };
+  rl\(self.builderId)();
+}
+""")
+        addClass("col")
+    }
+    @discardableResult
+    public init(_ binding: WBool) {
+        
+        super.init()
+        type = .text
+        declare("span", classList: self.builderId , {
+            
+        })
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("\(builderId).innerText = '\(binding.internalValue ? "true" : "false")';")
+        
+        // now lets listen for changes from the bound object
+        script("""
+l\(self.builderId)();
+function l\(self.builderId)() {
+  const rl\(self.builderId) = () => {
+    if(\(binding.builderId) == true) {
+      \(builderId).innerText = 'true';
+    } else {
+      \(builderId).innerText = 'false';
+    }
     return setTimeout(rl\(self.builderId), 500);
   };
   rl\(self.builderId)();

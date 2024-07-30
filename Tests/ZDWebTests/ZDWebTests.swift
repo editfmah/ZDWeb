@@ -55,9 +55,10 @@ class TestPage: WebHTMLEndpoint {
     var menuEntry: (primary: String, secondary: String?)? = ("Home",nil)
     
     func content(_ c: WebRequestContext) -> WebResponseObject? {
-        
+
         c.WebApplicationView {
-            // Example usage
+
+            // Navbar
             let navbar = Navbar(
                 brandText: "MyBrand",
                 brandImage: "https://via.placeholder.com/30",
@@ -73,81 +74,76 @@ class TestPage: WebHTMLEndpoint {
                 accessories: [
                     .search(placeholder: "Search...", url: "/search", showAlways: true)
                 ]
-            ).theme(.dark)
+            ).theme(.dark).background(.blue)
 
-            // Apply background color
-            navbar.background(.blue)
+            VStack {
 
-            HStack {
-            
-            Modal(ref: "myModal") {
-                Text("This is a modal")
-            }
-            
-            Button("Open Modal")
-                .onClick([
-                    .showModal(ref: "myModal", contentURL: "https://zestdeck.com")
-                ])
-            
-            let testVar = WString("Should be this text")
-                .name("testing_var")
-                .onValueChange([
-                    .random([
-                        .foregroundColor(ref: "textobject",.red),
-                        .foregroundColor(ref: "textobject",.blue),
-                        .foregroundColor(ref: "textobject",.green)
-                    ])
-                ])
-            let testChoice = WString("3").name("testing_choice")
-            HStack {
-                Text("sample")
-            }.minHeight(100).margin(20).border(.leading, .purple, width: 5).background(.lightpurple)
-                HStack {
-                    Spacer()
-                    VStack {
-                        Form {
-                            Text(testVar).font(.largeTitle).foreground(.black).ref("textobject")
-                            TextField("This is a text field", binding: testVar).name("txt_field")
-                            Picker(binding: testChoice) {
-                                Text("Option - Blank").value("")
-                                Text("Option 1").value("1")
-                                Text("Option 2").value("2")
-                                Text("Option 3").value("3")
-                            }.name("picker-field")
-                            
-                            Picker(type: .segmented, binding: testVar) {
-                                Option("First value", value: "first")
-                                Option("Second value", value: "second")
-                                Option("Third value", value: "third")
-                            }
-                            
-                            Button("Save")
-                                .type(.submit)
-                                .style(.warning)
-                                .enabled(testChoice, .isNotEmpty)
-                                .onEnable(.setStyle(.primary))
-                                .onDisable(.setStyle(.light))
-                                .badge(style: .danger, text: "34")
-                        }.method(.post)
-                    }.width(500)
-                    Spacer()
+                // Modals
+                VStack {
+                    Modal(ref: "myModal") {
+                        Text("This is a modal")
+                    }
+                    Button("Open Modal")
+                        .onClick([
+                            .showModal(ref: "myModal", contentURL: "https://zestdeck.com")
+                        ])
+                }.padding(20)
+
+                // Forms and Inputs
+                VStack {
+                    let testVar = WString("Should be this text")
+                        .name("testing_var")
+                        .onValueChange([
+                            .random([
+                                .foregroundColor(ref: "textobject", .red),
+                                .foregroundColor(ref: "textobject", .blue),
+                                .foregroundColor(ref: "textobject", .green)
+                            ])
+                        ])
+                    let testChoice = WString("3").name("testing_choice")
+
+                    Form {
+                        Text(testVar).font(.largeTitle).foreground(.black).ref("textobject")
+                        TextField("This is a text field", binding: testVar).name("txt_field")
+                        Picker(binding: testChoice) {
+                            Text("Option - Blank").value("")
+                            Text("Option 1").value("1")
+                            Text("Option 2").value("2")
+                            Text("Option 3").value("3")
+                        }.name("picker-field")
+
+                        Picker(type: .segmented, binding: testVar) {
+                            Option("First value", value: "first")
+                            Option("Second value", value: "second")
+                            Option("Third value", value: "third")
+                        }
+
+                        Button("Save")
+                            .type(.submit)
+                            .style(.warning)
+                            .enabled(testChoice, .isNotEmpty)
+                            .onEnable(.setStyle(.primary))
+                            .onDisable(.setStyle(.light))
+                            .badge(style: .danger, text: "34")
+                    }.method(.post).width(500)
+
                     Button("Click me")
                         .onClick(
                             .post(url: "http://localhost:53100/test/page",
                                   values: [testVar, testChoice],
-                                  onSuccessful: [.setStyle(.success),.navigate("https://www.google.co.uk")],
+                                  onSuccessful: [.setStyle(.success), .navigate("https://www.google.co.uk")],
                                   onFailed: [.setStyle(.danger)]
-                                 )
+                            )
                         )
                         .hidden(testVar, .isEmpty)
-                        .background(.toBottom, [.darkGrey,.lightGrey,.darkGrey])
+                        .background(.toBottom, [.darkGrey, .lightGrey, .darkGrey])
                         .tooltip("This is a tooltip")
-                    
+
                     Button("Show/Hide").onClick(.collapse(ref: "table-collapsible"))
-                    VStack(.auto) {
-                        Button("Popover").onClick(.popover(title: "Title", content: "Some content goes here"))
-                    }
-                    
+                }.padding(20)
+
+                // Tables
+                VStack {
                     Table {
                         TableHeader {
                             HeaderCell("Header 1")
@@ -172,7 +168,10 @@ class TestPage: WebHTMLEndpoint {
                             }
                         }
                     }.margin(20).ref("table-collapsible").collapsible()
-                    
+                }.padding(20)
+
+                // Carousels and Accordions
+                VStack {
                     Carousel([
                         .item(title: "First", subtitle: "First Subtitle", body: {
                             Text("First Item")
@@ -196,7 +195,7 @@ class TestPage: WebHTMLEndpoint {
                             Text("5")
                         })
                     ]).jumpTo(3).interval(1)
-                    
+
                     Accordion([
                         .item(title: "First Item", body: {
                             Text("First Item Body")
@@ -208,8 +207,10 @@ class TestPage: WebHTMLEndpoint {
                             Text("Third Item Body")
                         })
                     ]).expandFirst(true)
-                    
-                    // Example usage
+                }.padding(20)
+
+                // Dropdowns
+                VStack {
                     Dropdown("Test Button", items: [
                         .item(title: "Item 1", url: "https://zestdeck.com", icon: .addressBook),
                         .item(title: "Item 2", url: "https://zestdeck.com", icon: .alignLeft, disabled: true),
@@ -217,22 +218,59 @@ class TestPage: WebHTMLEndpoint {
                         .separator,
                         .item(title: "Item 4", url: "https://zestdeck.com", icon: .addressCard)
                     ])
-                    
+                }.padding(20)
+
+                // Progress and Spinners
+                VStack {
                     Progress(bindTo: WInt(50), maxValue: 100, showLabel: true)
                         .striped(true)
                         .animated(true)
                         .color(.blue)
-                    
-                    // Example usage
-                    let spinner = Spinner(type: .grow, size: .large, color: .red, label: "Please wait...")
-                    
-                }.maxWidth(600)
-                
-                
+
+                    Spinner(type: .grow, size: .large, color: .red, label: "Please wait...")
+                }.padding(20)
+
+                // Button Groups
+                VStack {
+                    let w1 = WBool(false)
+                    let w2 = WBool(true)
+                    let w3 = WBool(true)
+
+                    HStack {
+                        Text(w1)
+                        Text(w2)
+                        Text(w3)
+                    }
+
+                    ButtonGroup(btnType: .checkbox, style: .success, items: [
+                        .item(title: "Option 1", binding: w1, style: .success),
+                        .item(title: "Option 2", binding: w2, style: .success),
+                        .item(title: "Option 3", binding: w3, style: .success)
+                    ])
+
+                    let w4 = WBool(false)
+                    let w5 = WBool(false)
+                    let w6 = WBool(true)
+
+                    HStack {
+                        Text(w4)
+                        Text(w5)
+                        Text(w6)
+                    }
+
+                    ButtonGroup(btnType: .radio, style: .secondary, items: [
+                        .item(title: "Option 1", binding: w4, style: .secondary),
+                        .item(title: "Option 2", binding: w5, style: .secondary),
+                        .item(title: "Option 3", binding: w6, style: .secondary)
+                    ])
+                }.padding(20)
+
             }.background(.toBottom, [.white, .blue, .blue, .blue, .white])
+
         }
-        
+
     }
+
     
     func view(_ c: WebRequestContext) -> WebResponseObject? {
         return nil

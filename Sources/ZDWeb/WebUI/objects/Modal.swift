@@ -34,16 +34,16 @@ public class Modal : WebElement {
         // this is going to be a bootstrap modal with no header or footer and with the body closure as the body of the modal dialog
         
         // any headers and footers will be built into the body instead. This is to allow for more flexible modals
-        declare("div", identifier: self.builderId, {
-            declare("div", identifier: "modal-dialog modal-dialog-centered \(type?.rawValue ?? "")", {
-                declare("div", identifier: "modal-content", {
+        declare("div", classList: self.builderId, {
+            declare("div", classList: "modal-dialog modal-dialog-centered \(type?.rawValue ?? "")", {
+                declare("div", classList: "modal-content", {
                     // now the header
-                    declare("div", identifier: "modal-header", {
+                    declare("div", classList: "modal-header", {
                         context.text("<h5 class=\"modal-title\">\(title ?? "")</h5>")
                         context.text("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"modal\" aria-label=\"Close\"></button>")
                     })
                     // now the body
-                    declare("div", identifier: "modal-body", {
+                    declare("div", classList: "modal-body", {
                         body()
                     })
                 })

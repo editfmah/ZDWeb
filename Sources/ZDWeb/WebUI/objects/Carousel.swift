@@ -59,34 +59,34 @@ public class Carousel : WebCarouselElement {
     public init(_ elements: [CarouselElement]) {
         super.init()
         
-        declare("div", identifier: "carousel slide " + self.builderId, id: self.builderId, {
+        declare("div", classList: "carousel slide " + self.builderId, id: self.builderId, {
             // build the indicators
-            declare("div", identifier: "carousel-indicators") {
+            declare("div", classList: "carousel-indicators") {
                 for (index, e) in elements.enumerated() {
                     switch e {
                     case .item(_, _, _, let indicatorBody):
-                        declare("button", identifier: index == 0 ? "active" : "", attributes: ["data-bs-target":"#\(self.builderId)", "data-bs-slide-to":"\(index)", "aria-current":"true", "aria-label":"Slide \(index + 1)"], {
+                        declare("button", classList: index == 0 ? "active" : "", attributes: ["data-bs-target":"#\(self.builderId)", "data-bs-slide-to":"\(index)", "aria-current":"true", "aria-label":"Slide \(index + 1)"], {
                             indicatorBody?() ?? context.text("\(index + 1)")
                         })
                     }
                 }
             }
             
-            declare("div", identifier: "carousel-inner") {
+            declare("div", classList: "carousel-inner") {
                 for (index, e) in elements.enumerated() {
                     switch e {
                     case .item(let title, let subtitle, let body, _):
-                        declare("div", identifier: "carousel-item \(index == 0 ? "active" : "")", {
+                        declare("div", classList: "carousel-item \(index == 0 ? "active" : "")", {
                             body()
                             if title != nil || subtitle != nil {
-                                declare("div", identifier: "carousel-caption") {
+                                declare("div", classList: "carousel-caption") {
                                     if let title = title {
-                                        declare("h5", identifier: "", {
+                                        declare("h5", classList: "", {
                                             context.text(title)
                                         })
                                     }
                                     if let subtitle = subtitle {
-                                        declare("p", identifier: "", {
+                                        declare("p", classList: "", {
                                             context.text(subtitle)
                                         })
                                     }
@@ -97,18 +97,18 @@ public class Carousel : WebCarouselElement {
                 }
             }
             
-            declare("button", identifier: "carousel-control-prev", attributes: ["type":"button", "data-bs-target":"#\(self.builderId)", "data-bs-slide":"prev"]) {
-                declare("span", identifier: "carousel-control-prev-icon", attributes: ["aria-hidden":"true"]) {
+            declare("button", classList: "carousel-control-prev", attributes: ["type":"button", "data-bs-target":"#\(self.builderId)", "data-bs-slide":"prev"]) {
+                declare("span", classList: "carousel-control-prev-icon", attributes: ["aria-hidden":"true"]) {
                 }
-                declare("span", identifier: "visually-hidden") {
+                declare("span", classList: "visually-hidden") {
                     context.text("Previous")
                 }
             }
             
-            declare("button", identifier: "carousel-control-next", attributes: ["type":"button", "data-bs-target":"#\(self.builderId)", "data-bs-slide":"next"]) {
-                declare("span", identifier: "carousel-control-next-icon", attributes: ["aria-hidden":"true"]) {
+            declare("button", classList: "carousel-control-next", attributes: ["type":"button", "data-bs-target":"#\(self.builderId)", "data-bs-slide":"next"]) {
+                declare("span", classList: "carousel-control-next-icon", attributes: ["aria-hidden":"true"]) {
                 }
-                declare("span", identifier: "visually-hidden") {
+                declare("span", classList: "visually-hidden") {
                     context.text("Next")
                 }
             }

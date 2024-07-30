@@ -13,13 +13,13 @@ public class Option : WebElement {
         super.init()
         type = .text
         if isPicker == false {
-            declare("span", identifier: self.builderId , {
+            declare("span", classList: self.builderId , {
                 
             })
         } else {
             switch pickerType {
             case .dropdown:
-                declare("option", identifier: self.builderId , {
+                declare("option", classList: self.builderId , {
                     
                 })
             case .radio:
@@ -48,10 +48,10 @@ public class Option : WebElement {
                 }
                 
                 let optionId = UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "")
-                declare("input", identifier: self.builderId + " btn-check", id: optionId, type: "radio", name: name, attributes: ["autocomplete" : "off"], {
+                declare("input", classList: self.builderId + " btn-check", id: optionId, type: "radio", name: name, attributes: ["autocomplete" : "off"], {
                     
                 })
-                declare("label", identifier: "btn btn-outline-primary", for: optionId) {
+                declare("label", classList: "btn btn-outline-primary", for: optionId) {
                     context.text(text)
                 }
                 

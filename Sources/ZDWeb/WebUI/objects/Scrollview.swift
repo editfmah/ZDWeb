@@ -19,7 +19,7 @@ public class Scrollview : WebElement {
         
         super.init()
         
-        declare("div", identifier: self.builderId , {
+        declare("div", classList: self.builderId , {
             // now build the body of the picker
             body()
         })

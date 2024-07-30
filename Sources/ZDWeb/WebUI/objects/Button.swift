@@ -13,7 +13,7 @@ public class Button : WebButtonElement {
     public init(_ title: String) {
         super.init()
         type = .button
-        declare("button", identifier: self.builderId , {
+        declare("button", classList: self.builderId , {
             
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

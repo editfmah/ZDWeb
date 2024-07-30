@@ -94,10 +94,10 @@ public class Progress: WebElement, WebProgressProperties {
     public init(bindTo value: WInt, maxValue: Int = 100, showLabel: Bool = true) {
         super.init()
         
-        declare("div", identifier: "progress " + builderId) {
-            declare("div", identifier: "progress-bar", attributes: ["role": "progressbar", "aria-valuenow": "\(value.builderId)", "aria-valuemin": "0", "aria-valuemax": "\(maxValue)", "style": "width: \(value.builderId)%;"]) {
+        declare("div", classList: "progress " + builderId) {
+            declare("div", classList: "progress-bar", attributes: ["role": "progressbar", "aria-valuenow": "\(value.builderId)", "aria-valuemin": "0", "aria-valuemax": "\(maxValue)", "style": "width: \(value.builderId)%;"]) {
                 if showLabel {
-                    declare("span", identifier: "progress-label") {
+                    declare("span", classList: "progress-label") {
                         context.text("\(value.builderId)%")
                     }
                 }

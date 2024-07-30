@@ -11,7 +11,7 @@ public class Spacer : WebElement {
     @discardableResult
     public override init() {
         super.init()
-        declare("div", identifier: self.builderId , {
+        declare("div", classList: self.builderId , {
             
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

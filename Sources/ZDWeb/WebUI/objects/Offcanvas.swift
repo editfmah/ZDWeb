@@ -65,13 +65,13 @@ public class OffCanvas: WebElement, WebCanvasProperties {
         
         // this is going to be a bootstrap off-canvas with the body closure as the body of the off-canvas
         
-        declare("div", identifier: self.builderId, {
-            declare("div", identifier: "offcanvas-header", {
+        declare("div", classList: self.builderId, {
+            declare("div", classList: "offcanvas-header", {
                 context.text("<h5 class=\"offcanvas-title\">\(title ?? "")</h5>")
                 context.text("<button type=\"button\" class=\"btn-close\" data-bs-dismiss=\"offcanvas\" aria-label=\"Close\"></button>")
             })
             // now the body
-            declare("div", identifier: "offcanvas-body", {
+            declare("div", classList: "offcanvas-body", {
                 body()
             })
         })

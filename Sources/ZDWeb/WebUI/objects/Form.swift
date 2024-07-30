@@ -11,7 +11,7 @@ public class Form : WebFormElement {
     @discardableResult
     public init(_ body: WebComposerClosure) {
         super.init()
-        declare("form", identifier: self.builderId , {
+        declare("form", classList: self.builderId , {
             body()
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

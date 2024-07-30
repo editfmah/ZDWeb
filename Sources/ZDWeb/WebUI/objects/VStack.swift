@@ -15,7 +15,7 @@ public class VStack : WebElement {
     @discardableResult
     public init(_ mode: VStackMode? = nil, _ body: WebComposerClosure) {
         super.init()
-        declare("div", identifier: self.builderId , {
+        declare("div", classList: self.builderId , {
             body()
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

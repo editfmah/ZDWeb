@@ -28,7 +28,7 @@ public class Picker : WebElement {
             
             switch type {
             case .dropdown:
-                declare("select", identifier: self.builderId , {
+                declare("select", classList: self.builderId , {
                     body()
                 })
                 script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

@@ -41,19 +41,19 @@ public class Accordion : WebAccordionElement {
     public init(_ elements: [AccordionElement]) {
         super.init()
         
-        declare("div", identifier: "accordion " + self.builderId, id: self.builderId, {
+        declare("div", classList: "accordion " + self.builderId, id: self.builderId, {
             for (index, element) in elements.enumerated() {
                 switch element {
                 case .item(let title, let body):
                     let itemId = "\(self.builderId)-item-\(index)"
-                    declare("div", identifier: "accordion-item", {
-                        declare("h2", identifier: "accordion-header", attributes: ["id": "\(itemId)-header"], {
-                            declare("button", identifier: "accordion-button collapsed", attributes: ["type": "button", "data-bs-toggle": "collapse", "data-bs-target": "#\(itemId)", "aria-expanded": "false", "aria-controls": itemId], {
+                    declare("div", classList: "accordion-item", {
+                        declare("h2", classList: "accordion-header", attributes: ["id": "\(itemId)-header"], {
+                            declare("button", classList: "accordion-button collapsed", attributes: ["type": "button", "data-bs-toggle": "collapse", "data-bs-target": "#\(itemId)", "aria-expanded": "false", "aria-controls": itemId], {
                                 context.text(title)
                             })
                         })
-                        declare("div", identifier: "accordion-collapse collapse", attributes: ["id": itemId, "aria-labelledby": "\(itemId)-header", "data-bs-parent": "#\(self.builderId)"], {
-                            declare("div", identifier: "accordion-body", {
+                        declare("div", classList: "accordion-collapse collapse", attributes: ["id": itemId, "aria-labelledby": "\(itemId)-header", "data-bs-parent": "#\(self.builderId)"], {
+                            declare("div", classList: "accordion-body", {
                                 body()
                             })
                         })

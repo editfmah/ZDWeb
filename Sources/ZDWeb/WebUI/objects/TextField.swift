@@ -11,7 +11,7 @@ public class TextField : WebElement {
     @discardableResult
     public init(_ placeholder: String, name: String? = nil, binding: WString? = nil) {
         super.init()
-        declare("input", identifier: self.builderId , {
+        declare("input", classList: self.builderId , {
             
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

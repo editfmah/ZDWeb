@@ -12,7 +12,7 @@ public class Image : WebImageElement {
     public init(url: String) {
         super.init()
         type = .image
-        declare("img", identifier: self.builderId , {
+        declare("img", classList: self.builderId , {
             
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

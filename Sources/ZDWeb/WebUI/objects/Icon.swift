@@ -63,7 +63,7 @@ public class Icon : WebElement, WebIconProperties {
         self.iconClass = icon
         super.init()
         
-        declare("i", identifier: icon.rawValue + " " + self.builderId, id: self.builderId) {}
+        declare("i", classList: icon.rawValue + " " + self.builderId, id: self.builderId) {}
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
 }

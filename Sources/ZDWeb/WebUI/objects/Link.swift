@@ -13,14 +13,14 @@ public class Link : WebElement {
         super.init()
         type = .link
         if isPicker == false {
-            declare("a", identifier: self.builderId , {
+            declare("a", classList: self.builderId , {
                 
             })
             script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
             script("\(builderId).href = '\(url)';")
             script("\(builderId).innerText = '\(text)';")
         } else {
-            declare("option", identifier: self.builderId , {
+            declare("option", classList: self.builderId , {
                 
             })
             script("\(builderId).href = '\(url)';")

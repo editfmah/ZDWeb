@@ -90,35 +90,35 @@ public class Navbar: WebElement, WebNavbarProperties {
         self.accessories = accessories
         super.init()
 
-        declare("nav", identifier: "navbar navbar-expand-lg navbar-light bg-light " + builderId) {
-            declare("div", identifier: "container-fluid d-flex align-items-center justify-content-between " + builderId) {
+        declare("nav", classList: "navbar navbar-expand-lg navbar-light bg-light " + builderId) {
+            declare("div", classList: "container-fluid d-flex align-items-center justify-content-between " + builderId) {
                 // Branding section
-                declare("div", identifier: "navbar-brand-container d-flex align-items-center " + builderId) {
+                declare("div", classList: "navbar-brand-container d-flex align-items-center " + builderId) {
                     if let brandImage = brandImage, let brandText = brandText {
-                        declare("a", identifier: "navbar-brand " + builderId, attributes: ["href": "#"]) {
-                            declare("img", identifier: builderId, attributes: ["src": brandImage, "alt": brandText, "style": "height:45px; margin-right:10px;"]) {}
+                        declare("a", classList: "navbar-brand " + builderId, attributes: ["href": "#"]) {
+                            declare("img", classList: builderId, attributes: ["src": brandImage, "alt": brandText, "style": "height:45px; margin-right:10px;"]) {}
                             context.text(brandText)
                         }
                     } else if let brandImage = brandImage {
-                        declare("a", identifier: "navbar-brand " + builderId, attributes: ["href": "#"]) {
-                            declare("img", identifier: builderId, attributes: ["src": brandImage, "alt": brandText ?? "", "style": "height: 45px;"]) {}
+                        declare("a", classList: "navbar-brand " + builderId, attributes: ["href": "#"]) {
+                            declare("img", classList: builderId, attributes: ["src": brandImage, "alt": brandText ?? "", "style": "height: 45px;"]) {}
                         }
                     } else if let brandText = brandText {
-                        declare("a", identifier: "navbar-brand " + builderId, attributes: ["href": "#"]) {
+                        declare("a", classList: "navbar-brand " + builderId, attributes: ["href": "#"]) {
                             context.text(brandText)
                         }
                     }
                 }
 
                 // Navbar toggler for small screens
-                declare("button", identifier: "navbar-toggler " + builderId, attributes: ["type": "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNav", "aria-controls": "navbarNav", "aria-expanded": "false", "aria-label": "Toggle navigation"]) {
-                    declare("span", identifier: "navbar-toggler-icon " + builderId) {}
+                declare("button", classList: "navbar-toggler " + builderId, attributes: ["type": "button", "data-bs-toggle": "collapse", "data-bs-target": "#navbarNav", "aria-controls": "navbarNav", "aria-expanded": "false", "aria-label": "Toggle navigation"]) {
+                    declare("span", classList: "navbar-toggler-icon " + builderId) {}
                 }
 
                 // Navbar collapse
-                declare("div", identifier: "collapse navbar-collapse " + builderId, id: "navbarNav") {
+                declare("div", classList: "collapse navbar-collapse " + builderId, id: "navbarNav") {
                     // Navigation items
-                    declare("ul", identifier: "navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center " + builderId) {
+                    declare("ul", classList: "navbar-nav ms-auto mb-2 mb-lg-0 d-flex align-items-center " + builderId) {
                         for item in items {
                             renderNavigationItem(item)
                         }
@@ -141,7 +141,7 @@ public class Navbar: WebElement, WebNavbarProperties {
             margin-top: 0;
         }
         """
-        declare("style", identifier: builderId) {
+        declare("style", classList: builderId) {
             context.text(css)
         }
 
@@ -182,14 +182,14 @@ public class Navbar: WebElement, WebNavbarProperties {
         case .item(let title, let url, let icon, let disabled, let children):
             if let children = children, !children.isEmpty {
                 // Dropdown item
-                declare("li", identifier: "nav-item dropdown " + builderId) {
-                    declare("a", identifier: "nav-link dropdown-toggle" + (disabled == true ? " disabled" : "") + " " + builderId, attributes: ["href": url ?? "#", "id": "navbarDropdown", "role": "button", "data-bs-toggle": "dropdown", "aria-expanded": "false"]) {
+                declare("li", classList: "nav-item dropdown " + builderId) {
+                    declare("a", classList: "nav-link dropdown-toggle" + (disabled == true ? " disabled" : "") + " " + builderId, attributes: ["href": url ?? "#", "id": "navbarDropdown", "role": "button", "data-bs-toggle": "dropdown", "aria-expanded": "false"]) {
                         if let icon = icon {
                             Icon(icon)
                         }
                         context.text(title)
                     }
-                    declare("ul", identifier: "dropdown-menu " + builderId, attributes: ["aria-labelledby": "navbarDropdown"]) {
+                    declare("ul", classList: "dropdown-menu " + builderId, attributes: ["aria-labelledby": "navbarDropdown"]) {
                         for child in children {
                             renderNavigationItem(child)
                         }
@@ -197,8 +197,8 @@ public class Navbar: WebElement, WebNavbarProperties {
                 }
             } else {
                 // Simple item
-                declare("li", identifier: "nav-item " + builderId) {
-                    declare("a", identifier: "nav-link" + (disabled == true ? " disabled" : "") + " " + builderId, attributes: ["href": url ?? "#"]) {
+                declare("li", classList: "nav-item " + builderId) {
+                    declare("a", classList: "nav-link" + (disabled == true ? " disabled" : "") + " " + builderId, attributes: ["href": url ?? "#"]) {
                         if let icon = icon {
                             Icon(icon)
                         }
@@ -212,15 +212,15 @@ public class Navbar: WebElement, WebNavbarProperties {
     private func renderAccessory(_ accessory: NavigationAccessory) {
         switch accessory {
         case .search(let placeholder, let url, let showAlways):
-            declare("div", identifier: "d-none", id: "searchPopoverContent") {
-                declare("form", identifier: "d-flex align-items-center " + builderId) {
-                    declare("input", identifier: "form-control me-2 " + builderId, attributes: ["type": "search", "placeholder": placeholder ?? "Search", "aria-label": "Search", "data-search-url": url ?? "#"]) {}
-                    declare("button", identifier: "btn btn-outline-success " + builderId, attributes: ["type": "submit"]) {
+            declare("div", classList: "d-none", id: "searchPopoverContent") {
+                declare("form", classList: "d-flex align-items-center " + builderId) {
+                    declare("input", classList: "form-control me-2 " + builderId, attributes: ["type": "search", "placeholder": placeholder ?? "Search", "aria-label": "Search", "data-search-url": url ?? "#"]) {}
+                    declare("button", classList: "btn btn-outline-success " + builderId, attributes: ["type": "submit"]) {
                         context.text("Search")
                     }
                 }
             }
-            declare("button", identifier: "btn btn-outline-success search-toggle-button " + builderId, attributes: ["type": "button", "data-bs-toggle": "popover", "data-bs-placement": "bottom", "data-bs-trigger": "focus"]) {
+            declare("button", classList: "btn btn-outline-success search-toggle-button " + builderId, attributes: ["type": "button", "data-bs-toggle": "popover", "data-bs-placement": "bottom", "data-bs-trigger": "focus"]) {
                 Icon(.search)
             }
         }

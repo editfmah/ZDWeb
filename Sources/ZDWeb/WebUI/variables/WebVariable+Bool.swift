@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  WBool.swift
 //  
 //
 //  Created by Adrian Herridge on 31/05/2024.
@@ -11,20 +11,20 @@ public class WBool : WebVariable {
     
     internal var internalValue: Bool = false {
         didSet {
-            executionPipeline()?.context?.builderScript("\(builderId) = \(internalValue == true ? "true" : "false");")
+            script("\(builderId) = \(internalValue == true ? "true" : "false");")
         }
     }
     
     public init(_ value: Bool) {
         super.init()
         internalValue = value
-        executionPipeline()?.context?.builderScript("var \(builderId) = \(internalValue == true ? "true" : "false");")
+        script("var \(builderId) = \(internalValue == true ? "true" : "false");")
     }
     
     public func conditions(_ conditions: [(variable: WebVariable, operator: Operator)]) {
         for condition in conditions {
             let instanceId = UUID().uuidString.lowercased().replacingOccurrences(of: "-", with: "")
-            executionPipeline()?.context?.builderScript("""
+            script("""
 // condition tester and publisher
 // default to true and only set false on mismatched conditions of any/or
 \(builderId) = true;

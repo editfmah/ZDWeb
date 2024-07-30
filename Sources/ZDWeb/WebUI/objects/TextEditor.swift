@@ -11,7 +11,7 @@ public class TextEditor : WebTextInputElement {
     @discardableResult
     public init(_ placeholder: String, name: String? = nil, binding: WString? = nil) {
         super.init()
-        declare("textarea", identifier: self.builderId , {
+        declare("textarea", classList: self.builderId , {
             
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

@@ -11,7 +11,7 @@ public class HStack : WebElement {
     @discardableResult
     public init(_ body: WebComposerClosure) {
         super.init()
-        declare("div", identifier: self.builderId , {
+        declare("div", classList: self.builderId , {
             body()
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")

@@ -12,7 +12,7 @@ public class List : WebButtonElement {
     @discardableResult
     public init(_ body: WebComposerClosure) {
         super.init()
-        declare("div", identifier: self.builderId , {
+        declare("div", classList: self.builderId , {
             Scrollview(direction: .vertical) {
                 body()
             }

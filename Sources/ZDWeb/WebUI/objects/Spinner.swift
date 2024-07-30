@@ -86,8 +86,8 @@ public class Spinner: WebElement, WebSpinnerProperties {
     public init(type: SpinnerType = .border, size: SpinnerSize = .medium, color: WebColor = .blue, label: String? = "Loading...") {
         super.init()
         
-        declare("div", identifier: "\(type.rawValue) " + builderId, attributes: ["role": "status"]) {
-            declare("span", identifier: "sr-only") {
+        declare("div", classList: "\(type.rawValue) " + builderId, attributes: ["role": "status"]) {
+            declare("span", classList: "sr-only") {
                 context.text(label ?? "")
             }
         }

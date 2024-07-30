@@ -34,8 +34,8 @@ public class WebCommonInterop {
         context.builderScript(script)
     }
     
-    public func declare(_ tag: String, identifier: String, id: String? = nil, type: String? = nil, for: String? = nil, name: String? = nil, attributes: [String:String]? = nil, _ body: WebComposerClosure) {
-        context.declarative(tag, identifier: identifier, id: id, type: type, for: `for`, name: name, attributes: attributes, body)
+    public func declare(_ tag: String, classList: String, id: String? = nil, type: String? = nil, for: String? = nil, name: String? = nil, attributes: [String:String]? = nil, _ body: WebComposerClosure) {
+        context.declarative(tag, identifier: classList, id: id ?? self.builderId, type: type, for: `for`, name: name, attributes: attributes, body)
     }
     
     public var type: WebElementType {
