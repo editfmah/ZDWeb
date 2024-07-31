@@ -48,6 +48,7 @@ public enum WebAction {
      so the structure looks like function(body, code, headers) { /* your code goes here and you can access body, code, headers */ }
      */
     case handleResponse(script: String)
+    case src(ref: String? = nil, url: String)
 
 }
 
@@ -401,6 +402,12 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
             });
             popper.show();
             """
+        case .src(ref: let ref, url: let url):
+            if let ref = ref {
+                script += "document.getElementById('\(ref)').src = '\(url)';\n"
+            } else {
+                script += "\(builderId).src = '\(url)';\n"
+            }
         }
     }
 
