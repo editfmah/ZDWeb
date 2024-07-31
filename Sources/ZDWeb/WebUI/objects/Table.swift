@@ -43,6 +43,14 @@ public class Cell : WebElement {
         })
         script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
+    @discardableResult
+    public init(_ body: WebComposerClosure) {
+        super.init()
+        declare("td", classList: self.builderId, {
+            body()
+        })
+        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+    }
 }
 
 public class TableHeader : WebElement {
