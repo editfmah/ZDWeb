@@ -12,7 +12,7 @@ public enum WebAction {
     case load(ref: String? = nil, url: String)
     case navigate(String)
     case post(url: String? = nil, values: [WebVariable]? = nil, onSuccessful: [WebAction]? = nil, onFailed: [WebAction]? = nil, onTimeout: [WebAction]? = nil, resultInto: WebVariable? = nil)
-    case set(value: WebVariable, to: Any?)
+    case set(variable: WebVariable? = nil, input: String? = nil, varName: String? = nil, to: Any?)
     case addClass(String)
     case removeClass(String)
     case hidden(ref: String? = nil,_ value: Bool)
@@ -202,18 +202,55 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
             script += "}\n"
             script += "};\n"
             script += "xhr\(id).send(JSON.stringify(postData\(id)));\n"
-        case .set(value: let value, to: let to):
-            if let stringValue = to as? String {
-                script += "\(value.builderId) = '\(stringValue)';\n"
-            } else if let intValue = to as? Int {
-                script += "\(value.builderId) = \(intValue);\n"
-            } else if let doubleValue = to as? Double {
-                script += "\(value.builderId) = \(doubleValue);\n"
-            } else if let boolValue = to as? Bool {
-                script += "\(value.builderId) = \(boolValue ? "true" : "false");\n"
-            } else {
-                script += "\(value.builderId) = '\(to)';\n"
+        case .set(variable: let variable, input: let inputName, varName: let variableName, to: let to):
+            
+            if let variable = variable, let to = to {
+                if let stringValue = to as? String {
+                    script += "\(variable.builderId) = '\(stringValue)';\n"
+                } else if let intValue = to as? Int {
+                    script += "\(variable.builderId) = \(intValue);\n"
+                } else if let doubleValue = to as? Double {
+                    script += "\(variable.builderId) = \(doubleValue);\n"
+                } else if let boolValue = to as? Bool {
+                    script += "\(variable.builderId) = \(boolValue ? "true" : "false");\n"
+                } else {
+                    script += "\(variable.builderId) = '\(to)';\n"
+                }
+            } else if let inputName = inputName, let to = to {
+                
+                // this is going to set the value on an input by finding its name
+                if let stringValue = to as? String {
+                    script += "document.getElementsByName('\(inputName)')[0].value = '\(stringValue)';\n"
+                } else if let intValue = to as? Int {
+                    script += "document.getElementsByName('\(inputName)')[0].value = \(intValue);\n"
+                } else if let doubleValue = to as? Double {
+                    script += "document.getElementsByName('\(inputName)')[0].value = \(doubleValue);\n"
+                } else if let boolValue = to as? Bool {
+                    script += "document.getElementsByName('\(inputName)')[0].value = \(boolValue ? "true" : "false");\n"
+                } else {
+                    script += "document.getElementsByName('\(inputName)')[0].value = '\(to)';\n"
+                }
+                
+            } else if let variableName = variableName, let to = to {
+                
+                // this will find a javascript var, which has a name property set.  For instance, it was created like this:
+                // var myValue = 1234;
+                // myValue.name = 'myName';
+                
+                if let stringValue = to as? String {
+                    script += "window[\"\(variableName)\"] = '\(stringValue)';\n"
+                } else if let intValue = to as? Int {
+                    script += "window[\"\(variableName)\"] = \(intValue);\n"
+                } else if let doubleValue = to as? Double {
+                    script += "window[\"\(variableName)\"] = \(doubleValue);\n"
+                } else if let boolValue = to as? Bool {
+                    script += "window[\"\(variableName)\"] = \(boolValue ? "true" : "false");\n"
+                } else {
+                    script += "window[\"\(variableName)\"] = '\(to)';\n"
+                }
+                
             }
+            
         case .addClass(let className):
             script += "\(builderId).classList.add('\(className)');\n"
         case .removeClass(let className):
