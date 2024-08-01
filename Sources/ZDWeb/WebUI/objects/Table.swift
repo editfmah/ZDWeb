@@ -14,7 +14,7 @@ public class HeaderCell : WebElement {
         declare("th", classList: self.builderId, {
             context.text(text)
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
     @discardableResult
     public init(_ text: WString) {
@@ -22,7 +22,7 @@ public class HeaderCell : WebElement {
         declare("th", classList: self.builderId, {
             context.text(text.internalValue)
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
 }
 
@@ -33,7 +33,7 @@ public class Cell : WebElement {
         declare("td", classList: self.builderId, {
             context.text(text)
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
     @discardableResult
     public init(_ text: WString) {
@@ -41,7 +41,7 @@ public class Cell : WebElement {
         declare("td", classList: self.builderId, {
             context.text(text.internalValue)
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
     @discardableResult
     public init(_ body: WebComposerClosure) {
@@ -49,7 +49,7 @@ public class Cell : WebElement {
         declare("td", classList: self.builderId, {
             body()
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
 }
 
@@ -61,7 +61,7 @@ public class TableHeader : WebElement {
             declare("thead", classList: self.builderId, {
                 closure()
             })
-            script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+            script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         }
         
     }
@@ -97,7 +97,7 @@ public class Table : WebTableElement {
         declare("table", classList: self.builderId, {
             body()
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("table")
     }
 }

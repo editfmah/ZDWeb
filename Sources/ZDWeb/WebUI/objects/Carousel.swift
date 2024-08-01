@@ -114,6 +114,6 @@ public class Carousel : WebCarouselElement {
             }
             
         })
-        script("var \(builderId) = new bootstrap.Carousel(document.getElementById('\(builderId)'));")
+        script("/* builder-object-reference */ var \(builderId) = new bootstrap.Carousel(document.getElementById('\(builderId)'));")
     }
 }

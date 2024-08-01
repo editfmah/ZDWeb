@@ -18,7 +18,7 @@ public class WBool : WebVariable {
     public init(_ value: Bool) {
         super.init()
         internalValue = value
-        script("var \(builderId) = \(internalValue == true ? "true" : "false");")
+        script("/* builder-object-reference */ var \(builderId) = \(internalValue == true ? "true" : "false");")
     }
     
     public func conditions(_ conditions: [(variable: WebVariable, operator: Operator)]) {

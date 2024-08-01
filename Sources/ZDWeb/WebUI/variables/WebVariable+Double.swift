@@ -18,7 +18,7 @@ public class WDouble : WebVariable {
     public init(_ value: Double) {
         super.init()
         internalValue = value
-        executionPipeline()?.context?.builderScript("var \(builderId) = \(value);")
+        script("/* builder-object-reference */ var \(builderId) = \(value);")
     }
     
     public static func +(lhs: WDouble, rhs: WDouble) -> WDouble {

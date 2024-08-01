@@ -64,7 +64,7 @@ public class Icon : WebElement, WebIconProperties {
         super.init()
         
         declare("i", classList: icon.rawValue + " " + self.builderId, id: self.builderId) {}
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
 }
 

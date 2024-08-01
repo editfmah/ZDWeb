@@ -38,7 +38,7 @@ public class Text : WebElement {
                 })
             }
         }
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         if isPicker && pickerType == .segmented {
             // set the type to button
             script("\(builderId).type = 'button';")
@@ -53,7 +53,7 @@ public class Text : WebElement {
         declare("span", classList: self.builderId , {
             
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         script("\(builderId).innerText = '\(binding.internalValue)';")
         
         // now lets listen for changes from the bound object
@@ -77,7 +77,7 @@ function l\(self.builderId)() {
         declare("span", classList: self.builderId , {
             
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         script("\(builderId).innerText = '\(binding.internalValue ? "true" : "false")';")
         
         // now lets listen for changes from the bound object

@@ -263,6 +263,29 @@ class TestPage: WebHTMLEndpoint {
                         .item(title: "Option 2", binding: w5, style: .secondary),
                         .item(title: "Option 3", binding: w6, style: .secondary)
                     ])
+                    
+                    let fadeInButton = Button("Fade In")
+                        .onClick(.fadeIn(ref: "myElement", duration: 0.3))
+
+                    let fadeOutButton = Button("Fade Out")
+                        .onClick(.fadeOut(ref: "myElement", duration: 0.3))
+
+                    let fadeToggleButton = Button("Fade Toggle")
+                        .onClick(.fadeToggle(ref: "myElement", duration: 0.3))
+
+                    Text("This is a fadeable element")
+                        .ref("myElement")
+                    
+                    HStack {
+                        let myArray = WArray(["item1", "item2"]).name("myArray")
+                        let textField = TextField("Enter items", binding: myArray)
+                        Button("Add Item")
+                            .onClick([
+                                .addToArray(variable: myArray, value: "random \(Int.random(in: 1...100))")
+                            ])
+                    }.padding(.top, 30)
+                        
+
                 }.padding(20)
 
             }.background(.toBottom, [.white, .blue, .blue, .blue, .white])

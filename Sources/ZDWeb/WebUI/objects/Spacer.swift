@@ -14,7 +14,7 @@ public class Spacer : WebElement {
         declare("div", classList: self.builderId , {
             
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("col")
         addClass("mx-none")
     }

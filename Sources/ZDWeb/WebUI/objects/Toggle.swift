@@ -20,7 +20,7 @@ public class Toggle : WebElement {
         declare("input", classList: self.builderId , {
             
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("form-check-input")
         addClass("form-control")
         script("\(builderId).type = 'checkbox';")

@@ -77,7 +77,7 @@ public class OffCanvas: WebElement, WebCanvasProperties {
         })
         
         // create the object links
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("offcanvas")
         if let ref = ref {
             self.ref(ref)

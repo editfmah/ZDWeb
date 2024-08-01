@@ -16,7 +16,7 @@ public class Link : WebElement {
             declare("a", classList: self.builderId , {
                 
             })
-            script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+            script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
             script("\(builderId).href = '\(url)';")
             script("\(builderId).innerText = '\(text)';")
         } else {
@@ -24,7 +24,7 @@ public class Link : WebElement {
                 
             })
             script("\(builderId).href = '\(url)';")
-            script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+            script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
             script("\(builderId).innerText = '\(text)';")
         }
         addClass("col")

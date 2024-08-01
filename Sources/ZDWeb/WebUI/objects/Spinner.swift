@@ -93,7 +93,7 @@ public class Spinner: WebElement, WebSpinnerProperties {
         }
         
         // create the object links
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         self.type(type)
         self.size(size)
         self.color(color)

@@ -174,7 +174,7 @@ public class Navbar: WebElement, WebNavbarProperties {
         """
         script(js)
 
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
 
     private func renderNavigationItem(_ item: NavigationItem) {

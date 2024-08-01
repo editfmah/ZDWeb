@@ -14,7 +14,7 @@ public class TextEditor : WebTextInputElement {
         declare("textarea", classList: self.builderId , {
             
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         script("\(builderId).placeholder = '\(placeholder)';")
         addClass("form-control")
         

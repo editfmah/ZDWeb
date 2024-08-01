@@ -14,7 +14,7 @@ public class HStack : WebElement {
         declare("div", classList: self.builderId , {
             body()
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("row")
         
     }

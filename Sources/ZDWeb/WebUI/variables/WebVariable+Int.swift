@@ -18,7 +18,7 @@ public class WInt : WebVariable {
     public init(_ value: Int) {
         super.init()
         internalValue = value
-        executionPipeline()?.context?.builderScript("var \(builderId) = \(value);")
+        script("/* builder-object-reference */ var \(builderId) = \(value);")
     }
     
     public static func +(lhs: WInt, rhs: WInt) -> WInt {

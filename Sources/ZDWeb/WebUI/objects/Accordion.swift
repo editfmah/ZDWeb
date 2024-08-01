@@ -61,6 +61,6 @@ public class Accordion : WebAccordionElement {
                 }
             }
         })
-        script("var \(builderId) = document.getElementById('\(builderId)');")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementById('\(builderId)');")
     }
 }

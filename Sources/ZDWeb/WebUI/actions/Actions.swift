@@ -49,16 +49,182 @@ public enum WebAction {
      */
     case handleResponse(script: String)
     case src(ref: String? = nil, url: String)
-
+    case scrollTo(ref: String? = nil, behavior: ScrollBehavior, alignment: ScrollAlignment = .start)
+    case addToArray(variable: WArray, value: String)
+    case removeFromArray(variable: WArray, value: String)
+    case fadeIn(ref: String? = nil, duration: Double)
+    case fadeOut(ref: String? = nil, duration: Double)
+    case fadeToggle(ref: String? = nil, duration: Double)
+    
 }
 
 public func CompileActions(_ actions: [WebAction], builderId: String) -> String {
     var script = ""
-
+    
     for action in actions {
         switch action {
-        // Existing cases...
-        
+            
+        case .fadeIn(let ref, let duration):
+            if let ref = ref {
+                script += """
+                        var element = document.getElementById('\(ref)');
+                        if (element) {
+                            if (element.style.opacity === '' || parseFloat(element.style.opacity) < 1) {
+                                element.style.opacity = 0;
+                                element.style.display = 'block';
+                                var last = +new Date();
+                                var tick = function() {
+                                    element.style.opacity = +element.style.opacity + (new Date() - last) / (\(duration) * 1000);
+                                    last = +new Date();
+                                    if (+element.style.opacity < 1) {
+                                        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                                    }
+                                };
+                                tick();
+                            }
+                        }
+                        """
+            } else {
+                script += """
+                        if (\(builderId).style.opacity === '' || parseFloat(\(builderId).style.opacity) < 1) {
+                            \(builderId).style.opacity = 0;
+                            \(builderId).style.display = 'block';
+                            var last = +new Date();
+                            var tick = function() {
+                                \(builderId).style.opacity = +\(builderId).style.opacity + (new Date() - last) / (\(duration) * 1000);
+                                last = +new Date();
+                                if (+\(builderId).style.opacity < 1) {
+                                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                                }
+                            };
+                            tick();
+                        }
+                        """
+            }
+            
+        case .fadeOut(let ref, let duration):
+            if let ref = ref {
+                script += """
+                        var element = document.getElementById('\(ref)');
+                        if (element) {
+                            element.style.opacity = 1;
+                            var last = +new Date();
+                            var tick = function() {
+                                element.style.opacity = +element.style.opacity - (new Date() - last) / (\(duration) * 1000);
+                                last = +new Date();
+                                if (+element.style.opacity > 0) {
+                                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                                } else {
+                                    element.style.display = 'none';
+                                }
+                            };
+                            tick();
+                        }
+                        """
+            } else {
+                script += """
+                        \(builderId).style.opacity = 1;
+                        var last = +new Date();
+                        var tick = function() {
+                            \(builderId).style.opacity = +\(builderId).style.opacity - (new Date() - last) / (\(duration) * 1000);
+                            last = +new Date();
+                            if (+\(builderId).style.opacity > 0) {
+                                (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                            } else {
+                                \(builderId).style.display = 'none';
+                            }
+                        };
+                        tick();
+                        """
+            }
+            
+        case .fadeToggle(let ref, let duration):
+            if let ref = ref {
+                script += """
+                        var element = document.getElementById('\(ref)');
+                        if (element) {
+                            if (element.style.display === 'none' || getComputedStyle(element).display === 'none') {
+                                element.style.opacity = 0;
+                                element.style.display = 'block';
+                                var last = +new Date();
+                                var tick = function() {
+                                    element.style.opacity = +element.style.opacity + (new Date() - last) / (\(duration) * 1000);
+                                    last = +new Date();
+                                    if (+element.style.opacity < 1) {
+                                        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                                    }
+                                };
+                                tick();
+                            } else {
+                                var last = +new Date();
+                                var tick = function() {
+                                    element.style.opacity = +element.style.opacity - (new Date() - last) / (\(duration) * 1000);
+                                    last = +new Date();
+                                    if (+element.style.opacity > 0) {
+                                        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                                    } else {
+                                        element.style.display = 'none';
+                                    }
+                                };
+                                tick();
+                            }
+                        }
+                        """
+            } else {
+                script += """
+                        if (\(builderId).style.display === 'none' || getComputedStyle(\(builderId)).display === 'none') {
+                            \(builderId).style.opacity = 0;
+                            \(builderId).style.display = 'block';
+                            var last = +new Date();
+                            var tick = function() {
+                                \(builderId).style.opacity = +\(builderId).style.opacity + (new Date() - last) / (\(duration) * 1000);
+                                last = +new Date();
+                                if (+\(builderId).style.opacity < 1) {
+                                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                                }
+                            };
+                            tick();
+                        } else {
+                            var last = +new Date();
+                            var tick = function() {
+                                \(builderId).style.opacity = +\(builderId).style.opacity - (new Date() - last) / (\(duration) * 1000);
+                                last = +new Date();
+                                if (+\(builderId).style.opacity > 0) {
+                                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+                                } else {
+                                    \(builderId).style.display = 'none';
+                                }
+                            };
+                            tick();
+                        }
+                        """
+            }
+            
+            
+        case .addToArray(let variable, let value):
+            script += """
+                    if (\(variable.builderId).indexOf('\(value)') === -1) {
+                        \(variable.builderId).push('\(value)');
+                        document.getElementById('hiddenInput_\(variable.builderId)').value = JSON.stringify(\(variable.builderId));
+                    }
+                    """
+            
+        case .removeFromArray(let variable, let value):
+            script += """
+                    var index = \(variable.builderId).indexOf('\(value)');
+                    if (index !== -1) {
+                        \(variable.builderId).splice(index, 1);
+                        document.getElementById('hiddenInput_\(variable.builderId)').value = JSON.stringify(\(variable.builderId));
+                    }
+                    """
+            
+        case .scrollTo(let ref, let behavior, let alignment):
+            let refId = ref ?? builderId
+            script += """
+                    var element = document.getElementById('\(refId)');
+                    element.scrollIntoView({ behavior: '\(behavior.rawValue)', block: '\(alignment.rawValue)', inline: '\(alignment.rawValue)' });
+                    """
+            
         case .showOffCanvas(let ref):
             script += """
             var offcanvasElement = document.getElementById('\(ref)');
@@ -67,7 +233,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 offcanvas.show();
             }
             """
-        
+            
         case .hideOffCanvas(let ref):
             script += """
             var offcanvasElement = document.getElementById('\(ref)');
@@ -76,7 +242,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 offcanvas.hide();
             }
             """
-        
+            
         case .carouselNext(let ref):
             script += """
             var carouselElement = document.getElementById('\(ref)');
@@ -85,7 +251,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 carousel.next();
             }
             """
-        
+            
         case .carouselPrev(let ref):
             script += """
             var carouselElement = document.getElementById('\(ref)');
@@ -94,7 +260,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 carousel.prev();
             }
             """
-        
+            
         case .carouselTo(let ref, let index):
             script += """
             var carouselElement = document.getElementById('\(ref)');
@@ -103,7 +269,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 carousel.to(\(index));
             }
             """
-        
+            
         case .accordionToggle(let ref):
             script += """
             var accordionElement = document.getElementById('\(ref)');
@@ -112,7 +278,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 accordion.toggle();
             }
             """
-        
+            
         case .progressSet(let ref, let value):
             script += """
             var progressElement = document.getElementById('\(ref)');
@@ -128,7 +294,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 }
             }
             """
-        
+            
         case .spinnerSet(let ref, let type, let size, let color, let label):
             script += """
             var spinnerElement = document.getElementById('\(ref)');
@@ -145,13 +311,13 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 }
             }
             """
-        
+            
         case .handleResponse(let scriptContent):
             // This case is handled within the .post case to inject the response data
             break
-        
-        // Existing cases...
-
+            
+            // Existing cases...
+            
         case .navigate(let url):
             script += "window.location.href = '\(url)';\n"
         case .load(ref: let ref, url: let url):
@@ -447,7 +613,7 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
             }
         }
     }
-
+    
     return script
 }
 
@@ -458,4 +624,16 @@ extension GenericProperties {
         return CompileActions(actions, builderId: builderId)
     }
     
+}
+
+public enum ScrollBehavior: String {
+    case auto
+    case smooth
+}
+
+public enum ScrollAlignment: String {
+    case start
+    case center
+    case end
+    case nearest
 }

@@ -51,7 +51,7 @@ public class Modal : WebElement {
         })
         
         // create the object links
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         addClass("modal")
         addClass("fade")
         if let ref = ref {

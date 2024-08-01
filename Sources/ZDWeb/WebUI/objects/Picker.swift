@@ -31,7 +31,7 @@ public class Picker : WebElement {
                 declare("select", classList: self.builderId , {
                     body()
                 })
-                script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+                script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
                 addClass("form-select")
                 addClass("form-control")
             case .radio:

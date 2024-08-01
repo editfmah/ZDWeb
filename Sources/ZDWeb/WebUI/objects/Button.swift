@@ -16,7 +16,7 @@ public class Button : WebButtonElement {
         declare("button", classList: self.builderId , {
             
         })
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
         script("\(builderId).innerText = '\(title)';")
         addClass("btn")
     }

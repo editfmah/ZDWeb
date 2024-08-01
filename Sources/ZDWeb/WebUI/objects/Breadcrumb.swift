@@ -37,6 +37,6 @@ public class Breadcrumb: WebElement, BreadcrumbProperties {
                 }
             }
         }
-        script("var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
+        script("/* builder-object-reference */ var \(builderId) = document.getElementsByClassName('\(builderId)')[0];")
     }
 }

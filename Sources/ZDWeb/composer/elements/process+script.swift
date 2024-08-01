@@ -19,7 +19,11 @@ public extension WebRequestContext {
     }
     func compileBuilderScripts() {
         if self.builderScripts.isEmpty == false {
-            self.script(builderScripts.joined(separator: "\n"))
+            // first off, filter out all the lines which are factory definitions of objects and ensure they are scoped for all future code
+            let definitions = builderScripts.filter({ $0.hasPrefix("/* builder-object-reference */")}).map({ $0.replacingOccurrences(of: "/* builder-object-reference */ ", with: "")})
+            let remaining = builderScripts.filter({ $0.hasPrefix("/* builder-object-reference */") == false })
+            self.script(definitions.joined(separator: "\n"))
+            self.script(remaining.joined(separator: "\n"))
         }
         self.builderScripts.removeAll()
     }
