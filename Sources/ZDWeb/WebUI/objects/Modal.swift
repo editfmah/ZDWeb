@@ -56,7 +56,15 @@ public class Modal : WebElement {
         addClass("fade")
         if let ref = ref {
             self.ref(ref)
+            // create the modal object, but do not show it.
+            script("""
+var \(ref.md5().trimmingCharacters(in: CharacterSet.decimalDigits))ModalDialog = new bootstrap.Modal('#\(ref)', {
+  keyboard: false
+});
+""")
         }
+        
+
         
     }
 }

@@ -80,12 +80,15 @@ class TestPage: WebHTMLEndpoint {
 
                 // Modals
                 VStack {
-                    Modal(ref: "myModal") {
+                    Modal(type: .small, ref: "myModal") {
                         Text("This is a modal")
+                        Button("Close Modal").onClick([
+                            .hideModal(ref: "myModal")
+                        ])
                     }
                     Button("Open Modal")
                         .onClick([
-                            .showModal(ref: "myModal", contentURL: "https://zestdeck.com")
+                            .showModal(ref: "myModal")
                         ])
                 }.padding(20)
 

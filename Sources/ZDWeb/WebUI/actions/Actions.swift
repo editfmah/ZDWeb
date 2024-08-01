@@ -566,22 +566,18 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
         case .showModal(ref: let ref, contentURL: let contentURL):
             if let contentURL = contentURL {
                 script += """
-                const myModal = new bootstrap.Modal(document.getElementById('\(ref)'), {
-                    keyboard: false
-                })
                 fetch('\(contentURL)')
                     .then(response => response.text())
                     .then(data => {
                         document.getElementById('\(ref)').querySelector('.modal-body').innerHTML = data;
-                        myModal.show();
+                        \(ref.md5().trimmingCharacters(in: CharacterSet.decimalDigits))ModalDialog.show();
                     });
                 """
             } else {
                 script += """
-                const myModal = new bootstrap.Modal('#\(ref)', {
-                  keyboard: false
-                })
-                myModal.show();
+                if(\(ref.md5().trimmingCharacters(in: CharacterSet.decimalDigits))ModalDialog) {
+                    \(ref.md5().trimmingCharacters(in: CharacterSet.decimalDigits))ModalDialog.show();
+                }
                 """
             }
         case .collapse(ref: let ref):
@@ -592,10 +588,9 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
             """
         case .hideModal(ref: let ref):
             script += """
-            const myModal = new bootstrap.Modal('#\(ref)', {
-              keyboard: false
-            })
-            myModal.hide();
+            if(\(ref.md5().trimmingCharacters(in: CharacterSet.decimalDigits))ModalDialog) {
+                \(ref.md5().trimmingCharacters(in: CharacterSet.decimalDigits))ModalDialog.hide();
+            }
             """
         case .popover(title: let title, content: let content):
             script += """
