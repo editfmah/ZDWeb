@@ -534,6 +534,10 @@ public protocol GenericProperties {
     func onEnable(_ actions: [WebAction]) -> Self
     func onDisable(_ action: WebAction) -> Self
     func onDisable(_ actions: [WebAction]) -> Self
+    func onAppear(_ action: WebAction) -> Self
+    func onAppear(_ actions: [WebAction]) -> Self
+    func onInit(_ action: WebAction) -> Self
+    func onInit(_ actions: [WebAction]) -> Self
     
     // common methods
     func addClass(_ cls: String)
