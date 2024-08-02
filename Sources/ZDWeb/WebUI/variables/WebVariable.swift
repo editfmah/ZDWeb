@@ -18,7 +18,7 @@ public class WebVariable : WebCommonInterop {
     public func name(_ name: String) -> Self {
         
         formName = name
-        script("\(builderId).name = '\(name)';")
+        script("function set\(name.md5())(value) { \(builderId) = value; };")
 
         // Create the hidden input field using the declare function
         declare("input", classList: "hidden-input", id: "hiddenInput_\(builderId)", attributes: ["type": "hidden", "name": name, "value": "\(builderId)"]) {

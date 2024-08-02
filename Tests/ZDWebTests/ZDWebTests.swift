@@ -287,6 +287,16 @@ class TestPage: WebHTMLEndpoint {
                                 .addToArray(variable: myArray, value: "random \(Int.random(in: 1...100))")
                             ])
                     }.padding(.top, 30)
+                    
+                    HStack {
+                        
+                        let strValue = WString("this is the current value").name("strValue")
+                        TextField("", binding: strValue)
+                        Button("Set").onClick([
+                            .set(varName: "strValue", to: "new value")
+                        ])
+                        
+                    }.padding(.top, 30)
                         
 
                 }.padding(20)

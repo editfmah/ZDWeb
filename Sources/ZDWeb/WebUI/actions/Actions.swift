@@ -402,17 +402,16 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
                 // this will find a javascript var, which has a name property set.  For instance, it was created like this:
                 // var myValue = 1234;
                 // myValue.name = 'myName';
-                
                 if let stringValue = to as? String {
-                    script += "window[\"\(variableName)\"] = '\(stringValue)';\n"
+                    script += "set\(variableName.md5())('\(stringValue)');\n"
                 } else if let intValue = to as? Int {
-                    script += "window[\"\(variableName)\"] = \(intValue);\n"
+                    script += "set\(variableName.md5())(\(intValue));\n"
                 } else if let doubleValue = to as? Double {
-                    script += "window[\"\(variableName)\"] = \(doubleValue);\n"
+                    script += "set\(variableName.md5())(\(doubleValue));\n"
                 } else if let boolValue = to as? Bool {
-                    script += "window[\"\(variableName)\"] = \(boolValue ? "true" : "false");\n"
+                    script += "set\(variableName.md5())(\(boolValue ? "true" : "false"));\n"
                 } else {
-                    script += "window[\"\(variableName)\"] = '\(to)';\n"
+                    script += "set\(variableName.md5())('\(to)');\n"
                 }
                 
             }
