@@ -54,6 +54,7 @@ public enum WebAction {
     case scrollTo(ref: String? = nil, behavior: ScrollBehavior, alignment: ScrollAlignment = .start)
     case addToArray(variable: WArray, value: String)
     case removeFromArray(variable: WArray, value: String)
+    case toggleArray(variable: WArray, value: String)
     case fadeIn(ref: String? = nil, duration: Double)
     case fadeOut(ref: String? = nil, duration: Double)
     case fadeToggle(ref: String? = nil, duration: Double)
@@ -65,6 +66,19 @@ public func CompileActions(_ actions: [WebAction], builderId: String) -> String 
     
     for action in actions {
         switch action {
+            
+        case .toggleArray(let variable, let value):
+            
+            script += """
+                    var index = \(variable.builderId).indexOf('\(value)');
+                    if (index === -1) {
+                        \(variable.builderId).push('\(value)');
+                        document.getElementById('hiddenInput_\(variable.builderId)').value = JSON.stringify(\(variable.builderId));
+                    } else {
+                        \(variable.builderId).splice(index, 1);
+                        document.getElementById('hiddenInput_\(variable.builderId)').value = JSON.stringify(\(variable.builderId));
+                    }
+                    """
             
         case .fadeIn(let ref, let duration):
             if let ref = ref {

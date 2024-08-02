@@ -20,29 +20,29 @@ public class TextField: WebElement {
 
         if let binding = binding {
             script("""
-    var isUserInput = false;
-    var debounceTimer;
+    var isUserInput\(builderId) = false;
+    var debounceTimer\(builderId);
     \(builderId).addEventListener('input', function() {
-        isUserInput = true;
-        clearTimeout(debounceTimer);
-        debounceTimer = setTimeout(function() {
+        isUserInput\(builderId) = true;
+        clearTimeout(debounceTimer\(builderId));
+        debounceTimer\(builderId) = setTimeout(function() {
             \(binding.builderId) = \(builderId).value.split(/[,;|]/).map(function(item) {
                 return item.trim();
             }).filter(function(item) {
                 return item.length > 0;
             });
-            isUserInput = false;
+            isUserInput\(builderId) = false;
         }, 300);
     });
 
-    function updateTextField() {
+    function updateTextField\(builderId)() {
         var value = \(binding.builderId).join(', ');
-        if (!isUserInput && \(builderId).value !== value) {
+        if (!isUserInput\(builderId) && \(builderId).value !== value) {
             \(builderId).value = value;
         }
-        setTimeout(updateTextField, 500);
+        setTimeout(updateTextField\(builderId), 500);
     }
-    updateTextField();
+    updateTextField\(builderId)();
     """)
         }
     }
@@ -63,13 +63,13 @@ public class TextField: WebElement {
         \(binding.builderId) = \(builderId).value;
     });
     \(builderId).value = \(binding.builderId);
-    function updateTextField() {
+    function updateTextField\(builderId)() {
         if (\(builderId).value !== \(binding.builderId)) {
             \(builderId).value = \(binding.builderId);
         }
-        setTimeout(updateTextField, 500);
+        setTimeout(updateTextField\(builderId), 500);
     }
-    updateTextField();
+    updateTextField\(builderId)();
     """)
         }
     }

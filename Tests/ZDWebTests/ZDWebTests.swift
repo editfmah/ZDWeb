@@ -284,7 +284,7 @@ class TestPage: WebHTMLEndpoint {
                         let textField = TextField("Enter items", binding: myArray)
                         Button("Add Item")
                             .onClick([
-                                .addToArray(variable: myArray, value: "random \(Int.random(in: 1...100))")
+                                .toggleArray(variable: myArray, value: "random \(Int.random(in: 1...100))")
                             ])
                     }.padding(.top, 30)
                     
