@@ -293,7 +293,7 @@ class TestPage: WebHTMLEndpoint {
                         let strValue = WString("this is the current value").name("strValue")
                         TextField("", binding: strValue)
                         Button("Set").onClick([
-                            .set(varName: "strValue", to: "new value")
+                            .setVariableName("strValue", to: "new value")
                         ])
                         
                     }.padding(.top, 30)
