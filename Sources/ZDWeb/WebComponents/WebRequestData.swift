@@ -77,6 +77,10 @@ public class WebRequestData {
                             if data[kvp.key.lowercased()] == nil {
                                 data[kvp.key.lowercased()] = "\(value)"
                             }
+                        } else if let value = kvp.value as? [String] {
+                            if data[kvp.key.lowercased()] == nil {
+                                data[kvp.key.lowercased()] = "\(value.joined(separator: "|"))"
+                            }
                         }
                     }
                 } else if let ajax = try? JSONDecoder().decode([AJAXJsonForm].self, from: bodyData) {
