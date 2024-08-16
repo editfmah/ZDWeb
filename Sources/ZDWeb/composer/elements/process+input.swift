@@ -633,7 +633,7 @@ public class DataFormFields {
     
 }
 
-internal extension Date {
+fileprivate extension Date {
     
     var milliseconds : UInt64 {
         return UInt64((self.timeIntervalSince1970 * 1000))

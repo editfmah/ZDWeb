@@ -314,3 +314,111 @@ public class WebRequestData {
     
 }
 
+fileprivate extension Date {
+    
+    var milliseconds : UInt64 {
+        return UInt64((self.timeIntervalSince1970 * 1000))
+    }
+    var seconds: UInt64 {
+        return UInt64(self.timeIntervalSince1970)
+    }
+    func getFormattedDate(format: String) -> String {
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = format
+        dateformat.timeZone = TimeZone(identifier: "UTC")
+        return dateformat.string(from: self)
+    }
+    var isoFullDate: String {
+        return getFormattedDate(format: "yyyy-MM-dd'T'HH:mm:ssZ")
+    }
+    var isoYear: String {
+        return getFormattedDate(format: "yyyy")
+    }
+    var isoMonth: String {
+        return getFormattedDate(format: "yyyy-MM")
+    }
+    var isoDate: String {
+        return getFormattedDate(format: "yyyy-MM-dd")
+    }
+    var isoDateWithTime: String {
+        return getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+    }
+    var isoTime: String {
+        return getFormattedDate(format: "HH:mm:ss")
+    }
+    var isoDateWithHour: String {
+        return getFormattedDate(format: "yyyy-MM-dd HH")
+    }
+    var isoDateWithHoursMinutes: String {
+        return getFormattedDate(format: "yyyy-MM-dd HH:mm")
+    }
+    
+    
+    // localised for the user
+    func userDate() -> String {
+        return self.isoDate
+    }
+    
+    func userDateTime() -> String {
+        return ""
+    }
+    
+    static func from(string: String) -> Date? {
+        
+        let dateString = string
+        
+        // right try and cobble something together to sort out this damned mixed date issue
+        let components = dateString.components(separatedBy: CharacterSet(charactersIn: "T "))
+        if components.count > 0 {
+            let datePart = components[0]
+            
+            let dateComponents = datePart.components(separatedBy: CharacterSet(charactersIn: "-/\\|:."))
+            
+            if dateComponents.count > 2 {
+                
+                if let year = Int(dateComponents[0]), let month = Int(dateComponents[1]), let day = Int(dateComponents[2]) {
+                    // we have our date parts
+                    
+                    var hours = 0
+                    var minutes = 0
+                    var seconds = 0
+                    
+                    if components.count > 1 {
+                        let timePart = components[1]
+                        
+                        var timeComponents = timePart.components(separatedBy: CharacterSet(charactersIn: "-/\\|:."))
+                        
+                        if let hrs = timeComponents.first, let h = Int(hrs) {
+                            timeComponents.removeFirst()
+                            hours = h
+                        }
+                        
+                        if let mins = timeComponents.first, let m = Int(mins) {
+                            timeComponents.removeFirst()
+                            minutes = m
+                        }
+                        
+                        if let secs = timeComponents.first, let s = Int(secs) {
+                            timeComponents.removeFirst()
+                            seconds = s
+                        }
+                    }
+                    
+                    var calendar = Calendar(identifier: .gregorian)
+                    calendar.timeZone = TimeZone(abbreviation: "UTC")!
+                    let components = DateComponents(year: year, month: month, day: day, hour: hours, minute: minutes, second: seconds)
+                    
+                    if let newDate = calendar.date(from: components) {
+                        return newDate
+                    }
+                    
+                }
+            }
+            
+        }
+        
+        return nil
+    }
+    
+    
+}
